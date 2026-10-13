@@ -6,6 +6,7 @@ const read=(key,f)=>{try{return JSON.parse(localStorage.getItem(key))??f}catch{r
 const config=await fetch('/api/site-config').then(r=>r.json()).catch(()=>({}));
 let consent=read('beta:analytics-consent',null);
 document.addEventListener('click',e=>{const b=e.target.closest('[data-save-case]');if(b&&b.getAttribute('aria-pressed')==='true')track('case_saved')});
+addEventListener('beta:case-saved',()=>track('case_saved'));
 
 export function track(event,metric){if(consent!==true||!config.analyticsEnabled)return;void fetch('/api/analytics',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event,path:location.pathname.replace(/^\/en(?=\/|$)/,'')||'/',consent:true,...(metric?{metric:metric.name,value:metric.value}: {})}),keepalive:true}).catch(()=>{})}
 function choices(){let el=$('#privacy-choice');if(!el){el=document.createElement('aside');el.id='privacy-choice';el.className='privacy-choice';el.setAttribute('aria-label',t('Valgfri statistik'));el.innerHTML='<div><b>ET LILLE VALG.</b><p>Vil du hjælpe os med anonym besøgsstatistik? Det er helt valgfrit.</p><a href="'+(document.documentElement.lang==='en'?'/en':'')+'/privacy">LÆS OM PRIVATLIV ↗</a></div><div><button data-consent="true">JA, GERNE</button><button data-consent="false">KUN DET NØDVENDIGE</button></div>';document.body.append(el);el.querySelectorAll('[data-consent]').forEach(b=>b.onclick=()=>{consent=b.dataset.consent==='true';write('beta:analytics-consent',consent);void closeChoice(el);if(consent)track('page_view')})}el.hidden=false;enter(el)}
