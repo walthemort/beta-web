@@ -6,7 +6,8 @@
     "dev": "node --env-file-if-exists=.env.local server.js",
     "start": "node --env-file-if-exists=.env.local server.js",
     "test": "node --test",
-    "build:portal": "node --env-file-if-exists=.env.local scripts/build-portal.mjs"
+    "build:portal": "node --env-file-if-exists=.env.local scripts/build-portal.mjs",
+    "build:clients": "node scripts/build-client-strip.mjs"
   },
   "engines": {
     "node": ">=22"

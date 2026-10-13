@@ -58,6 +58,15 @@ Browser checks cover logo delivery, menu/Escape, service selection/removal, actu
 
 Pressing Enter expands the review card in the hero instead of navigating to a separate results section. Loading, findings, failure and reset all stay in that card. Copy colour codes, download an initial text brand guide, or open a project brief. No simulated review findings are shipped.
 
-The former text ticker is replaced with the client's logo loop, populated from `public/clients.json`. The six supplied SVG files are included; Red Bull is a text name pending an image file. SVG, PNG, JPG and WebP logos are supported. Add an approved local logo under `public/clients/`, then update the JSON entry. The two identical track groups loop without a gap; hover, keyboard focus or the pause button stops motion. Reduced-motion mode uses a static layout. Missing image files fall back to client names.
+The former text ticker is replaced with the client's logo loop, populated from `public/clients.json`. The six supplied SVG files are included; Red Bull is a text name pending an image file. SVG, PNG, JPG and WebP logos are supported. Add an approved local logo under `public/clients/`, then update the JSON entry and run `npm run build:clients`. The two identical track groups loop without a gap; hover, keyboard focus or the pause button stops motion. Reduced-motion mode uses a static layout. Missing image files fall back to client names.
 
 Validation: 3 Node extractor/address-validation tests pass. Browser checks cover Enter/loading expansion, a controlled success response (palette/fonts/sizes), download contents, inline errors, reset, actual supplied logos, loop/pause, reduced motion, and mobile widths. Live external requests still return DNS EAI_AGAIN in this cloud machine and must be checked from local or hosted deployment.
+
+
+## Disclosure motion and resilient logo strip
+
+The logo bar is rendered directly into the homepage with embedded images. It remains visible even when `/clients.json` cannot be fetched, image routes are unavailable, or JavaScript is disabled. `npm run build:clients` regenerates that section from the approved local logos and manifest; this command does not run at startup.
+
+Service and FAQ disclosures now animate both height and opacity on opening and closing, including rapid direction changes. Dialog dismissal, Escape, backdrop dismissal and case-to-project-brief transitions animate before focus/scroll state is released. Review results animate their height when loading changes to findings or errors. Closing the review waits for its panel transition before resetting the hero. Selection-list changes animate their height. Reduced-motion preference makes these operations immediate.
+
+Browser regression checks verify logos without any manifest/image endpoint (and without JavaScript), intermediate disclosure heights, interrupted open/close, keyboard FAQ use, dialog transitions, restored scrolling, mobile overflow and reduced motion.
