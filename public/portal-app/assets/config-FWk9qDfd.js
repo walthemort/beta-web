@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-Dd_uD5pT.js";var t=e({CLOUD:()=>n,cloudConfigured:()=>r}),n={url:`https://rpusturwwrmsaketawkf.supabase.co`,key:`sb_publishable_UpwovACC_VRZM-tD1KLE0w_KxnX3ZvS`},r=()=>!!(n.url&&n.key);export{r as n,t as r,n as t};
