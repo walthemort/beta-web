@@ -1,14 +1,15 @@
 import {spawnSync} from 'node:child_process';
-import {cp,mkdir,readFile,writeFile} from 'node:fs/promises';
+import {cp,mkdir,readFile,writeFile,rm} from 'node:fs/promises';
 import {resolve} from 'node:path';
 const forme=resolve(process.env.FORME_PATH||'../forme');
 const result=spawnSync('npm',['run','build'],{cwd:forme,stdio:'inherit',env:{...process.env,VITE_BETA_MODE:'true',VITE_BETA_WEBSITE_URL:process.env.VITE_BETA_WEBSITE_URL||'/'}});
 if(result.status!==0)process.exit(result.status||1);
+await rm('public/portal-app',{recursive:true,force:true});
 await mkdir('public/portal-app',{recursive:true});
 await cp(resolve(forme,'dist'),'public/portal-app',{recursive:true});
 const indexPath='public/portal-app/index.html';
 const html=await readFile(indexPath,'utf8');
 const scripts=html.match(/<script type="module"[^>]*><\/script>/g)||[];
 const styles=html.match(/<link rel="stylesheet"[^>]*>/g)||[];
-await writeFile(indexPath,`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beta — Your creative workspace</title><meta name="description" content="Your projects, files, feedback, and next steps with Beta."><link rel="icon" href="/favicon.svg">${scripts.join('')}${styles.join('')}<style>#boot{position:fixed;inset:0;display:grid;place-content:center;text-align:center;background:#f5f4ee;color:#262723;font-family:Arial,sans-serif}#boot b{font-size:60px;letter-spacing:-6px}#boot p{font-size:12px;color:#626459}</style></head><body><div id="root"><div id="boot" role="status"><b>beta®</b><p>Getting your workspace ready.</p></div></div><noscript>Please enable JavaScript to sign in to your Beta workspace.</noscript></body></html>`);
+await writeFile(indexPath,`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beta — Your creative workspace</title><meta name="description" content="Your projects, files, feedback, and next steps with Beta."><link rel="icon" href="/favicon.svg">${scripts.join('')}${styles.join('')}<style>#boot{position:fixed;inset:0;display:grid;place-content:center;text-align:center;background:#F6F4EF;color:#0B0B0E;font-family:Arial,sans-serif}#boot b{font-size:60px;letter-spacing:-6px}#boot p{font-size:12px;color:#626459}</style></head><body><div id="root"><div id="boot" role="status"><img src="/logos/beta-blue.svg" alt="Beta" style="width:90px;margin:auto"><p>Getting your workspace ready.</p></div></div><noscript>Please enable JavaScript to sign in to your Beta workspace.</noscript></body></html>`);
 console.log('Beta portal built. The website and portal now run from the same server.');

@@ -45,3 +45,10 @@ Review currently detects colours, inline font families, and SVG references from 
 - Owner studio sync was reported Saved by the user. Live client reviews and email-login callbacks on this unified origin have not yet been exercised.
 
 No public deployment has been made. The runnable artifact is separate from your existing local Forme checkout.
+
+
+## Beta redesign
+
+The public site now uses the provided Beta SVG logos and brand colours (#1B4DFF / #F6F4EF / #0B0B0E), with Danish copy following the Figma direction. Features include an animated review hero, full-screen navigation, a rolling type strip, expandable services, remembered service selection, a local downloadable project brief, interactive concept cases and accessible FAQ disclosure. The brief is not sent automatically. Motion is disabled when the user requests reduced motion. The website and portal branding share the same palette. The about section uses brand artwork until an approved portrait is supplied.
+
+Browser checks cover logo delivery, menu/Escape, service selection/removal, actual brief download contents, review errors, concept details, FAQ, portal login and narrow-screen overflow. The analysis engine itself is unchanged and still needs the work described above.

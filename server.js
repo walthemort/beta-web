@@ -54,6 +54,11 @@ const server=http.createServer(async(req,res)=>{
    if(process.env.PORTAL_URL){const destination=new URL(process.env.PORTAL_URL);if(!['https:','http:'].includes(destination.protocol)||destination.username||destination.password)throw Error('Invalid portal configuration.');res.writeHead(302,{Location:destination.href});res.end();return;}
    res.writeHead(200,{'Content-Type':'text/html'});res.end('<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beta — Client portal</title><link rel="stylesheet" href="/style.css"></head><body><header><a class="logo" href="/">beta<span>®</span></a><span>CLIENT PORTAL</span></header><main style="padding:80px 5%;max-width:850px"><h1>Every project.<br>One <em>place.</em></h1><p>We’re connecting your Beta workspace. Please contact Beta for project access.</p><a class="dark-button" href="/">Back to Beta ↗</a></main></body></html>');return;
   }
+  if(pathname.startsWith('/logos/')){
+   const name=pathname.slice('/logos/'.length);
+   if(!['beta-blue.svg','beta-white.svg','beta-black.svg','beta-outline.svg'].includes(name)){res.writeHead(404);res.end('Not found');return;}
+   res.writeHead(200,{'Content-Type':'image/svg+xml','X-Content-Type-Options':'nosniff'});res.end(await readFile(new URL(`./public/logos/${name}`,import.meta.url)));return;
+  }
   const files={'/':'index.html','/style.css':'style.css','/app.js':'app.js','/favicon.svg':'favicon.svg'};
   const file=files[req.url?.split('?')[0]];if(!file){res.writeHead(404);res.end('Not found');return;}
   res.writeHead(200,{'Content-Type':file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':file.endsWith('.svg')?'image/svg+xml':'text/html'});res.end(await readFile(new URL(`./public/${file}`,import.meta.url)));
