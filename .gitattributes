@@ -1,3 +1,4 @@
 # Generated bundles contain intentional whitespace inside library string literals.
 public/admin.js -whitespace
+public/mark-scene.js -whitespace
 public/portal-app/** -whitespace
