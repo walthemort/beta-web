@@ -3,3 +3,8 @@ node_modules/
 .env.*
 !.env.example
 public/portal-app/
+/data/
+portal/node_modules/
+portal/dist/
+public/media/*
+!public/media/.gitkeep

@@ -1,0 +1,19 @@
+import { useEffect, useState } from 'react'
+import Versions from './Versions'
+import { BETA_STUDIO_ID } from './config'
+type File = {id:string;name:string;status:string;version_id:string|null;blob_key:string|null}
+export default function ProjectFiles({projectId}:{projectId:string}){
+ const [files,setFiles]=useState<File[]>([]),[loading,setLoading]=useState(true),[message,setMessage]=useState('')
+ const [busy,setBusy]=useState<string|null>(null),[opened,setOpened]=useState<Record<string,string>>({}),[feedback,setFeedback]=useState<Record<string,string>>({})
+ useEffect(()=>{let live=true;setLoading(true);setMessage('');import('../data/cloud/supabase').then(async({supabase})=>{const {data,error}=await supabase().rpc('beta_project_files',{p_studio:BETA_STUDIO_ID,p_project:projectId});if(!live)return;if(error){setMessage('File reviews are not available yet. Please contact Beta.');return}setFiles(data as File[])}).catch(()=>{if(live)setMessage('Unable to load files. Please try again.')}).finally(()=>{if(live)setLoading(false)});return()=>{live=false}},[projectId])
+ async function download(file:File){
+  if(!file.blob_key||!file.version_id)return
+  setBusy(file.id);setMessage('')
+  try{const {supabase}=await import('../data/cloud/supabase');const {data,error}=await supabase().storage.from('files').download(`${BETA_STUDIO_ID}/${file.blob_key}`);if(error||!data)throw error;const url=URL.createObjectURL(data);const a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);setOpened(prev=>({...prev,[file.id]:file.version_id!}));setMessage('File downloaded. Review it before accepting or requesting changes.')}catch{setMessage('The file could not be downloaded. It may still need to be uploaded to cloud storage.')}finally{setBusy(null)}
+ }
+ async function review(file:File,decision:string){
+  if(!file.version_id)return
+  setBusy(file.id);setMessage('');try{const {supabase}=await import('../data/cloud/supabase');const {error}=await supabase().rpc('beta_review_file',{p_studio:BETA_STUDIO_ID,p_file:file.id,p_version:file.version_id,p_decision:decision,p_feedback:feedback[file.id]||''});if(error){setMessage(error.message);return}setFiles(prev=>prev.map(f=>f.id===file.id?{...f,status:decision}:f));setMessage(decision==='Approved'?'File accepted. Beta will see your approval.':'Your feedback has been saved for Beta.')}catch{setMessage('Unable to save your review. Please try again.')}finally{setBusy(null)}
+ }
+ return <section className="beta-files"><h3>Files & feedback</h3>{loading?<p role="status">Loading your shared files…</p>:!files.length&&!message?<p>No shared files yet. We’ll let you know when there’s something to review.</p>:files.map(file=><div className="beta-file" key={file.id}><div className="beta-file-title"><b>{file.name}</b><span>{file.status}</span></div>{file.blob_key?<button disabled={busy!==null} onClick={()=>download(file)}>Download to review →</button>:<p>This file is not available in cloud storage yet.</p>}{file.status==='In review'&&<><label htmlFor={`feedback-${file.id}`}>Your feedback</label><textarea id={`feedback-${file.id}`} maxLength={4000} value={feedback[file.id]||''} onChange={e=>setFeedback(prev=>({...prev,[file.id]:e.target.value}))} placeholder="What’s working? What would you like us to change?"/><div className="beta-file-actions"><button disabled={busy!==null||!file.version_id||opened[file.id]!==file.version_id} onClick={()=>review(file,'Approved')}>Accept files ✓</button><button disabled={busy!==null||!file.version_id||!(feedback[file.id]||'').trim()} onClick={()=>review(file,'Changes requested')}>Request changes →</button></div><small>Download and review this version before accepting it.</small></>}<Versions fileId={file.id} name={file.name}/></div>)}<p role="status">{message}</p></section>
+}

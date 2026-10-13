@@ -1,0 +1,4 @@
+import {useEffect,useState} from 'react'
+import {BETA_STUDIO_ID} from './config'
+type Request={id:string;description:string;status:string;created_at:string}
+export default function Requests(){const [rows,setRows]=useState<Request[]>([]);useEffect(()=>{let live=true;import('../data/cloud/supabase').then(async({supabase})=>{const {data,error}=await supabase().from('beta_requests').select('id,description,status,created_at').eq('studio_id',BETA_STUDIO_ID!).order('created_at',{ascending:false});if(live&&!error)setRows(data as Request[])});return()=>{live=false}},[]);if(!rows.length)return null;return <section className="beta-requests"><h3>Your project requests</h3>{rows.map(r=><article key={r.id}><small>{new Date(r.created_at).toLocaleDateString()} / {r.status}</small><p>{r.description}</p></article>)}</section>}

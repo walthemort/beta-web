@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+
+# The translation sheet is generated (npm run translations:export)
+translations/
+
+# Keys and secrets (FAL_KEY, ANTHROPIC_API_KEY, STRIPE_*) – never commit these
+.env
+.env.*
+!.env.example

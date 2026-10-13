@@ -1,0 +1,40 @@
+/* The studio's brand in light and dark – setup and Settings → Your brand (brandKit.tsx). */
+.portal-preview { border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 14px; background: var(--bg); }
+.pp-head { display: flex; gap: 8px; align-items: center; font-size: 14px; }
+.pp-head img { max-height: 28px; max-width: 120px; object-fit: contain; }
+.pp-h { font-size: 24px; letter-spacing: -0.03em; }
+.pp-h i { font-family: var(--serif); color: var(--accent); }
+.pp-btn { justify-self: start; background: var(--accent); color: #fff; padding: 8px 14px; border-radius: 8px; font-size: 14px; }
+.brand-h { font-size: 13px; font-weight: 500; color: var(--muted); margin: 6px 0 -4px; }
+.brand-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .brand-grid { grid-template-columns: 1fr; } }
+.brand-slot { display: grid; gap: 8px; }
+.brand-slot-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.brand-swatch-bg { height: 110px; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 16px; border: 1px solid var(--line); cursor: pointer; font-size: 13px; }
+.brand-swatch-bg span { display: inline-flex; gap: 6px; align-items: center; }
+.brand-swatch-bg img { max-height: 100%; max-width: 100%; object-fit: contain; }
+/* Fixed colours: these tiles show the real light and dark backgrounds, whatever theme the app is in. */
+.brand-swatch-bg.light, .portal-preview.light { background: #faf9f6; color: #141414; }
+.brand-swatch-bg.dark, .portal-preview.dark { background: #111110; color: #f2f1ec; border-color: #2d2d2a; }
+.brand-swatch-bg.light > span { color: #6b6b66; }
+.brand-swatch-bg.dark > span { color: #a3a29c; }
+.brand-chip { padding: 7px 12px; border-radius: 8px; font-size: 13px; }
+.colour-input { width: 38px; height: 32px; border: 1px solid var(--line); border-radius: 8px; padding: 2px; background: var(--surface); }
+.pp-muted { opacity: 0.6; }
+
+/* Accent pairs: one circle, two colours (on light pages / on dark pages). */
+.pair-picker { display: grid; gap: 10px; }
+.pair-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.accent-pick { position: relative; flex: none; width: 40px; height: 40px; border-radius: 50%; padding: 3px; border: 2px solid transparent; background: none; cursor: pointer; display: grid; place-items: center; color: var(--muted); }
+.accent-pick:hover { border-color: var(--line); }
+.accent-pick.on { border-color: var(--ink); }
+/* The ring keeps a black or white half visible on a page of the same colour. */
+.split-dot { width: 100%; height: 100%; border-radius: 50%; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 22%, transparent); }
+.pair-check { position: absolute; right: -4px; bottom: -4px; width: 16px; height: 16px; padding: 2px; border-radius: 50%; background: var(--ink); color: var(--bg); }
+.pair-own { border: 1.5px dashed var(--line); }
+.pair-own.on { border-style: solid; }
+.pair-own-fields { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+.pair-own-fields label { display: inline-flex; gap: 8px; align-items: center; }
+button.brand-swatch-bg { width: 100%; font: inherit; }
+.brand-slot-foot .cell-title { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.brand-slot-foot .cell-title small { color: var(--muted); font-size: 12px; }

@@ -1,0 +1,14 @@
+{
+  "siteURL": null,
+  "bookingURL": null,
+  "bookingContextParam": null,
+  "contactEmail": null,
+  "availability": null,
+  "availabilityMessage": null,
+  "currency": "DKK",
+  "prices": {},
+  "analyticsEnabled": true,
+  "supabaseURL": "https://rpusturwwrmsaketawkf.supabase.co",
+  "supabasePublishableKey": "sb_publishable_UpwovACC_VRZM-tD1KLE0w_KxnX3ZvS",
+  "studioID": "713a2e85-2f38-4d5e-97b3-999d21a770a4"
+}

@@ -3,6 +3,7 @@ import https from 'node:https';
 import {lookup} from 'node:dns';
 import {isIP} from 'node:net';
 export function publicAddress(address){
+ if(isIP(address)===6)return /^2[0-9a-f]{3}:/i.test(address)&&!/^2002:|^2001:(?:0:|db8:|1[0-9a-f]:|2[0-9a-f]:)/i.test(address);
  if(isIP(address)!==4)return false;
  return !/^(0\.|10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.|192\.0\.|192\.88\.99\.|198\.(18|19)\.|22[4-9]\.|2[3-5]\d\.)/.test(address);
 }
@@ -18,6 +19,7 @@ function safeLookup(hostname,options,callback){
  lookup(hostname,{all:true},(error,addresses)=>{
   if(error)return callback(error);
   if(!addresses.length||addresses.some(a=>!publicAddress(a.address)))return callback(Error('This tool can only review public websites.'));
+  addresses.sort((a,b)=>a.family-b.family);
   if(options.all)return callback(null,addresses);
   callback(null,addresses[0].address,addresses[0].family);
  });
@@ -46,7 +48,9 @@ export function extractGuide(html,stylesheets=[],url='https://example.com'){
  const clean=html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<!--[\s\S]*?-->/g,'');
  const embedded=[...clean.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map(m=>m[1]);
  const inline=[...clean.matchAll(/\bstyle\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)].map(m=>m[1]||m[2]);
- const css=[...embedded,...inline,...stylesheets].join('\n').replace(/\/\*[\s\S]*?\*\//g,'');
+ let css=[...embedded,...inline,...stylesheets].join('\n').replace(/\/\*[\s\S]*?\*\//g,'');
+ const variables=new Map([...css.matchAll(/(--[\w-]+)\s*:\s*([^;}]+)/g)].map(m=>[m[1],m[2].trim()]));
+ for(let i=0;i<4;i++)css=css.replace(/var\(\s*(--[\w-]+)(?:\s*,\s*([^)]*))?\s*\)/g,(all,key,fallback)=>variables.get(key)||fallback||all);
  const colors=[...new Set((css.match(/#[\da-f]{6}\b|#[\da-f]{3}\b/gi)||[]).map(c=>c.length===4?'#'+[...c.slice(1)].map(x=>x+x).join('').toUpperCase():c.toUpperCase()))].slice(0,6);
  const fonts=[...new Set([...css.matchAll(/font-family\s*:\s*([^;}]+)/gi)].map(m=>m[1].split(',')[0].replace(/["']/g,'').trim()).filter(f=>f&&!/var\(|inherit|initial|unset/i.test(f)))].slice(0,4);
  const sizes=[...new Set([...css.matchAll(/font-size\s*:\s*((?:\d*\.)?\d+(?:px|rem|em|vw|%))/gi)].map(m=>m[1]))].slice(0,8);

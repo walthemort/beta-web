@@ -1,0 +1,54 @@
+[
+  {
+    "id": "Brandidentitet",
+    "number": "01",
+    "title": "BETA_BRAND",
+    "summary": "Et brand, der ved, hvem det er. Og får andre til at mærke det.",
+    "note": "Fra den første retning til et samlet visuelt system, der virker på tværs af flader.",
+    "tags": [
+      "Brandstrategi",
+      "Logo & identitet",
+      "Farver & typografi",
+      "Brandguide"
+    ]
+  },
+  {
+    "id": "Website",
+    "number": "02",
+    "title": "BETA_DIGITAL",
+    "summary": "Din stærkeste digitale førstehåndsoplevelse.",
+    "note": "Vi forbinder dit brand med en hjemmeside, der er lige så god at bruge, som den er at se på.",
+    "tags": [
+      "Webdesign",
+      "Udvikling",
+      "Brugeroplevelse",
+      "Responsivt design"
+    ]
+  },
+  {
+    "id": "Content & kampagner",
+    "number": "03",
+    "title": "BETA_CONTENT",
+    "summary": "Et brand skal leve. Ikke bare ligge i en mappe.",
+    "note": "Sammenhængende indhold, der gør din identitet til noget, folk møder og husker.",
+    "tags": [
+      "Art direction",
+      "Sociale medier",
+      "Kampagner",
+      "Designsystemer"
+    ]
+  },
+  {
+    "id": "Løbende samarbejde",
+    "number": "04",
+    "title": "BETA_PARTNER",
+    "summary": "En kreativ partner til det, der kommer efter lanceringen.",
+    "note": "Projekter, feedback og filer samlet ét sted. Så vi kan bruge mere tid på at skabe.",
+    "tags": [
+      "Løbende design",
+      "Nye initiativer",
+      "Brandudvikling",
+      "Kundeportal"
+    ]
+  }
+]

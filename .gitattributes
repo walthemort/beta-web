@@ -1,2 +1,3 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Generated bundles contain intentional whitespace inside library string literals.
+public/admin.js -whitespace
+public/portal-app/** -whitespace

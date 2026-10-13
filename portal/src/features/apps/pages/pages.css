@@ -1,0 +1,38 @@
+/* A page made with Pages – the same in the editor's preview and on /site/<slug>. */
+.pg { background: var(--pg-bg); color: var(--pg-ink); min-height: 100%; min-height: 100dvh; container-type: inline-size; }
+.pg-inner { max-width: 560px; margin: 0 auto; padding: 40px 20px 64px; display: grid; gap: 28px; }
+.pg-head { display: flex; justify-content: center; }
+.pg-logo { height: 40px; max-width: 200px; object-fit: contain; }
+.pg-wordmark { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; }
+.pg-block { display: grid; gap: 12px; }
+.pg-block h1 { font-size: clamp(30px, 9cqw, 46px); line-height: 1.05; letter-spacing: -0.02em; margin: 0; font-weight: 700; }
+.pg-block h2 { font-size: 24px; line-height: 1.15; margin: 0; }
+.pg-block h3 { font-size: 18px; margin: 0; }
+.pg-block p { margin: 0; line-height: 1.55; opacity: 0.9; }
+.pg-hero { text-align: center; justify-items: center; }
+.pg-hero p { font-size: 17px; max-width: 42ch; }
+.pg-button { display: inline-flex; align-items: center; justify-content: center; padding: 13px 22px; border-radius: 999px; background: var(--pg-accent); color: var(--pg-on-accent); font-weight: 600; font-size: 15px; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; }
+.pg-button:hover { filter: brightness(1.06); }
+.pg-links { gap: 10px; }
+.pg-link { display: block; text-align: center; padding: 15px 18px; border-radius: 14px; border: 1.5px solid color-mix(in srgb, var(--pg-ink) 22%, transparent); color: inherit; text-decoration: none; font-weight: 500; transition: background 0.15s, transform 0.15s; }
+.pg-link:hover { background: color-mix(in srgb, var(--pg-ink) 7%, transparent); transform: translateY(-1px); }
+.pg-image figcaption { font-size: 13px; opacity: 0.7; text-align: center; }
+.pg-image { margin: 0; }
+.pg-gallery { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.pg-countdown { text-align: center; justify-items: center; }
+.pg-count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; }
+.pg-count div { display: grid; gap: 2px; padding: 14px 4px; border-radius: 14px; background: color-mix(in srgb, var(--pg-ink) 7%, transparent); }
+.pg-count b { font-size: clamp(26px, 8cqw, 38px); font-variant-numeric: tabular-nums; line-height: 1; }
+.pg-count span { font-size: 12px; opacity: 0.7; }
+.pg-big { font-size: 28px; font-weight: 700; }
+.pg-signup { text-align: center; }
+.pg-signup form { display: flex; gap: 8px; flex-wrap: wrap; }
+.pg-signup input { flex: 1 1 200px; min-width: 0; padding: 13px 16px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--pg-ink) 22%, transparent); background: transparent; color: inherit; font: inherit; font-size: 15px; }
+.pg-signup input[aria-invalid='true'] { border-color: #e5484d; }
+.pg-signup input::placeholder { color: inherit; opacity: 0.55; }
+.pg-contact { justify-items: center; gap: 8px; }
+.pg-contact a, .pg-contact span { display: inline-flex; align-items: center; gap: 8px; color: inherit; text-decoration: none; }
+.pg-social { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; }
+.pg-social a { color: inherit; font-weight: 600; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.pg-ph { background: color-mix(in srgb, var(--pg-ink) 8%, transparent); }
+.pg-missing { min-height: 100dvh; display: grid; place-items: center; font-family: system-ui, sans-serif; color: #666; padding: 20px; text-align: center; }
