@@ -98,4 +98,8 @@ npm run test:budget
 
 16 website tests and 31 portal database/sync tests pass. Checks cover role verification, content validation/escaping, CSS variables, real computed typography, private network blocking, contrast, language routes, real PDFs, owner/client isolation, invitation identity/expiry, uploads, requests, timelines and version protection. The portal production build/type checks pass. Browser checks cover actual downloads, galleries/keyboard controls, service disclosures, saved notes, process tabs, consent, mobile widths and English navigation. Gzip budgets pass; public JS is approximately 34 KiB and CSS 16 KiB combined. Public deployment and live authenticated client validation are pending.
 
-The complete feature/status ledger is `docs/NEXT-IDEAS.md`.
+Comparisons use a draggable arrow/divider directly on the image, with touch, arrow keys, Shift+arrow, Home/End and Escape cancellation. Clicking the image repositions the split. With JavaScript disabled, public comparisons show both concepts side by side. The portal uses the same control for explicitly shared versions. Header logo spacing and the planner’s empty sidebar sections have been corrected; selected services appear in the sidebar.
+
+Use `npm run build:comparison` after editing the shared control in `src/comparison.ts` or its CSS. `npm run build` includes this step, and the portal imports the same source. Run `npm run test:ui` for the direct-drag, keyboard, touch and layout regression checks.
+
+The complete feature/status ledger is `docs/NEXT-IDEAS.md`; 15 further proposals are in `docs/IDEAS-ROUND-2.md`.

@@ -9,9 +9,11 @@
     "build:portal": "node --env-file-if-exists=.env.local scripts/build-portal.mjs",
     "build:clients": "node scripts/build-client-strip.mjs",
     "build:admin": "node scripts/build-admin.mjs",
-    "build": "npm run build:admin && npm run build:clients && npm run build:portal",
+    "build": "npm run build:comparison && npm run build:admin && npm run build:clients && npm run build:portal",
     "test:portal": "npm --prefix portal test -- src/__tests__/cloud-db.test.ts src/__tests__/cloud-sync.test.ts",
-    "test:budget": "node scripts/performance-budget.mjs"
+    "test:budget": "node scripts/performance-budget.mjs",
+    "build:comparison": "node scripts/build-comparison.mjs",
+    "test:ui": "node scripts/check-comparison.mjs"
   },
   "engines": {
     "node": ">=22"

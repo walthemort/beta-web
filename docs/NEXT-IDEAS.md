@@ -10,7 +10,7 @@ All feasible items from the previous idea list now have an implementation. This 
 | Secure onboarding | Owner-only invitations, authenticated email acceptance, expiry and access revocation. | Apply migration 0005 and verify live magic-link callbacks. |
 | Case galleries | Responsive reserved media, lazy loading, alt text and keyboard/lightbox controls. | Placeholder/concept images until approved assets. |
 | Booking context | Configured provider parameter carries project/service context; full brief downloads separately. | Actual booking URL and supported parameter. |
-| Before/after slider | Interactive concept A/B slider. | Real before/after assets when approved; no invented prior client identity. |
+| Before/after slider | Concept A/B comparison with an arrow/divider dragged directly on the image, keyboard/touch support and a static fallback. | Real before/after assets when approved; no invented prior client identity. |
 | Inspiration board | Saved cases, private local notes, removal/clear controls and planner continuity. | None for current local-only behavior. |
 | Review-to-brief | URL, palette, typography and provenance included with user-selectable checkbox. | None. |
 | Typography analysis | Source CSS-variable resolution plus computed sizes/rendered glyph fonts. | Live public-site checks on intended host. |
@@ -32,3 +32,5 @@ All feasible items from the previous idea list now have an implementation. This 
 | Opt-in analytics | Explicit consent controls, allowlisted aggregate funnel events, no identifiers/query strings, 90-day retention. | Durable analytics storage; optional enable switch. |
 
 Validation: website tests, portal SQL/sync tests, production type checks/build, bundle budgets and browser interaction/mobile/download checks pass. Live deployment, authenticated owner/client email flows, Supabase Storage enforcement and representative external website scans are not claimed verified.
+
+The next 15 proposals are in [IDEAS-ROUND-2.md](IDEAS-ROUND-2.md).
