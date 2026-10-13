@@ -1,3 +1,5 @@
+import './lib/env.mjs';
+import {insideDirectory} from './lib/paths.mjs';
 import http from 'node:http';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
@@ -43,13 +45,13 @@ export const server=http.createServer(async(req,res)=>{
   if(portalRoute){
    if(pathname==='/portal'&&process.env.PORTAL_URL){const u=new URL(process.env.PORTAL_URL);if(!['http:','https:'].includes(u.protocol)||u.username||u.password)throw Error('Invalid portal URL');return send(302,'','text/plain',{Location:u.href})}
    const folder=resolve(root,'public/portal-app'),asset=pathname.startsWith('/assets/')||pathname.startsWith('/brand/'),file=asset?resolve(folder,'.'+decodeURIComponent(pathname)):resolve(folder,'index.html');
-   if(!file.startsWith(folder+'/'))return send(404,'Not found','text/plain');
+   if(!insideDirectory(folder,file))return send(404,'Not found','text/plain');
    try{return send(200,await readFile(file),mime(file),{'Cache-Control':asset?'public, max-age=31536000, immutable':'no-store'})}catch{return send(503,'Portal build unavailable. Run npm run build:portal.','text/plain')}
   }
   if(/^\/(logos|clients|media|work)\//.test(pathname)){
    const match=pathname.match(/^\/(logos|clients|media|work)\/([A-Za-z0-9_.-]+\.(?:svg|png|webp|jpg))$/);if(!match)return send(404,'Not found','text/plain');try{return send(200,await readFile(resolve(root,'public',match[1],match[2])),mime(match[2]),{'Cache-Control':'public, max-age=3600'})}catch{return send(404,'Not found','text/plain')}
   }
-  const files=['style.css','app.js','favicon.svg','clients.json','pages.css','pages.js','navigation.js','motion.js','features.css','features.js','comparison.css','comparison.js','brief-schema.js','admin.js','locale.js'];
+  const files=['style.css','app.js','favicon.svg','clients.json','pages.css','pages.js','navigation.js','motion.js','features.css','agency.css','features.js','comparison.css','comparison.js','brief-schema.js','admin.js','locale.js'];
   const name=pathname==='/'?'index.html':pathname.slice(1);if(name!=='index.html'&&!files.includes(name))return send(404,'Not found','text/plain');
   const data=await readFile(resolve(root,'public',name));return send(200,name==='index.html'?decorateHTML(data.toString(),pathname,english):data,mime(name));
  }catch(e){return send(e.status||400,{error:e.message||'Unable to complete this request.'})}

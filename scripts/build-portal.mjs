@@ -1,9 +1,13 @@
+import '../lib/env.mjs';
 import {spawnSync} from 'node:child_process';
 import {cp,mkdir,readFile,writeFile,rm} from 'node:fs/promises';
 import {authConfig} from '../lib/store.mjs';
 import {resolve} from 'node:path';
 const forme=resolve(process.env.FORME_PATH||'./portal');
-const result=spawnSync('npm',['run','build'],{cwd:forme,stdio:'inherit',env:{...process.env,VITE_SUPABASE_URL:authConfig().url,VITE_SUPABASE_PUBLISHABLE_KEY:authConfig().key,VITE_BETA_STUDIO_ID:authConfig().studio,VITE_BETA_MODE:'true',VITE_BETA_WEBSITE_URL:process.env.VITE_BETA_WEBSITE_URL||'/'}});
+// npm.cmd cannot be spawned directly on Windows; invoke the running npm CLI with Node.
+const npmCLI=process.env.npm_execpath;
+const result=spawnSync(npmCLI?process.execPath:'npm',npmCLI?[npmCLI,'run','build']:['run','build'],{cwd:forme,stdio:'inherit',env:{...process.env,VITE_SUPABASE_URL:authConfig().url,VITE_SUPABASE_PUBLISHABLE_KEY:authConfig().key,VITE_BETA_STUDIO_ID:authConfig().studio,VITE_BETA_MODE:'true',VITE_BETA_WEBSITE_URL:process.env.VITE_BETA_WEBSITE_URL||'/'}});
+if(result.error)throw result.error;
 if(result.status!==0)process.exit(result.status||1);
 await rm('public/portal-app',{recursive:true,force:true});
 await mkdir('public/portal-app',{recursive:true});
