@@ -1,4 +1,8 @@
 import {t} from './locale.js';
+import {mountReveals} from './scroll-reveal.js';
+import {mountFloatingMenu} from './floating-menu.js';
+
+mountReveals();mountFloatingMenu(t);
 
 const mark=document.querySelector('[data-mark-source]'),reduce=matchMedia('(prefers-reduced-motion: reduce)');
 let dispose=()=>{},generation=0;
