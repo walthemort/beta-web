@@ -33,13 +33,15 @@ All real-client pages remain explicitly labelled placeholders until approved con
 
 ## Enable the new portal tools
 
-The connected studio already uses migrations 0001–0004. Run the complete `migrations/0005_beta_workflows.sql` in **Supabase → SQL Editor** once. It creates client invitations, scoped requests/attachments, a private `beta-uploads` bucket, client-visible timeline events and explicit historical-version sharing. File approvals cannot silently carry over to a new uploaded version.
+The connected studio already uses migrations 0001–0004. In **Supabase → SQL Editor**, run the complete `migrations/0005_beta_workflows.sql`, then `migrations/0006_beta_annotations.sql`. Both can be run again safely. It creates client invitations, scoped requests/attachments, a private `beta-uploads` bucket, client-visible timeline events and explicit historical-version sharing. File approvals cannot silently carry over to a new uploaded version.
 
 In **Authentication → URL Configuration**, allow your local or hosted origin’s `/portal`, `/admin` and `/app/settings/cloud` callbacks. Set the actual hosted Site URL when deploying. Supabase email delivery and account signup must be enabled for invited clients’ first magic-link login. The portal permits account creation, but database access still requires a matching, unexpired owner-created invitation; arbitrary signups receive no workspace data.
 
 Use `/app/beta` to select an existing client record and save an invitation. Share the portal URL yourself; saving an invitation does not send an email. Invitations expire after 14 days. The client requests their sign-in link at the portal. Their assigned projects are derived from each project’s client ID. Clients are never added to `studio_members` and never receive direct access to private `records`.
 
 Private attachments go directly to Supabase under the signed-in client’s studio/user path. Accepted types: PNG, JPEG, WebP, PDF, TXT and ZIP; 20 MB per file, up to ten attachments per request. Downloads stay private. Visual version comparison accepts validated raster images; other file types can be downloaded for review. Only current or explicitly shared historical versions can be downloaded, and only the current version can be approved.
+
+The new design-feedback panel renders private PNG, JPEG, WebP and PDFs (up to 20 MB and 100 pages). Pins store normalized coordinates, page number, and exact file version; PDF rendering loads lazily and renders only the selected page. Keyboard arrows position a draft pin; the comment list provides a text alternative. SVG and other formats remain download-only. Approved or historical versions are read only. Only studio staff can mark pins resolved. Clients see old pins only while that version remains explicitly shared, and lose access when project access is revoked or archived. Pins are shared feedback, not internal notes; adding a pin does not approve or request changes to a delivery.
 
 Live email callbacks, real owner/client workflows and storage service enforcement still need verification in your Supabase project. Local Postgres tests validate SQL/RLS boundaries but do not replace those live checks. See `PORTAL-SETUP.md`.
 
@@ -55,11 +57,15 @@ CMS files live in `content/`, public uploaded media in `public/media/`, and anon
 
 Alternatively configure `BOOKING_URL`, `CONTACT_EMAIL`, `SITE_URL`, `PORT`, or `PORTAL_URL` in `.env.local` using `.env.example`. Environment overrides take precedence. Never put a Supabase service-role/secret key in frontend variables.
 
+## Adaptive briefs
+
+`/start` asks optional follow-ups based on the selected services. Switching services preserves previous answers locally, but only relevant questions enter the summary and text export. Clearing the draft removes all answers. The website owner can edit the bounded Danish/English question catalog in `/admin` → Services; it is stored in `content/brief-questions.json`.
+
 ## Beta Review and export
 
-The engine attempts a bounded, sandboxed Chromium desktop visit. It reads computed colours/sizes and uses Chromium glyph evidence for fonts actually rendered. It returns an anonymous screenshot and separate SVG/logo evidence. When browser rendering is unavailable, it falls back to HTML and up to three same-origin stylesheets, including CSS custom-property resolution. The report identifies its source; source declarations are not presented as rendered measurements. Qualitative labels and recommendations describe detected evidence, not aesthetic judgment or a complete website audit.
+The engine attempts two bounded, sandboxed Chromium visits: desktop (1280 × 900) and mobile (390 × 844 with mobile browser emulation), each in an isolated anonymous session. View tabs switch between their own palette, type sizes, fonts and screenshot; unavailable views are explicitly marked. It reads computed colours/sizes and uses Chromium glyph evidence for fonts actually rendered. It returns an anonymous screenshot and separate SVG/logo evidence. When browser rendering is unavailable, it falls back to HTML and up to three same-origin stylesheets, including CSS custom-property resolution. The report identifies its source; source declarations are not presented as rendered measurements. Qualitative labels and recommendations describe detected evidence, not aesthetic judgment or a complete website audit.
 
-Detected colour pairs can be explored with a WCAG contrast calculation. This does not establish that the website uses those colours together for text or that the site as a whole is accessible. Export a designed A4 PDF or a printable HTML guide. Review findings can be included in a brief; the latest report is stored only in this browser and can be cleared.
+Review explanations and colour-contrast controls sit behind an animated “Details & contrast” disclosure. Detected colour pairs can be explored with a WCAG contrast calculation. This does not establish that the website uses those colours together for text or that the site as a whole is accessible. Export a designed A4 PDF or a printable HTML guide. Both view summaries are included in PDF/print exports and can be included in a brief; the latest report is stored only in this browser and can be cleared.
 
 For PDF/browser features on your own machine, install the browser once:
 
@@ -100,6 +106,6 @@ npm run test:budget
 
 Comparisons use a draggable arrow/divider directly on the image, with touch, arrow keys, Shift+arrow, Home/End and Escape cancellation. Clicking the image repositions the split. With JavaScript disabled, public comparisons show both concepts side by side. The portal uses the same control for explicitly shared versions. Header logo spacing and the planner’s empty sidebar sections have been corrected; selected services appear in the sidebar.
 
-Use `npm run build:comparison` after editing the shared control in `src/comparison.ts` or its CSS. `npm run build` includes this step, and the portal imports the same source. Run `npm run test:ui` for the direct-drag, keyboard, touch and layout regression checks.
+Use `npm run build:comparison` after editing the shared control in `src/comparison.ts` or its CSS. `npm run build` includes this step, and the portal imports the same source. Run `npm run test:ui` and `npm run test:adaptive` for the direct-drag, keyboard, touch and layout regression checks.
 
 The complete feature/status ledger is `docs/NEXT-IDEAS.md`; 15 further proposals are in `docs/IDEAS-ROUND-2.md`.

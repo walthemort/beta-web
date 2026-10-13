@@ -1,6 +1,6 @@
 # Beta — next product ideas
 
-Proposals for the next iteration; these are not shipped features. Existing galleries, saved inspiration, PDFs, language switching, service estimates, private editing and portal uploads are already available, so this list develops those foundations further.
+Ideas 1, 6 and 11 are implemented. The remaining entries are proposals. Existing galleries, saved inspiration, PDFs, language switching, service estimates, private editing and portal uploads are already available, so this list develops those foundations further.
 
 | # | Idea | Visitor/client benefit | What it needs |
 | --- | --- | --- | --- |
@@ -20,6 +20,6 @@ Proposals for the next iteration; these are not shipped features. Existing galle
 | 14 | Client-controlled notifications | Let clients choose immediate updates or a digest for files, feedback and milestones. | Email delivery, preferences, unsubscribe controls and notification deduplication. |
 | 15 | An approved brand library | Keep current logos, colour tokens, usage guidance and downloadable approved assets together in the portal. | Owner-curated assets, per-client access and clear font/asset licensing metadata. |
 
-Suggested next batch: adaptive project questions, mobile/desktop review and pinned design feedback. They improve lead quality, the core review experience and returning-client collaboration respectively.
+Implemented batch: adaptive project questions (editable bilingual catalog, persistent draft answers and filtered exports), mobile/desktop review (independent anonymous snapshots, tabs and exports), and pinned design feedback (private raster/PDF preview, per-page/version pins, keyboard positioning and studio resolution). Portal pins require migration 0006; live Supabase and public-site scans still need verification on the intended host.
 
 Implemented alongside this list: direct divider dragging on case and portal comparisons, touch/keyboard controls, corrected header spacing, and a planner sidebar that only displays populated sections and shows current service selections. Placeholder comparisons stay explicitly labelled as concepts.

@@ -12,7 +12,7 @@ import { ArrowUpRight } from 'lucide-react'
 type Project = { id: string; name: string; due: string | null }
 type Access = { kind: 'loading' } | { kind: 'signed-out' } | { kind: 'staff' } | { kind: 'client'; projects: Project[] } | { kind: 'blocked'; message: string }
 export function BetaLoading() {
- return <div className="beta-screen" role="status"><div className="beta-wordmark"><img src="/logos/beta-white.svg" alt="Beta" /></div><div className="beta-loader" /><p>Getting your workspace ready.</p></div>
+ return <div className="beta-screen" role="status"><div className="beta-wordmark"><img src="/logos/b-white.svg" alt="Beta" /></div><div className="beta-loader" /><p>Getting your workspace ready.</p></div>
 }
 
 /** This routing gate is backed by Supabase membership checks, never by a selectable UI role. */

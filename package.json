@@ -13,7 +13,8 @@
     "test:portal": "npm --prefix portal test -- src/__tests__/cloud-db.test.ts src/__tests__/cloud-sync.test.ts",
     "test:budget": "node scripts/performance-budget.mjs",
     "build:comparison": "node scripts/build-comparison.mjs",
-    "test:ui": "node scripts/check-comparison.mjs"
+    "test:ui": "node scripts/check-comparison.mjs",
+    "test:adaptive": "node scripts/check-adaptive.mjs"
   },
   "engines": {
     "node": ">=22"

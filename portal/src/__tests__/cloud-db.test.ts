@@ -8,6 +8,7 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import { PGlite } from '@electric-sql/pglite'
 
 const MIGRATION = readFileSync(new URL('../../supabase/migrations/0001_formlar.sql', import.meta.url), 'utf8')
+const BETA_ANNOTATIONS=readFileSync(new URL('../../supabase/migrations/0006_beta_annotations.sql',import.meta.url),'utf8')
 const BETA_WORKFLOWS = readFileSync(new URL('../../supabase/migrations/0005_beta_workflows.sql', import.meta.url), 'utf8')
 const BETA_FILES = readFileSync(new URL('../../supabase/migrations/0004_beta_file_review.sql', import.meta.url), 'utf8')
 const BETA_PORTAL = readFileSync(new URL('../../supabase/migrations/0003_beta_portal.sql', import.meta.url), 'utf8')
@@ -64,6 +65,8 @@ beforeAll(async () => {
   await db.exec(BETA_FILES)
   await db.exec(BETA_WORKFLOWS)
   await db.exec(BETA_WORKFLOWS) // repeatable migration, with all named policies recreated atomically
+  await db.exec(BETA_ANNOTATIONS)
+  await db.exec(BETA_ANNOTATIONS)
   await db.exec(GRANTS)
   for (const u of [OWNER, MATE, STRANGER]) await db.query('insert into auth.users (id, email) values ($1, $2)', [u.id, u.email])
   const [row] = await as<{ create_studio: string }>(OWNER, `select public.create_studio('BETA_01')`)
@@ -315,5 +318,55 @@ describe('Beta onboarding, attachments, timelines and history',()=>{
   await as(OWNER,`update public.records set data=jsonb_set(data,'{versions}',data->'versions'||'[{"id":"v3","src":"idb:new"}]'::jsonb) where id='beta-file'`)
   const [changed]=await as<{data:{status:string;approvedBy?:string}}>(OWNER,"select data from public.records where id='beta-file'");expect(changed.data.status).toBe('In review');expect(changed.data.approvedBy).toBeUndefined()
   const clientEvents=await as<{label:string}>(CLIENT,'select label from public.beta_project_events');expect(clientEvents).toContainEqual({label:'Ready for review: Logo.svg'})
+ })
+})
+
+
+describe('Version-specific feedback pins',()=>{
+ const CLIENT={id:'00000000-0000-4000-8000-000000000004',email:'client@beta.test'}
+ const OTHER={id:'00000000-0000-4000-8000-000000000005',email:'other@beta.test'}
+ let pin:string
+ it('derives author and project from authenticated access and bounds the coordinates',async()=>{
+  await as(OWNER,`insert into public.records(studio_id,coll,id,data) values($1,'files','pin-file','{"name":"Design","projectId":"beta-visible","status":"In review","versions":[{"id":"pin-v1","src":"idb:pin-image","mime":"application/pdf"}]}')`,[studio])
+  for(const coords of [[-0.1,.5],[.5,1.1],[null,.5],['NaN',.5]])await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v1',1,$2,$3,'Invalid')",[studio,...coords])).rejects.toThrow('Invalid feedback pin')
+  await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v1',101,.5,.5,'Invalid')",[studio])).rejects.toThrow()
+  await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v1',1,.5,.5,'   ')",[studio])).rejects.toThrow()
+  const [r]=await as<{beta_add_annotation:string}>(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v1',2,.25,.75,'Make this heading clearer')",[studio]);pin=r.beta_add_annotation
+  expect(await as(CLIENT,'select project_id,version_id,page,x,y,author_id,author_label,from_client,resolved from public.beta_annotations where id=$1',[pin])).toEqual([{project_id:'beta-visible',version_id:'pin-v1',page:2,x:.25,y:.75,author_id:CLIENT.id,author_label:CLIENT.email,from_client:true,resolved:false}])
+ })
+ it('denies unassigned clients, anonymous writes and direct impersonation',async()=>{
+  expect(await as(OTHER,'select * from public.beta_annotations')).toEqual([])
+  await expect(as(OTHER,"select public.beta_add_annotation($1,'pin-file','pin-v1',1,.5,.5,'Intrusion')",[studio])).rejects.toThrow('No file access')
+  await expect(as(null,"select public.beta_add_annotation($1,'pin-file','pin-v1',1,.5,.5,'Intrusion')",[studio])).rejects.toThrow()
+  await expect(as(CLIENT,`insert into public.beta_annotations(studio_id,file_id,version_id,project_id,page,x,y,body,author_id,author_label,from_client) values($1,'pin-file','pin-v1','beta-visible',1,.5,.5,'Fake',$2,'Owner',false)`,[studio,OWNER.id])).rejects.toThrow()
+  await as(CLIENT,"update public.beta_annotations set body='Changed',resolved=true where id=$1",[pin])
+  expect(await as(OWNER,'select body,resolved from public.beta_annotations where id=$1',[pin])).toEqual([{body:'Make this heading clearer',resolved:false}])
+ })
+ it('allows studio resolution without granting that action to a client',async()=>{
+  await expect(as(CLIENT,'select public.beta_resolve_annotation($1,true)',[pin])).rejects.toThrow('Studio access required')
+  await as(OWNER,'select public.beta_resolve_annotation($1,true)',[pin]);expect(await as(CLIENT,'select resolved,resolved_by from public.beta_annotations where id=$1',[pin])).toEqual([{resolved:true,resolved_by:OWNER.id}])
+  await as(OWNER,'select public.beta_resolve_annotation($1,false)',[pin])
+ })
+ it('keeps old pins private after a revision unless that version is explicitly shared',async()=>{
+  await as(OWNER,`update public.records set data=jsonb_set(data,'{versions}',data->'versions'||'[{"id":"pin-v2","src":"idb:pin-new"}]') where id='pin-file'`)
+  expect(await as(CLIENT,'select * from public.beta_annotations')).toEqual([])
+  await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v1',1,.5,.5,'Old')",[studio])).rejects.toThrow()
+  await as(OWNER,"select public.beta_share_version($1,'pin-file','pin-v1',true)",[studio])
+  expect(await as(CLIENT,'select id from public.beta_annotations')).toEqual([{id:pin}])
+  await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v1',1,.5,.5,'Old')",[studio])).rejects.toThrow('File version changed')
+  await as(OWNER,"select public.beta_share_version($1,'pin-file','pin-v1',false)",[studio]);expect(await as(CLIENT,'select * from public.beta_annotations')).toEqual([])
+ })
+ it('closes approved versions and prevents multi-page image pins',async()=>{
+  await as(OWNER,`update public.records set data=data||'{"status":"Approved"}' where id='pin-file'`)
+  await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v2',1,.5,.5,'Closed')",[studio])).rejects.toThrow('closed for feedback')
+  await as(OWNER,`update public.records set data=data||'{"status":"In review","name":"Design.png"}' where id='pin-file'`)
+  await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v2',2,.5,.5,'Wrong page')",[studio])).rejects.toThrow('Images have one page')
+  await as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v2',1,.5,.5,'New version pin')",[studio]);expect((await as(CLIENT,'select version_id from public.beta_annotations')).map(r=>r.version_id)).toEqual(['pin-v2'])
+ })
+ it('removes access when the project is archived or client membership revoked',async()=>{
+  await as(OWNER,`update public.records set data=data||'{"archived":true}' where id='beta-visible'`);expect(await as(CLIENT,'select * from public.beta_annotations')).toEqual([])
+  await as(OWNER,`update public.records set data=data||'{"archived":false}' where id='beta-visible'`)
+  await as(OWNER,'delete from public.beta_client_members where studio_id=$1 and user_id=$2',[studio,CLIENT.id]);expect(await as(CLIENT,'select * from public.beta_annotations')).toEqual([])
+  await expect(as(CLIENT,"select public.beta_add_annotation($1,'pin-file','pin-v2',1,.5,.5,'Revoked')",[studio])).rejects.toThrow('No file access')
  })
 })

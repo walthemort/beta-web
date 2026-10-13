@@ -17,3 +17,10 @@ Storage buckets `files` and `beta-uploads` must stay private. Clients cannot upl
 Before launch, test with your real owner and two separate client accounts: invitation/expiry, correct project assignment, cross-client denial, upload/download, request receipt/status, timeline visibility, shared history, stale-version rejection, access revocation and email callbacks on the final origin. Local Postgres tests exercise these policy/function boundaries, but live email and Storage API behavior remain pending.
 
 If a tool reports a missing function/table, finish applying migration 0005 in this project, then refresh the portal. If login links redirect elsewhere, correct Auth URL Configuration. Studio settings can still use Forme’s existing cloud tools; client invitations must use the Beta workflow page, never studio-team invitations.
+
+
+## Design feedback pins
+
+After migration 0005, run the entire `migrations/0006_beta_annotations.sql` in Supabase SQL Editor. It is repeatable. Shared files now have **Open design & pin feedback**: PNG, JPEG, WebP and PDF previews, exact-version/page pins, and a keyboard-accessible comment list. SVG files remain available through private downloads. Owners can read and resolve feedback in `/app/beta` → Design feedback. A resolved pin does not approve a file; approvals keep their existing version checks.
+
+Verify with a real invited client: place a pin, read/resolve it as staff, add a new version, and check that old pins only appear while the old version is explicitly shared. Revoke sharing/client access and confirm the old feedback is unavailable. These service-level checks require your Supabase project; local Postgres policy and controlled browser checks passed.

@@ -12,3 +12,11 @@
 @media(max-width:950px){.site-header{column-gap:18px}.site-header>.header-note{font-size:8px;letter-spacing:.7px;margin-left:0}}@media(max-width:720px){.site-header{column-gap:18px}.site-header>.brand{flex-basis:47px}.site-header>.brand img{width:47px}.site-header>.language-toggle{margin-right:0}}
 
 .concept-compare>.comparison-hint{font-size:11px}
+
+.adaptive-brief{margin-top:35px;padding-top:25px;border-top:1px solid var(--line)}.adaptive-brief h3{font-size:24px;letter-spacing:-.7px;margin:14px 0}.adaptive-brief>p{font-size:12px;line-height:1.8;color:var(--muted)}#adaptive-fields{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}.adaptive-field{min-width:0}.adaptive-field:has(textarea){grid-column:1/-1}.adaptive-field textarea{min-height:95px}.adaptive-field small{display:block;font-size:10px;line-height:1.7;color:var(--muted);margin-top:8px}.adaptive-summary{border-top:1px solid #0B0B0E20;margin-top:24px;padding-top:8px}.adaptive-summary>div{padding:15px 0}.adaptive-summary dt{font:11px/1.6 monospace;color:#777}.adaptive-summary dd{font-size:14px;line-height:1.7;margin:6px 0 0;overflow-wrap:anywhere}@media(max-width:720px){#adaptive-fields{grid-template-columns:1fr}.adaptive-brief h3{font-size:21px}}
+
+.review-view-tabs{display:flex;gap:6px;margin:22px 0}.review-view-tabs button{border:1px solid #ffffff40;color:inherit;background:none;padding:12px 20px;font-size:11px}.review-view-tabs button[aria-selected=true]{background:var(--beta-blue,#1B4DFF);border-color:#1B4DFF}.review-view-tabs button:disabled{opacity:.45}.review-screenshot.is-mobile{max-width:390px;margin-inline:auto}.review-screenshot.is-mobile img{width:100%;height:auto}
+
+.review-details{border-block:1px solid #ffffff25;margin:24px 0}.review-details summary{cursor:pointer;display:flex;justify-content:space-between;padding:18px 0;list-style:none}.review-details .insight-columns{padding-bottom:22px}.hero-footer{justify-content:flex-end}.report-font-evidence{font-size:11px!important;opacity:.6}.planner-aside>p{font-size:22px}.adaptive-brief>p{font-size:12px;opacity:.6}
+
+.site-header>.brand{flex-basis:110px}.site-header>.brand img{width:110px;height:auto}@media(max-width:700px){.site-header>.brand{flex-basis:96px}.site-header>.brand img{width:96px}}
