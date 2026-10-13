@@ -18,6 +18,7 @@ export const server=http.createServer(async(req,res)=>{
   const rawPath=new URL(req.url,'http://beta.local').pathname,english=rawPath==='/en'||rawPath.startsWith('/en/'),pathname=english?(rawPath.slice(3)||'/'):rawPath;
   if(pathname.startsWith('/api/')){
    if(english)throw Error('Use the canonical API path');
+   if(pathname==='/api/status'&&req.method==='GET')return send(200,{app:'beta-web',subpages:true,routes:['/cases','/services','/studio','/start','/inspiration','/privacy','/admin','/portal']});
    if(pathname==='/api/site-config'&&req.method==='GET')return send(200,publicConfig());
    if(pathname==='/api/auth-config'&&req.method==='GET')return send(200,authConfig());
    if(pathname==='/api/case-content'&&req.method==='GET'){const {readJSON}=await import('./lib/store.mjs');return send(200,readJSON('content/cases.json',[]).filter(c=>c.status!=='draft'))}
@@ -54,4 +55,4 @@ export const server=http.createServer(async(req,res)=>{
  }catch(e){return send(e.status||400,{error:e.message||'Unable to complete this request.'})}
 });
 function mime(file){return {'.html':'text/html; charset=utf-8','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.woff2':'font/woff2','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.json':'application/json'}[extname(file)]||'application/octet-stream'}
-if(process.env.NODE_ENV!=='test')server.listen(port,'0.0.0.0',()=>console.log(`Beta running on port ${port}`));
+if(process.env.NODE_ENV!=='test')server.listen(port,'0.0.0.0',()=>console.log(`Beta website (beta-web) running on port ${port}\nProject folder: ${root}\nSubpages: /cases /services /studio /start`));

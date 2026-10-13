@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --env-file-if-exists=.env.local server.js",
+    "dev": "node --watch --env-file-if-exists=.env.local server.js",
     "start": "node --env-file-if-exists=.env.local server.js",
     "test": "node --test tests/*.test.mjs",
     "build:portal": "node --env-file-if-exists=.env.local scripts/build-portal.mjs",
