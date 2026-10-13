@@ -1,30 +1,37 @@
 [
   {
     "name": "Rekom",
-    "logo": "/clients/rekom.svg"
+    "logo": "/clients/rekom.svg",
+    "case": "/cases/rekom"
   },
   {
     "name": "BAT",
-    "logo": "/clients/bat.svg"
+    "logo": "/clients/bat.svg",
+    "case": "/cases/bat"
   },
   {
     "name": "Reformed Cleaning",
-    "logo": "/clients/reformed-cleaning.svg"
+    "logo": "/clients/reformed-cleaning.svg",
+    "case": "/cases/reformed-cleaning"
   },
   {
     "name": "Red Bull",
-    "logo": null
+    "logo": null,
+    "case": "/cases/red-bull"
   },
   {
     "name": "Selfmade Records",
-    "logo": "/clients/selfmade-records.svg"
+    "logo": "/clients/selfmade-records.svg",
+    "case": "/cases/selfmade-records"
   },
   {
     "name": "Freshpoint",
-    "logo": "/clients/freshpoint.svg"
+    "logo": "/clients/freshpoint.svg",
+    "case": "/cases/freshpoint"
   },
   {
     "name": "Ild.Pizza",
-    "logo": "/clients/ild-pizza.svg"
+    "logo": "/clients/ild-pizza.svg",
+    "case": "/cases/ild-pizza"
   }
 ]

@@ -70,3 +70,18 @@ The logo bar is rendered directly into the homepage with embedded images. It rem
 Service and FAQ disclosures now animate both height and opacity on opening and closing, including rapid direction changes. Dialog dismissal, Escape, backdrop dismissal and case-to-project-brief transitions animate before focus/scroll state is released. Review results animate their height when loading changes to findings or errors. Closing the review waits for its panel transition before resetting the hero. Selection-list changes animate their height. Reduced-motion preference makes these operations immediate.
 
 Browser regression checks verify logos without any manifest/image endpoint (and without JavaScript), intermediate disclosure heights, interrupted open/close, keyboard FAQ use, dialog transitions, restored scrolling, mobile overflow and reduced motion.
+
+
+## Editorial subpages and new visitor tools
+
+- `/cases`: filter concept cases by category, save references and view coming-soon client stories.
+- `/cases/forma` and `/cases/offscript`: individually designed concept stories, chapter navigation, colour copying, a live type playground, saved inspiration, share-link copying and next-case links.
+- Client-logo links lead to `/cases/<client-slug>`; these pages explicitly await approved project content.
+- `/services` and `/studio`: dedicated editorial pages.
+- `/start`: a three-step project planner. Chosen services carry over from the homepage; case inspiration can be passed in the URL. Draft text is local to this browser and can be cleared. Downloads do not submit anything to Beta. Booking only appears when configured.
+
+Subpages render HTML on the server, with distinct titles and descriptions; refreshing deep links works. Known missing case URLs return 404. Case content is in `content/cases.json`. Header/menu navigation links directly to these pages. Cross-document view transitions progressively enhance navigation in supported browsers; other browsers receive a short fade, and reduced-motion users receive immediate navigation.
+
+The logo strip now links to client pages and has a soft fade/blur at both edges. `npm run build:clients` updates its generated links and embedded marks after editing `public/clients.json`.
+
+The full next-feature list is in `docs/NEXT-IDEAS.md`. It distinguishes what is implemented from work that needs real assets, credentials or further engineering.

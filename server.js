@@ -1,6 +1,7 @@
 import http from 'node:http';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
+import {renderPage} from './pages.mjs';
 import {reviewWebsite} from './review.mjs';
 const port=Number(process.env.PORT||3000);
 const server=http.createServer(async(req,res)=>{
@@ -10,6 +11,8 @@ const server=http.createServer(async(req,res)=>{
    const result=await reviewWebsite(JSON.parse(body).url);res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(result));return;
   }
   const pathname=new URL(req.url,'http://beta.local').pathname;
+  const page=renderPage(pathname);
+  if(page){res.writeHead(page.status,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});res.end(page.html);return;}
   if(pathname==='/api/site-config'){
    res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store'});
    res.end(JSON.stringify({bookingURL:process.env.BOOKING_URL||null,contactEmail:process.env.CONTACT_EMAIL||null}));return;
@@ -40,7 +43,7 @@ const server=http.createServer(async(req,res)=>{
    if(!/^[a-zA-Z0-9_.-]+\.(svg|png|webp|jpg)$/i.test(filename)){res.writeHead(404);res.end('Not found');return;}
    try{const data=await readFile(new URL(`./public/clients/${filename}`,import.meta.url));res.writeHead(200,{'Content-Type':{'.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg'}[extname(filename).toLowerCase()],'X-Content-Type-Options':'nosniff'});res.end(data)}catch{res.writeHead(404);res.end('Not found')}return;
   }
-  const files={'/':'index.html','/style.css':'style.css','/app.js':'app.js','/favicon.svg':'favicon.svg','/clients.json':'clients.json'};
+  const files={'/':'index.html','/style.css':'style.css','/app.js':'app.js','/favicon.svg':'favicon.svg','/clients.json':'clients.json','/pages.css':'pages.css','/pages.js':'pages.js','/navigation.js':'navigation.js','/motion.js':'motion.js'};
   const file=files[req.url?.split('?')[0]];if(!file){res.writeHead(404);res.end('Not found');return;}
   res.writeHead(200,{'Content-Type':file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':file.endsWith('.svg')?'image/svg+xml':file.endsWith('.json')?'application/json':'text/html'});res.end(await readFile(new URL(`./public/${file}`,import.meta.url)));
  }catch(e){res.writeHead(400,{'Content-Type':'application/json'});res.end(JSON.stringify({error:e.message||'Unable to review this website.'}));}

@@ -7,7 +7,8 @@ const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const entries=await Promise.all(clients.map(async client=>{
  let source=null;
  if(client.logo){if(!/^\/clients\/[a-zA-Z0-9_.-]+\.(svg|png|webp|jpg)$/i.test(client.logo))throw Error('Invalid client logo path');const data=await readFile(resolve(root,'public'+client.logo));const mime={svg:'image/svg+xml',png:'image/png',webp:'image/webp',jpg:'image/jpeg'}[client.logo.split('.').at(-1).toLowerCase()];source=`data:${mime};base64,${data.toString('base64')}`;}
- return `<div class="client-logo${source?'':' client-name'}">${source?`<img src="${source}" alt="${escape(client.name)}" width="130" height="42">`:escape(client.name)}</div>`;
+ const href=/^\/cases\/[a-z0-9-]+$/.test(client.case||'')?client.case:'/cases';
+ return `<a class="client-logo${source?'':' client-name'}" href="${escape(href)}" aria-label="Se ${escape(client.name)} case">${source?`<img src="${source}" alt="${escape(client.name)}" width="130" height="42">`:escape(client.name)}</a>`;
 }));
 const html=await readFile(resolve(root,'public/index.html'),'utf8');
 const replacement=`<section class="client-strip" id="client-strip" aria-label="Et udvalg af vores kunder"><div class="client-strip-header"><span>I GODT SELSKAB.</span><button id="client-motion-toggle" aria-pressed="false" aria-label="Sæt logoanimation på pause">PAUSE</button></div><div class="client-marquee"><div class="client-track" id="client-track"><div class="client-group">${entries.join('')}</div></div></div></section>`;
