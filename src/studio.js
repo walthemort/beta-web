@@ -4,16 +4,6 @@ import {mountFloatingMenu} from './floating-menu.js';
 
 mountReveals();mountFloatingMenu(t);
 
-const mark=document.querySelector('[data-mark-source]'),reduce=matchMedia('(prefers-reduced-motion: reduce)');
-let dispose=()=>{},generation=0;
-async function startMark(){
- const version=++generation;if(!mark||reduce.matches||navigator.connection?.saveData)return;
- try{const {mountMark}=await import('./mark-scene.js');if(version!==generation)return;const stop=await mountMark(mark);if(version!==generation)stop();else dispose=stop}
- catch{mark?.classList.remove('mark-ready')}
-}
-function stopMark(){generation++;dispose();dispose=()=>{}}
-if(mark){if('requestIdleCallback'in window)requestIdleCallback(()=>void startMark(),{timeout:1600});else setTimeout(()=>void startMark(),700);addEventListener('pagehide',stopMark);addEventListener('pageshow',event=>{if(event.persisted)void startMark()});reduce.addEventListener('change',()=>{stopMark();if(!reduce.matches)void startMark()})}
-
 // Keep a direction while browsing; the existing inspiration board and brief read this same key.
 const buttons=[...document.querySelectorAll('[data-studio-save]')];
 const read=()=>{try{const saved=JSON.parse(localStorage.getItem('beta:inspiration')||'[]');return Array.isArray(saved)?saved.filter(value=>typeof value==='string'&&/^[a-z0-9-]{1,60}$/.test(value)):[]}catch{return[]}};
