@@ -1,37 +1,13 @@
 import http from 'node:http';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
-import {lookup} from 'node:dns/promises';
-import {isIP} from 'node:net';
+import {reviewWebsite} from './review.mjs';
 const port=Number(process.env.PORT||3000);
-async function safeURL(input){
- const u=new URL(input.includes('://')?input:`https://${input}`);
- if(!['http:','https:'].includes(u.protocol)||u.username||u.password||u.port) throw Error('Please enter a public website URL without credentials or a port.');
- const addresses=await lookup(u.hostname,{all:true});
- if(!addresses.length||addresses.some(({address:a})=> isIP(a)!==4 || /^(0\.|10\.|127\.|169\.254\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.|192\.0\.|198\.(18|19)\.|22[4-9]\.|2[3-5]\d\.)/.test(a))) throw Error('This tool can only review public websites.');
- return u;
-}
-async function review(input){
- let u=await safeURL(input),response;
- for(let i=0;i<4;i++){
-  response=await fetch(u,{redirect:'manual',signal:AbortSignal.timeout(12000),headers:{'User-Agent':'BetaReview/1.0'}});
-  if(response.status>=300&&response.status<400){await response.body?.cancel();u=await safeURL(new URL(response.headers.get('location'),u).href);continue;}break;
- }
- if(!response.ok)throw Error('The website could not be read. It may block automated reviews.');
- if(!response.headers.get('content-type')?.includes('text/html'))throw Error('Please enter a website page, rather than a file.');
- const reader=response.body.getReader();let html='',bytes=0;
- while(true){const {done,value}=await reader.read();if(done)break;bytes+=value.length;if(bytes>2000000){await reader.cancel();break;}html+=new TextDecoder().decode(value);}
- const colors=[...new Set(html.match(/#[\da-f]{6}\b|#[\da-f]{3}\b/gi)||[])].slice(0,6);
- const fonts=[...new Set([...html.matchAll(/font-family\s*:\s*([^;}<]+)/gi)].map(m=>m[1].replace(/["']/g,'').trim()))].slice(0,3);
- const svg=/<svg\b|\.svg(?:["'?\s])/i.test(html);
- const title=html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim()||u.hostname;
- return {url:u.href,title,colors,fonts,svg,rating:colors.length&&fonts.length&&svg?'A promising foundation':'Room for improvement',note:'An initial review of the page HTML. External stylesheets, rendered content, and visual suitability need a designer’s review. SVG detection does not confirm a logo.'};
-}
 const server=http.createServer(async(req,res)=>{
  try{
   if(req.url==='/api/review'&&req.method==='POST'){
    let body='';for await(const chunk of req){body+=chunk;if(body.length>4096)throw Error('Request too large.');}
-   const result=await review(JSON.parse(body).url);res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(result));return;
+   const result=await reviewWebsite(JSON.parse(body).url);res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(result));return;
   }
   const pathname=new URL(req.url,'http://beta.local').pathname;
   if(pathname==='/api/site-config'){
@@ -59,9 +35,14 @@ const server=http.createServer(async(req,res)=>{
    if(!['beta-blue.svg','beta-white.svg','beta-black.svg','beta-outline.svg'].includes(name)){res.writeHead(404);res.end('Not found');return;}
    res.writeHead(200,{'Content-Type':'image/svg+xml','X-Content-Type-Options':'nosniff'});res.end(await readFile(new URL(`./public/logos/${name}`,import.meta.url)));return;
   }
-  const files={'/':'index.html','/style.css':'style.css','/app.js':'app.js','/favicon.svg':'favicon.svg'};
+  if(pathname.startsWith('/clients/')){
+   const filename=pathname.slice(9);
+   if(!/^[a-zA-Z0-9_.-]+\.(svg|png|webp|jpg)$/i.test(filename)){res.writeHead(404);res.end('Not found');return;}
+   try{const data=await readFile(new URL(`./public/clients/${filename}`,import.meta.url));res.writeHead(200,{'Content-Type':{'.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg'}[extname(filename).toLowerCase()],'X-Content-Type-Options':'nosniff'});res.end(data)}catch{res.writeHead(404);res.end('Not found')}return;
+  }
+  const files={'/':'index.html','/style.css':'style.css','/app.js':'app.js','/favicon.svg':'favicon.svg','/clients.json':'clients.json'};
   const file=files[req.url?.split('?')[0]];if(!file){res.writeHead(404);res.end('Not found');return;}
-  res.writeHead(200,{'Content-Type':file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':file.endsWith('.svg')?'image/svg+xml':'text/html'});res.end(await readFile(new URL(`./public/${file}`,import.meta.url)));
+  res.writeHead(200,{'Content-Type':file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':file.endsWith('.svg')?'image/svg+xml':file.endsWith('.json')?'application/json':'text/html'});res.end(await readFile(new URL(`./public/${file}`,import.meta.url)));
  }catch(e){res.writeHead(400,{'Content-Type':'application/json'});res.end(JSON.stringify({error:e.message||'Unable to review this website.'}));}
 });
 server.listen(port,'0.0.0.0',()=>console.log(`Beta running on port ${port}`));

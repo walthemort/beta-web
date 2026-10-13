@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Rekom",
+    "logo": "/clients/rekom.svg"
+  },
+  {
+    "name": "BAT",
+    "logo": "/clients/bat.svg"
+  },
+  {
+    "name": "Reformed Cleaning",
+    "logo": "/clients/reformed-cleaning.svg"
+  },
+  {
+    "name": "Red Bull",
+    "logo": null
+  },
+  {
+    "name": "Selfmade Records",
+    "logo": "/clients/selfmade-records.svg"
+  },
+  {
+    "name": "Freshpoint",
+    "logo": "/clients/freshpoint.svg"
+  },
+  {
+    "name": "Ild.Pizza",
+    "logo": "/clients/ild-pizza.svg"
+  }
+]

@@ -34,7 +34,7 @@ This builds Forme with VITE_BETA_MODE=true and replaces its boot HTML with Beta 
 
 ## Beta Review and cases
 
-Review currently detects colours, inline font families, and SVG references from HTML. It does not analyse external CSS, computed sizes, rendered content, logo identity, or visual suitability. Its qualitative label describes detectable foundations, not designer judgment. Cloud external DNS and further outbound request hardening remain unresolved; do not publish it as a finished brand audit service. The case studies are illustrative concepts and are labelled accordingly.
+Review now detects hex colours, font-family definitions, source font sizes, SVG references and possible SVG logo references from HTML and up to three same-origin stylesheets. It does not render the website or judge logo identity/visual suitability. Its qualitative label describes detectable foundations, not designer judgment. Network connections validate DNS addresses when connecting, redirects are rechecked, response sizes are capped, and requests have a total time budget. IPv6-only websites are currently unsupported. Cloud external DNS still prevents live public-site validation in this machine; controlled browser results exercise the success presentation and extractor tests exercise real parsing. Do not describe this as a complete rendered brand audit. The case studies are illustrative concepts and are labelled accordingly.
 
 ## Validation
 
@@ -52,3 +52,12 @@ No public deployment has been made. The runnable artifact is separate from your 
 The public site now uses the provided Beta SVG logos and brand colours (#1B4DFF / #F6F4EF / #0B0B0E), with Danish copy following the Figma direction. Features include an animated review hero, full-screen navigation, a rolling type strip, expandable services, remembered service selection, a local downloadable project brief, interactive concept cases and accessible FAQ disclosure. The brief is not sent automatically. Motion is disabled when the user requests reduced motion. The website and portal branding share the same palette. The about section uses brand artwork until an approved portrait is supplied.
 
 Browser checks cover logo delivery, menu/Escape, service selection/removal, actual brief download contents, review errors, concept details, FAQ, portal login and narrow-screen overflow. The analysis engine itself is unchanged and still needs the work described above.
+
+
+## Inline review and client logos
+
+Pressing Enter expands the review card in the hero instead of navigating to a separate results section. Loading, findings, failure and reset all stay in that card. Copy colour codes, download an initial text brand guide, or open a project brief. No simulated review findings are shipped.
+
+The former text ticker is replaced with the client's logo loop, populated from `public/clients.json`. The six supplied SVG files are included; Red Bull is a text name pending an image file. SVG, PNG, JPG and WebP logos are supported. Add an approved local logo under `public/clients/`, then update the JSON entry. The two identical track groups loop without a gap; hover, keyboard focus or the pause button stops motion. Reduced-motion mode uses a static layout. Missing image files fall back to client names.
+
+Validation: 3 Node extractor/address-validation tests pass. Browser checks cover Enter/loading expansion, a controlled success response (palette/fonts/sizes), download contents, inline errors, reset, actual supplied logos, loop/pause, reduced motion, and mobile widths. Live external requests still return DNS EAI_AGAIN in this cloud machine and must be checked from local or hosted deployment.
