@@ -2,6 +2,7 @@ const reduce=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Native cross-document transitions where supported, with a short fallback elsewhere.
 document.addEventListener('click',event=>{
  const anchor=event.target.closest('a[href]');if(!anchor||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||anchor.target||anchor.hasAttribute('download'))return;
+ if(anchor.closest('#menu'))return;
  const url=new URL(anchor.href,location.href);if(url.origin!==location.origin||url.pathname===location.pathname||url.pathname.startsWith('/portal')||url.pathname.startsWith('/app'))return;
  const visual=anchor.querySelector('.case-art');
  if(visual&&!reduce()){document.querySelectorAll('.case-art').forEach(e=>e.style.viewTransitionName='');visual.style.viewTransitionName='case-visual'}

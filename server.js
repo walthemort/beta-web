@@ -4,7 +4,7 @@ import http from 'node:http';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
 import {gzipSync} from 'node:zlib';
-import {renderPage} from './pages.mjs';
+import {renderPage,renderMissingPage} from './pages.mjs';
 import {featurePage,decorateHTML,sitemap} from './lib/site.mjs';
 import {reviewWebsite,checkedURL} from './review.mjs';
 import {renderedReview} from './lib/render-review.mjs';
@@ -51,8 +51,8 @@ export const server=http.createServer(async(req,res)=>{
   if(/^\/(logos|clients|media|work|fonts)\//.test(pathname)){
    const match=pathname.match(/^\/(logos|clients|media|work|fonts)\/([A-Za-z0-9_.-]+\.(?:svg|png|webp|jpg|woff2|txt))$/);if(!match)return send(404,'Not found','text/plain');try{return send(200,await readFile(resolve(root,'public',match[1],match[2])),mime(match[2]),{'Cache-Control':'public, max-age=3600'})}catch{return send(404,'Not found','text/plain')}
   }
-  const files=['style.css','app.js','favicon.svg','clients.json','pages.css','pages.js','navigation.js','motion.js','features.css','agency.css','studio.js','features.js','comparison.css','comparison.js','brief-schema.js','admin.js','locale.js'];
-  const name=pathname==='/'?'index.html':pathname.slice(1);if(name!=='index.html'&&!files.includes(name))return send(404,'Not found','text/plain');
+  const files=['style.css','app.js','favicon.svg','clients.json','pages.css','pages.js','navigation.js','motion.js','features.css','agency.css','editorial.css','studio.js','features.js','comparison.css','comparison.js','brief-schema.js','admin.js','locale.js'];
+  const name=pathname==='/'?'index.html':pathname.slice(1);if(name!=='index.html'&&!files.includes(name)){if(/\.[a-z0-9]+$/i.test(pathname))return send(404,'Not found','text/plain');const missing=renderMissingPage(pathname);return send(404,decorateHTML(missing.html,pathname,english),'text/html; charset=utf-8')}
   const data=await readFile(resolve(root,'public',name));return send(200,name==='index.html'?decorateHTML(data.toString(),pathname,english):data,mime(name));
  }catch(e){return send(e.status||400,{error:e.message||'Unable to complete this request.'})}
 });

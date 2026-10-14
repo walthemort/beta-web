@@ -104,10 +104,10 @@ function renderReview(data){
 }
 window.betaRenderReview=renderReview;
 $('#review-form').onsubmit=async e=>{
- e.preventDefault();const button=$('#review-submit'),status=$('#review-status');if(button.disabled)return;button.disabled=true;status.textContent='Vi undersøger dit websites visuelle fundament…';$('#review-form').setAttribute('aria-busy','true');expandReview();showLoading();
+ e.preventDefault();const button=$('#review-submit'),status=$('#review-status');if(button.disabled)return;button.disabled=true;status.textContent='Vi undersøger dit websites visuelle fundament…';$('#review-form').setAttribute('aria-busy','true');$('#review-result').setAttribute('aria-busy','true');expandReview();showLoading();
  try{const response=await fetch('/api/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:$('#url').value.trim()}),signal:AbortSignal.timeout(45000)});const data=await response.json();if(!response.ok)throw Error(data.error);clearInterval(loadingTimer);renderReview(data);status.textContent='Dit review er klar. Farver, typografi og assets vises herunder.'}
  catch(err){clearInterval(loadingTimer);const raw=err.message;const message=/public website|private/i.test(raw)?'Indsæt en offentlig hjemmeside. Lokale og private adresser kan ikke analyseres.':/URL|Invalid|includes/i.test(raw)?'Tjek adressen og prøv igen. Fx dinvirksomhed.dk.':/Timeout|abort|time/i.test(raw)?'Websitet svarede ikke i tide. Prøv igen om lidt.':'Vi kunne ikke læse websitet lige nu. Det kan skyldes adgangsbegrænsninger. Prøv en anden adresse eller kom tilbage senere.';reviewError(message);status.textContent=message}
- finally{clearInterval(loadingTimer);button.disabled=false;$('#review-form').removeAttribute('aria-busy')}
+ finally{clearInterval(loadingTimer);button.disabled=false;$('#review-form').removeAttribute('aria-busy');$('#review-result').setAttribute('aria-busy','false')}
 };
 function initializeClients(){
  const strip=$('#client-strip'),track=$('#client-track'),originals=track.querySelector('.client-group');if(!originals)return;

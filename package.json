@@ -16,7 +16,8 @@
     "test:ui": "node scripts/check-comparison.mjs",
     "test:adaptive": "node scripts/check-adaptive.mjs",
     "build:studio": "node scripts/build-studio.mjs",
-    "test:studio": "node scripts/check-studio.mjs"
+    "test:studio": "node scripts/check-studio.mjs",
+    "test:overhaul": "node scripts/check-overhaul.mjs"
   },
   "engines": {
     "node": ">=22"
