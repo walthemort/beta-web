@@ -12,12 +12,13 @@ export async function disclose(panel,open){
 }
 export function enter(element){if(!motionOff())element.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'translateY(0)'}],{duration:400,easing:'cubic-bezier(.22,1,.36,1)'})}
 const menuClosings=new WeakMap();
-export function openMenu(dialog){const pending=menuClosings.get(dialog);if(pending){menuClosings.delete(dialog);pending.animation.cancel()}dialog.removeAttribute('data-closing');if(!dialog.open)dialog.showModal();document.body.style.overflow='hidden'}
+export function openMenu(dialog){const pending=menuClosings.get(dialog);if(pending){menuClosings.delete(dialog);pending.animation.cancel();pending.paused.forEach(a=>a.play())}dialog.removeAttribute('data-closing');if(!dialog.open)dialog.showModal();document.body.style.overflow='hidden'}
 function closeMenu(dialog){
  if(!dialog.open)return Promise.resolve();const pending=menuClosings.get(dialog);if(pending)return pending.promise;
  if(motionOff()||!dialog.animate){dialog.close();document.body.style.overflow='';return Promise.resolve()}
  dialog.setAttribute('data-closing','');
- const animation=dialog.animate([{clipPath:getComputedStyle(dialog).clipPath},{clipPath:'inset(0 0 0 100%)'}],{duration:420,easing:'cubic-bezier(.76,0,.24,1)',fill:'forwards'}),state={animation,promise:null};menuClosings.set(dialog,state);
+ const from=getComputedStyle(dialog).transform,paused=dialog.getAnimations({subtree:true}).filter(a=>a instanceof CSSAnimation&&a.playState==='running');paused.forEach(a=>a.pause());
+ const animation=dialog.animate([{transform:from},{transform:'translateX(100%)'}],{duration:260,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'}),state={animation,paused,promise:null};menuClosings.set(dialog,state);
  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),settle=()=>{if(reduce.matches&&menuClosings.get(dialog)===state)animation.finish()};reduce.addEventListener('change',settle);
  state.promise=animation.finished.then(()=>{if(menuClosings.get(dialog)!==state)return;menuClosings.delete(dialog);dialog.close();dialog.removeAttribute('data-closing');animation.cancel();document.body.style.overflow=''}).catch(()=>{}).finally(()=>reduce.removeEventListener('change',settle));return state.promise;
 }

@@ -144,11 +144,11 @@ body{font-family:var(--studio-font)}
 /* Ink sweeps follow the original line breaks and keep the blue emphasis. */
 .motion-pending{opacity:.08;translate:0 18px}
 .motion-ink,h1>.motion-ink,.section-heading h2>.motion-ink{display:inline;font:inherit;letter-spacing:inherit;line-height:inherit;vertical-align:baseline;margin:0;color:transparent;background-image:linear-gradient(90deg,var(--ink-color) 50%,color-mix(in srgb,var(--ink-color) 22%,transparent) 50%);background-size:200% 100%;background-position:0% 0%;background-clip:text;-webkit-background-clip:text}
-.floating-menu{position:fixed;top:24px;right:6%;z-index:90;display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;border-radius:50%;background:#0b0b0ecc;color:var(--white);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);visibility:hidden;clip-path:inset(0 0 0 100% round 50%);transition:clip-path .5s cubic-bezier(.76,0,.24,1),visibility .5s,color .25s,background .25s}
+.floating-menu{position:fixed;top:24px;right:6%;z-index:90;display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;border-radius:0;background:transparent;color:#fff;visibility:hidden;clip-path:inset(0 0 0 100%);transition:clip-path .5s cubic-bezier(.76,0,.24,1),visibility .5s,color .25s,background .25s}
 .floating-menu svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.2;transform:translateX(4px);transition:transform .45s cubic-bezier(.22,1,.36,1)}
-.floating-menu.is-visible{visibility:visible;clip-path:inset(0 round 50%)}
+.floating-menu.is-visible{visibility:visible;clip-path:inset(0)}
 .floating-menu.is-visible svg{transform:translateX(0)}
-.floating-menu:hover{color:var(--blue);background:#0b0b0eef}
+.floating-menu:hover{color:#fff;background:transparent}
 .floating-menu:focus-visible{outline:2px solid var(--blue);outline-offset:5px}
 @media(max-width:600px){.floating-menu{top:max(16px,env(safe-area-inset-top));right:6%;width:44px;height:44px}}
 @media(prefers-reduced-motion:reduce){.motion-pending{opacity:1;translate:none}.motion-ink{color:var(--ink-color);background:none}.floating-menu,.floating-menu svg{transition:none}.floating-menu,.floating-menu.is-visible{transform:none}}
@@ -180,3 +180,27 @@ body{font-family:var(--studio-font)}
 @keyframes menu-wipe-in{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0)}}
 @keyframes menu-link-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.menu-dialog[open],.menu-dialog[open] nav a{animation:none}.menu-dialog[open]{clip-path:none}.floating-menu,.floating-menu svg{transition:none}.floating-menu svg{transform:none}}
+
+/* Plain white burger strokes; no container, tint, blur or hover colour. */
+.floating-menu svg,.menu-trigger>svg{stroke:#fff;stroke-width:1.5}
+html{background:var(--black);scrollbar-gutter:stable}
+.menu-dialog[data-closing]{will-change:transform}
+
+/* Soft magnetism, a travelling case arrow, and quiet editorial accents. */
+.has-magnet{transform:translate(var(--magnet-x,0px),var(--magnet-y,0px));transition:transform .3s cubic-bezier(.22,1,.36,1),background-color .25s;background-image:linear-gradient(105deg,transparent 40%,#fff2 50%,transparent 60%);background-size:260% 100%;background-position:120% 0}
+.has-magnet:hover{transform:translate(var(--magnet-x,0px),var(--magnet-y,0px));background-position:-35% 0;transition:transform .3s cubic-bezier(.22,1,.36,1),background-position .8s,background-color .25s}
+.has-magnet .ui-arrow{transition:transform .3s}.has-magnet:hover .ui-arrow{transform:translateX(3px)}
+@media(hover:hover) and (pointer:fine){
+ .case-preview.is-previewing .case-open{top:var(--case-y,40px);left:var(--case-x,calc(100% - 40px));right:auto;width:44px;height:44px;border:0;background:var(--blue);color:var(--white);transform:translate(-50%,-50%);transition:top .12s ease-out,left .12s ease-out,background .2s;pointer-events:none}
+ .case-preview.is-previewing img{translate:var(--case-pan-x,0px) var(--case-pan-y,0px);scale:1.02;transition:translate .6s cubic-bezier(.22,1,.36,1),scale .6s,opacity .45s}
+ .service-head{position:relative}.service-head:after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1)}
+ .service-head:hover:after,.service-head:focus-within:after{transform:scaleX(1)}
+ .menu-dialog nav a{position:relative}.menu-dialog nav a[href$="/cases"]:after{content:'';position:absolute;right:12%;top:50%;width:180px;aspect-ratio:1.5;background:url('/work/forma-1.svg') center/cover;opacity:0;transform:translateY(-45%) rotate(-5deg) scale(.94);pointer-events:none;transition:opacity .3s,transform .5s cubic-bezier(.22,1,.36,1)}
+ .menu-dialog nav a[href$="/cases"]:hover:after{opacity:1;transform:translateY(-50%) rotate(-3deg) scale(1)}
+}
+@media(max-width:900px){.menu-dialog nav a[href$="/cases"]:after{display:none}}
+@media(prefers-reduced-motion:reduce){.has-magnet,.has-magnet:hover,.has-magnet .ui-arrow,.case-preview img,.service-head:after,.menu-dialog nav a:after{transition:none}.has-magnet,.has-magnet:hover,.has-magnet:hover .ui-arrow{transform:none}.case-preview img{translate:none;scale:1}.menu-dialog nav a[href$="/cases"]:after{transform:translateY(-50%)}}
+
+.home-case .case-preview{aspect-ratio:1.5}
+
+.home-case .case:hover .case-preview{transform:none}

@@ -2,9 +2,11 @@ import {t} from './locale.js';
 import {mountReveals} from './scroll-reveal.js';
 import {mountFloatingMenu} from './floating-menu.js';
 import {mountHeroParallax} from './hero-parallax.js';
+import {mountCreativeInteractions} from './creative-interactions.js';
 
 mountReveals();mountFloatingMenu(t);
 mountHeroParallax();
+mountCreativeInteractions();
 
 // Keep a direction while browsing; the existing inspiration board and brief read this same key.
 const buttons=[...document.querySelectorAll('[data-studio-save]')];

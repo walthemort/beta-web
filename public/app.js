@@ -37,16 +37,17 @@ function animateHeightChange(element,from){
 const modal=$('#modal'),content=$('#modal-content'),menu=$('#menu');
 const lockScroll=()=>{document.body.style.overflow=modal.open||menu.open?'hidden':''};
 const closingDialogs=new WeakMap();
-function showDialog(dialog){const pending=closingDialogs.get(dialog);if(pending){closingDialogs.delete(dialog);pending.animation.cancel()}dialog.removeAttribute('data-closing');if(!dialog.open)dialog.showModal();lockScroll()}
+function showDialog(dialog){const pending=closingDialogs.get(dialog);if(pending){closingDialogs.delete(dialog);pending.animation.cancel();pending.paused?.forEach(a=>a.play())}dialog.removeAttribute('data-closing');if(!dialog.open)dialog.showModal();lockScroll()}
 function closeDialog(dialog){
  if(!dialog.open)return Promise.resolve();const pending=closingDialogs.get(dialog);if(pending)return pending.promise;
  if(motionOff()||!dialog.animate){dialog.close();return Promise.resolve()}
  dialog.setAttribute('data-closing','');
  const current=getComputedStyle(dialog);
  const isMenu=dialog===menu;
- const frames=isMenu?[{clipPath:current.clipPath,opacity:1,transform:'none'},{clipPath:'inset(0 0 0 100%)',opacity:1,transform:'none'}]:[{opacity:current.opacity,transform:current.transform},{opacity:0,transform:'translateY(12px) scale(.97)'}];
- const animation=dialog.animate(frames,{duration:isMenu?420:220,easing:isMenu?'cubic-bezier(.76,0,.24,1)':'cubic-bezier(.4,0,1,1)',fill:'forwards'});
- const state={animation,promise:null};closingDialogs.set(dialog,state);
+ const paused=isMenu?dialog.getAnimations({subtree:true}).filter(a=>a instanceof CSSAnimation&&a.playState==='running'):[];paused.forEach(a=>a.pause());
+ const frames=isMenu?[{opacity:1,transform:current.transform},{opacity:1,transform:'translateX(100%)'}]:[{opacity:current.opacity,transform:current.transform},{opacity:0,transform:'translateY(12px) scale(.97)'}];
+ const animation=dialog.animate(frames,{duration:isMenu?260:220,easing:isMenu?'cubic-bezier(.22,1,.36,1)':'cubic-bezier(.4,0,1,1)',fill:'forwards'});
+ const state={animation,paused,promise:null};closingDialogs.set(dialog,state);
  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),settle=()=>{if(reduce.matches&&closingDialogs.get(dialog)===state)animation.finish()};reduce.addEventListener('change',settle);
  state.promise=animation.finished.then(()=>{if(closingDialogs.get(dialog)!==state)return;closingDialogs.delete(dialog);dialog.close();dialog.removeAttribute('data-closing');animation.cancel()}).catch(()=>{}).finally(()=>reduce.removeEventListener('change',settle));return state.promise;
 }
