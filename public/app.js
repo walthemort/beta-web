@@ -43,9 +43,12 @@ function closeDialog(dialog){
  if(motionOff()||!dialog.animate){dialog.close();return Promise.resolve()}
  dialog.setAttribute('data-closing','');
  const current=getComputedStyle(dialog);
- const animation=dialog.animate([{opacity:current.opacity,transform:current.transform},{opacity:0,transform:dialog===menu?'translateY(-14px) scale(1)':'translateY(12px) scale(.97)'}],{duration:220,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
+ const isMenu=dialog===menu;
+ const frames=isMenu?[{clipPath:current.clipPath,opacity:1,transform:'none'},{clipPath:'inset(0 0 0 100%)',opacity:1,transform:'none'}]:[{opacity:current.opacity,transform:current.transform},{opacity:0,transform:'translateY(12px) scale(.97)'}];
+ const animation=dialog.animate(frames,{duration:isMenu?420:220,easing:isMenu?'cubic-bezier(.76,0,.24,1)':'cubic-bezier(.4,0,1,1)',fill:'forwards'});
  const state={animation,promise:null};closingDialogs.set(dialog,state);
- state.promise=animation.finished.then(()=>{if(closingDialogs.get(dialog)!==state)return;closingDialogs.delete(dialog);dialog.close();dialog.removeAttribute('data-closing');animation.cancel()}).catch(()=>{});return state.promise;
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)'),settle=()=>{if(reduce.matches&&closingDialogs.get(dialog)===state)animation.finish()};reduce.addEventListener('change',settle);
+ state.promise=animation.finished.then(()=>{if(closingDialogs.get(dialog)!==state)return;closingDialogs.delete(dialog);dialog.close();dialog.removeAttribute('data-closing');animation.cancel()}).catch(()=>{}).finally(()=>reduce.removeEventListener('change',settle));return state.promise;
 }
 function openModal(html){
  const alreadyOpen=modal.open,from=content.getBoundingClientRect().height;
