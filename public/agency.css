@@ -160,3 +160,9 @@ body{font-family:var(--studio-font)}
 @media(max-width:1100px) and (min-width:601px){.agency-visual .hero-artwork{object-position:58% 50%}.agency-visual:after{background:linear-gradient(90deg,#0B0B0E 0%,#0B0B0Ea6 38%,transparent 70%)}}
 @media(max-width:600px){.agency-visual{inset:250px -15% 0 0;mask-image:linear-gradient(180deg,transparent,#000 28%);-webkit-mask-image:linear-gradient(180deg,transparent,#000 28%)}.agency-visual .hero-artwork{object-position:83% 50%}.agency-visual:after{background:linear-gradient(180deg,#0B0B0E88,transparent 40%,#0B0B0E 100%)}}
 @media(prefers-reduced-motion:reduce){.agency-visual .hero-artwork{animation:none;transform:none}}
+
+/* Overscan keeps the image edges inside the frame as the ribbon moves. */
+.has-parallax .hero-artwork{scale:1.16;translate:var(--art-x,0px) var(--art-y,0px)}
+.parallax-active .hero-artwork{will-change:translate}
+@media(max-width:600px){.has-parallax .hero-artwork{scale:1.12}}
+@media(prefers-reduced-motion:reduce){.has-parallax .hero-artwork{scale:1;translate:none;will-change:auto}}
