@@ -15,3 +15,5 @@ Forma and Offscript remain clearly labelled concept projects. Their new generate
 `public/editorial.css` contains the shared system and homepage direction. `public/subpages-art.css` contains the public subpage compositions. Both load after the existing component styles. The client portal and its authentication/data flows are outside this visual pass.
 
 Images have responsive 768px and 1536px WebP versions. Their encoded sizes are covered by `test:budget`; existing CSS and JavaScript budgets remain unchanged. Run `build:studio` after changing the motion source. Verification includes the root suite, `test:studio`, `test:ui`, `test:adaptive` and `test:overhaul`.
+
+A subsequent simplification pass removes the logo pause button, hover pausing, decorative menu numbers and repeated slogans/metadata around headings, comparisons and calls to action. The client loop continues on hover; keyboard focus pauses moving links and reduced-motion preferences keep the static row. Concept disclosures, practical instructions and local-save/privacy feedback remain visible.

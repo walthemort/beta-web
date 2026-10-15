@@ -103,12 +103,11 @@ $('#review-form').onsubmit=async e=>{
  finally{clearInterval(loadingTimer);button.disabled=false;$('#review-form').removeAttribute('aria-busy');$('#review-result').setAttribute('aria-busy','false')}
 };
 function initializeClients(){
- const strip=$('#client-strip'),track=$('#client-track'),originals=track.querySelector('.client-group');if(!originals)return;
+ const track=$('#client-track'),originals=track.querySelector('.client-group');if(!originals)return;
  const slots=[...originals.children];
  originals.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{const slot=img.parentElement;slot.textContent=img.alt;slot.classList.add('client-name')}));
  function repeatTrack(){track.classList.toggle('is-looping',!window.matchMedia('(prefers-reduced-motion: reduce)').matches);track.querySelectorAll('[data-repeat]').forEach(n=>n.remove());originals.querySelectorAll('[data-fill]').forEach(n=>n.remove());if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){let count=0;while(originals.getBoundingClientRect().width<innerWidth&&count++<20){for(const slot of slots){const clone=slot.cloneNode(true);clone.dataset.fill='true';clone.setAttribute('aria-hidden','true');clone.tabIndex=-1;originals.append(clone)}}const copy=originals.cloneNode(true);copy.dataset.repeat='true';copy.setAttribute('aria-hidden','true');copy.querySelectorAll('a').forEach(a=>a.tabIndex=-1);track.append(copy);track.style.setProperty('--loop-duration',Math.max(25,originals.getBoundingClientRect().width/45)+'s')}}
  repeatTrack();let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(repeatTrack,150)});window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',repeatTrack);
- $('#client-motion-toggle').onclick=()=>{const paused=strip.classList.toggle('is-paused');$('#client-motion-toggle').textContent=paused?'AFSPIL':'PAUSE';$('#client-motion-toggle').setAttribute('aria-pressed',String(paused));$('#client-motion-toggle').setAttribute('aria-label',paused?'Afspil logoanimation':'Sæt logoanimation på pause')};
 }
 initializeClients();
 const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;

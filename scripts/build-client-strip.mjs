@@ -11,7 +11,7 @@ const entries=await Promise.all(clients.map(async client=>{
  return `<a class="client-logo${source?'':' client-name'}" href="${escape(href)}" aria-label="Se ${escape(client.name)} case">${source?`<img src="${escape(source)}" alt="${escape(client.name)}" width="130" height="42" decoding="async">`:escape(client.name)}</a>`;
 }));
 const html=await readFile(resolve(root,'public/index.html'),'utf8');
-const replacement=`<section class="client-strip" id="client-strip" aria-label="Et udvalg af vores kunder"><div class="client-strip-header"><span>I GODT SELSKAB.</span><button id="client-motion-toggle" aria-pressed="false" aria-label="Sæt logoanimation på pause">PAUSE</button></div><div class="client-marquee"><div class="client-track" id="client-track"><div class="client-group">${entries.join('')}</div></div></div></section>`;
+const replacement=`<section class="client-strip" id="client-strip" aria-label="Et udvalg af vores kunder"><div class="client-marquee"><div class="client-track" id="client-track"><div class="client-group">${entries.join('')}</div></div></div></section>`;
 const updated=html.replace(/<section class="client-strip"[\s\S]*?<\/section>/,replacement);
 if(updated===html&&!html.includes(replacement))throw Error('Client strip section not found');
 await writeFile(resolve(root,'public/index.html'),updated);
