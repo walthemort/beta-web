@@ -136,3 +136,10 @@ p{overflow-wrap:break-word}.story-lead,.service-body>p{max-width:48ch}
 .contact .contact-main{padding-block:25px}.menu-dialog .menu-footer{justify-content:flex-start}.menu-dialog .menu-footer a{font:500 11px/1.6 var(--studio-font);letter-spacing:.02em;display:inline-flex;align-items:center;gap:12px}
 
 .portal-strip.section-pad{display:block}.portal-strip>div{flex-wrap:nowrap;gap:24px}.portal-strip h2{max-width:none}.public-edition .lab-preview{justify-content:center}
+
+/* Optional tools stay close to the Review, without another homepage section. */
+.review-tools{display:flex;gap:14px 28px;flex-wrap:wrap;margin-top:22px}.review-tools a{display:inline-flex;align-items:center;gap:8px;color:#646468;font:11px/1.6 var(--studio-font);min-height:32px}.review-tools a:hover{color:var(--blue)}.review-tools .ui-arrow{width:12px;height:12px}
+.planner-lab-context{padding:24px 0 0;border-top:1px solid var(--line);margin-top:24px}.planner-lab-context>p{font-size:14px;line-height:1.7;margin:14px 0}.planner-lab-context>small{display:block;font-size:11px;line-height:1.7;color:var(--muted);margin-top:12px}.brief-lab-context{border-top:1px solid var(--line);padding-top:20px;margin-top:24px}.brief-lab-context h4{font:500 11px/1.6 var(--studio-font);letter-spacing:.03em;margin:0}.brief-lab-context>p{font-size:14px;line-height:1.7;margin-bottom:0}
+@media(max-width:600px){.review-tools{gap:8px 20px;margin-top:18px}.review-tools a{font-size:10px}}
+
+.brief-direction-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:20px}.brief-direction-board img{display:block;width:100%;height:auto;aspect-ratio:1.2;object-fit:cover}

@@ -17,7 +17,8 @@
     "test:adaptive": "node scripts/check-adaptive.mjs",
     "build:studio": "node scripts/build-studio.mjs",
     "test:studio": "node scripts/check-studio.mjs",
-    "test:overhaul": "node scripts/check-overhaul.mjs"
+    "test:overhaul": "node scripts/check-overhaul.mjs",
+    "test:lab": "node scripts/check-lab.mjs"
   },
   "engines": {
     "node": ">=22"
