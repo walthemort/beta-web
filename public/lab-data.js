@@ -17,12 +17,7 @@ export function cleanDirection(raw){
 }
 export function directionChoices(raw){const value=cleanDirection(raw);return value?directionSteps.flatMap(step=>{const option=step.options.find(o=>o.id===value.choices[step.id]);return option?[option]:[]}):[]}
 export function completeDirection(raw){return directionChoices(raw).length===directionSteps.length}
-export function cleanLogoTest(raw){
- if(!raw||raw.version!==1||typeof raw.name!=='string'||!['svg','raster'].includes(raw.kind))return null;
- const width=Number(raw.width),height=Number(raw.height);if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0||width>100000||height>100000)return null;
- return{version:1,name:raw.name.replace(/[\u0000-\u001f]/g,'').slice(0,120),kind:raw.kind,width,height,transparent:raw.transparent===true,hasText:raw.hasText===true,note:typeof raw.note==='string'?raw.note.slice(0,500):''};
-}
-export function contextText(kind,raw,lang='da'){
- const en=lang==='en';if(kind==='direction'){const value=cleanDirection(raw);if(!value||!completeDirection(value))return'';return `${en?'VISUAL DIRECTION':'VISUEL RETNING'}\n${directionChoices(value).map(o=>o.label[en?'en':'da']).join(' / ')}${value.note?'\n'+value.note:''}`}
- const value=cleanLogoTest(raw);if(!value)return'';return `${en?'LOGO UNDER PRESSURE':'LOGO UNDER PRES'}\n${value.name}\n${value.kind==='svg'?(en?'Vector file':'Vektorfil'):`${value.width} × ${value.height} px`} / ${en?(value.transparent?'Transparent background':'Background included'):(value.transparent?'Gennemsigtig baggrund':'Baggrund i filen')}${value.note?'\n'+value.note:''}`;
+export function directionText(raw,lang='da'){
+ const en=lang==='en',value=cleanDirection(raw);if(!value||!completeDirection(value))return'';
+ return `${en?'VISUAL DIRECTION':'VISUEL RETNING'}\n${directionChoices(value).map(o=>o.label[en?'en':'da']).join(' / ')}${value.note?'\n'+value.note:''}`;
 }

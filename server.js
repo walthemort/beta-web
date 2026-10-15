@@ -20,7 +20,7 @@ export const server=http.createServer(async(req,res)=>{
   const rawPath=new URL(req.url,'http://beta.local').pathname,english=rawPath==='/en'||rawPath.startsWith('/en/'),pathname=english?(rawPath.slice(3)||'/'):rawPath;
   if(pathname.startsWith('/api/')){
    if(english)throw Error('Use the canonical API path');
-   if(pathname==='/api/status'&&req.method==='GET')return send(200,{app:'beta-web',subpages:true,routes:['/cases','/services','/studio','/start','/logo-test','/retning','/inspiration','/privacy','/admin','/portal']});
+   if(pathname==='/api/status'&&req.method==='GET')return send(200,{app:'beta-web',subpages:true,routes:['/cases','/services','/studio','/start','/retning','/inspiration','/privacy','/admin','/portal']});
    if(pathname==='/api/site-config'&&req.method==='GET')return send(200,publicConfig());
    if(pathname==='/api/auth-config'&&req.method==='GET')return send(200,authConfig());
    if(pathname==='/api/case-content'&&req.method==='GET'){const {readJSON}=await import('./lib/store.mjs');return send(200,readJSON('content/cases.json',[]).filter(c=>c.status!=='draft'))}
