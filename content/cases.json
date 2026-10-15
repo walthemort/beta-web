@@ -1,4 +1,121 @@
 [
- {"slug":"forma","name":"FORMA","number":"01","type":"Konceptprojekt","category":"brand","categoryLabel":"Brand & digital","headline":"PLADS TIL\nAT VÆRE.","intro":"En visuel retning, der skruer ned for støjen og op for nærværet. Arkitektoniske former. Varme materialer. En identitet, der giver plads.","challenge":"Hvordan skaber man karakter uden at råbe? Forma undersøger en identitet, hvor ro og præcision er de stærkeste virkemidler.","direction":"Vi lader mellemrum, en enkel form og en varm palette gøre arbejdet. Et system, der føles åbent og sikkert på samme tid.","principles":[["01","RO SOM KARAKTER","Færre elementer giver hver detalje mere betydning."],["02","MATERIALE SOM STEMME","Varme, taktile nuancer forbinder identiteten med et fysisk rum."],["03","PLADS SOM SYSTEM","Et konsekvent hierarki gør identiteten genkendelig uden at gøre den rigid."]],"palette":["#D8D3C9","#554F46","#F6F4EF","#0B0B0E"],"deliverables":["Visuel retning","Identitetskoncept","Typografisk hierarki","Digital udforskning"],"services":["Brandidentitet","Website"],"next":"offscript"},
- {"slug":"offscript","name":"OFFSCRIPT","number":"02","type":"Konceptprojekt","category":"digital","categoryLabel":"Digital & art direction","headline":"GØR PLADS\nTIL ANDERLEDES.","intro":"Et ekspressivt koncept med stor typografi, elektrisk blå og en legende rytme. Fordi et førstehåndsindtryk gerne må sætte sig fast.","challenge":"Hvordan skaber man et brand, der bryder mønstret og stadig hænger sammen? Offscript undersøger balancen mellem frihed og et tydeligt system.","direction":"Typografien får hovedrollen. Skala, kontrast og forskydninger skaber energi, mens få farver holder udtrykket samlet.","principles":[["01","STOR TYPOGRAFI","Ord bliver til visuelle elementer, der bærer identiteten."],["02","KONTROLLERET URO","Forskydninger og rytme skaber karakter inden for klare rammer."],["03","KONTRAST SOM MOTOR","Blå, hvid og sort holder en ekspressiv retning præcis."]],"palette":["#1B4DFF","#F6F4EF","#0B0B0E"],"deliverables":["Strategisk retning","Identitetskoncept","Art direction","Digital udforskning"],"services":["Brandidentitet","Content & kampagner"],"next":"forma"}
+  {
+    "slug": "forma",
+    "name": "FORMA",
+    "number": "01",
+    "type": "Konceptprojekt",
+    "category": "brand",
+    "categoryLabel": "Brand & digital",
+    "headline": "Plads til\nat være.",
+    "intro": "En visuel retning, der skruer ned for støjen og op for nærværet. Arkitektoniske former. Varme materialer. En identitet, der giver plads.",
+    "challenge": "Hvordan skaber man karakter uden at råbe? Forma undersøger en identitet, hvor ro og præcision er de stærkeste virkemidler.",
+    "direction": "Vi lader mellemrum, en enkel form og en varm palette gøre arbejdet. Et system, der føles åbent og sikkert på samme tid.",
+    "principles": [
+      [
+        "01",
+        "RO SOM KARAKTER",
+        "Færre elementer giver hver detalje mere betydning."
+      ],
+      [
+        "02",
+        "MATERIALE SOM STEMME",
+        "Varme, taktile nuancer forbinder identiteten med et fysisk rum."
+      ],
+      [
+        "03",
+        "PLADS SOM SYSTEM",
+        "Et konsekvent hierarki gør identiteten genkendelig uden at gøre den rigid."
+      ]
+    ],
+    "palette": [
+      "#D8D3C9",
+      "#554F46",
+      "#F6F4EF",
+      "#0B0B0E"
+    ],
+    "deliverables": [
+      "Visuel retning",
+      "Identitetskoncept",
+      "Typografisk hierarki",
+      "Digital udforskning"
+    ],
+    "services": [
+      "Brandidentitet",
+      "Website"
+    ],
+    "next": "offscript",
+    "gallery": [
+      {
+        "src": "/work/forma-cover.webp",
+        "alt": "Forma / konceptstudie med brandbog, tryksager og varme materialer"
+      },
+      {
+        "src": "/work/forma-2.svg",
+        "alt": "FORMA / grafisk konceptstudie 2"
+      },
+      {
+        "src": "/work/forma-3.svg",
+        "alt": "FORMA / grafisk konceptstudie 3"
+      }
+    ]
+  },
+  {
+    "slug": "offscript",
+    "name": "OFFSCRIPT",
+    "number": "02",
+    "type": "Konceptprojekt",
+    "category": "digital",
+    "categoryLabel": "Digital & art direction",
+    "headline": "Gør plads\ntil anderledes.",
+    "intro": "Et ekspressivt koncept med stor typografi, elektrisk blå og en legende rytme. Fordi et førstehåndsindtryk gerne må sætte sig fast.",
+    "challenge": "Hvordan skaber man et brand, der bryder mønstret og stadig hænger sammen? Offscript undersøger balancen mellem frihed og et tydeligt system.",
+    "direction": "Typografien får hovedrollen. Skala, kontrast og forskydninger skaber energi, mens få farver holder udtrykket samlet.",
+    "principles": [
+      [
+        "01",
+        "STOR TYPOGRAFI",
+        "Ord bliver til visuelle elementer, der bærer identiteten."
+      ],
+      [
+        "02",
+        "KONTROLLERET URO",
+        "Forskydninger og rytme skaber karakter inden for klare rammer."
+      ],
+      [
+        "03",
+        "KONTRAST SOM MOTOR",
+        "Blå, hvid og sort holder en ekspressiv retning præcis."
+      ]
+    ],
+    "palette": [
+      "#1B4DFF",
+      "#F6F4EF",
+      "#0B0B0E"
+    ],
+    "deliverables": [
+      "Strategisk retning",
+      "Identitetskoncept",
+      "Art direction",
+      "Digital udforskning"
+    ],
+    "services": [
+      "Brandidentitet",
+      "Content & kampagner"
+    ],
+    "next": "forma",
+    "gallery": [
+      {
+        "src": "/work/offscript-cover.webp",
+        "alt": "Offscript / konceptstudie med blå plakatkampagne og stor typografi"
+      },
+      {
+        "src": "/work/offscript-2.svg",
+        "alt": "OFFSCRIPT / grafisk konceptstudie 2"
+      },
+      {
+        "src": "/work/offscript-3.svg",
+        "alt": "OFFSCRIPT / grafisk konceptstudie 3"
+      }
+    ]
+  }
 ]

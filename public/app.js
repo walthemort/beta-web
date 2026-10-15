@@ -34,8 +34,8 @@ function animateHeightChange(element,from){
  heightAnimations.set(element,animation);
  animation.finished.catch(()=>{}).then(()=>{if(heightAnimations.get(element)===animation){element.style.overflow='';heightAnimations.delete(element)}});
 }
-const modal=$('#modal'),content=$('#modal-content'),menu=$('#menu');
-const lockScroll=()=>{document.body.style.overflow=modal.open||menu.open?'hidden':''};
+const menu=$('#menu');
+const lockScroll=()=>{document.body.style.overflow=menu.open?'hidden':''};
 const closingDialogs=new WeakMap();
 function showDialog(dialog){const pending=closingDialogs.get(dialog);if(pending){closingDialogs.delete(dialog);pending.animation.cancel();pending.paused?.forEach(a=>a.play())}dialog.removeAttribute('data-closing');if(!dialog.open)dialog.showModal();lockScroll()}
 function closeDialog(dialog){
@@ -51,13 +51,8 @@ function closeDialog(dialog){
  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),settle=()=>{if(reduce.matches&&closingDialogs.get(dialog)===state)animation.finish()};reduce.addEventListener('change',settle);
  state.promise=animation.finished.then(()=>{if(closingDialogs.get(dialog)!==state)return;closingDialogs.delete(dialog);dialog.close();dialog.removeAttribute('data-closing');animation.cancel()}).catch(()=>{}).finally(()=>reduce.removeEventListener('change',settle));return state.promise;
 }
-function openModal(html){
- const alreadyOpen=modal.open,from=content.getBoundingClientRect().height;
- content.innerHTML=html;decorateArrows(content);showDialog(modal);
- if(alreadyOpen){animateHeightChange(content,from);if(!motionOff())content.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:300,easing:'ease-out'});content.querySelector('input,button')?.focus({preventScroll:true})}
-}
-$('#modal-close').onclick=()=>closeDialog(modal);$('#menu-close').onclick=()=>closeDialog(menu);
-for(const dialog of [modal,menu]){dialog.addEventListener('close',lockScroll);dialog.addEventListener('cancel',e=>{e.preventDefault();void closeDialog(dialog)});dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)void closeDialog(dialog)}})}
+$('#menu-close').onclick=()=>closeDialog(menu);
+menu.addEventListener('close',lockScroll);menu.addEventListener('cancel',e=>{e.preventDefault();void closeDialog(menu)});
 $('#menu-open').onclick=()=>showDialog(menu);
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();void closeDialog(menu).then(()=>{if(a.getAttribute('href').startsWith('#')){$(a.getAttribute('href'))?.scrollIntoView({behavior:motionOff()?'instant':'smooth'});history.replaceState(null,'',a.getAttribute('href'))}else window.location.assign(a.href)})}));
 const services=[...document.querySelectorAll('[data-service]')],names=services.map(el=>el.dataset.service);
@@ -73,12 +68,10 @@ function updateSelection(animate=true){
 for(const el of services){el.querySelector('.service-toggle').onclick=()=>{const button=el.querySelector('.service-toggle'),panel=el.querySelector('.service-body'),open=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!open));void animateDisclosure(panel,!open);el.classList.toggle('is-open',!open)};el.querySelector('.service-add').onclick=()=>{selected.has(el.dataset.service)?selected.delete(el.dataset.service):selected.add(el.dataset.service);updateSelection()}}
 let siteConfig={};fetch('/api/site-config').then(r=>r.json()).then(c=>{siteConfig=c}).catch(()=>{});
 function contactDestination(){if(siteConfig.bookingURL){try{const u=new URL(siteConfig.bookingURL);if(u.protocol==='https:'||u.protocol==='http:')return u.href}catch{}}if(siteConfig.contactEmail&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(siteConfig.contactEmail))return `mailto:${siteConfig.contactEmail}`;return null}
-function openBrief(){
- openModal(`<span class="eyebrow">DIT NÆSTE PROJEKT / BETA</span><h2 id="modal-heading">FRA IDÉ<br>TIL <span style="color:var(--blue)">VIRKELIGHED.</span></h2><p>${selected.size?`Dit valg: ${[...selected].map(esc).join(' / ')}`:'Fortæl os om din idé. Vi hjælper med at finde den rigtige retning.'}</p><label for="brief-company">Virksomhed / projektnavn</label><input id="brief-company" autocomplete="organization" placeholder="Hvad hedder dit projekt?"><label for="brief-description">Din idé</label><textarea id="brief-description" placeholder="Hvad vil du skabe? Hvad er målet? Og hvad har du allerede klar?" maxlength="5000"></textarea><div class="brief-actions"><a class="outline-button" href="/start">ÅBN PROJEKTPLANLÆGGER ↗</a><button id="brief-download" class="button-blue">DOWNLOAD PROJEKTBRIEF ↗</button>${contactDestination()?'<button id="brief-contact" class="outline-button">BOOK EN SAMTALE ↗</button>':''}</div><p id="brief-status" role="status">Briefen gemmes på din enhed. Den bliver ikke sendt automatisk.</p>`);
- $('#brief-download').onclick=()=>{const description=$('#brief-description').value.trim();if(!description){$('#brief-status').textContent='Skriv lidt om din idé, før du downloader din brief.';$('#brief-description').focus();return}const text=`BETA / PROJEKTBRIEF\n\nProjekt: ${$('#brief-company').value.trim()||'Ikke angivet'}\nServices: ${[...selected].join(', ')||'Afklares sammen'}\n\n${description}\n\nDenne brief er ikke en bestilling og er ikke sendt til Beta.`;const u=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=u;a.download='beta-projektbrief.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);$('#brief-status').textContent='Din brief er downloadet. Gem den til vores første samtale.'};
- if($('#brief-contact'))$('#brief-contact').onclick=()=>window.location.assign(contactDestination());
-}
-$('#brief-open').onclick=openBrief;document.querySelector('[data-booking]').onclick=()=>{const destination=contactDestination();destination?window.location.assign(destination):openBrief()};
+const plannerURL=()=>document.documentElement.lang==='en'?'/en/start':'/start';
+function openBrief(){window.location.assign(plannerURL())}
+$('#brief-open').onclick=e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();openBrief()};
+document.querySelector('[data-booking]').onclick=e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();window.location.assign(contactDestination()||plannerURL())};
 const ratingLabels={'A promising foundation':'ET STÆRKT UDGANGSPUNKT','Room for improvement':'PLADS TIL FORBEDRING'};
 const hero=$('#review'),shell=$('#review-shell'),expansion=$('#review-expansion'),report=$('#review-result');
 let loadingTimer=null;
