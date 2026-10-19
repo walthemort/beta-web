@@ -43,7 +43,7 @@ body{font-family:var(--studio-font)}
 .client-logo img{max-height:27px;max-width:112px}
 .client-group{gap:48px;padding-right:48px}
 .client-name{font-size:19px}
-.client-marquee:before,.client-marquee:after{width:6%;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.client-marquee:before,.client-marquee:after{width:6%;backdrop-filter:none;backdrop-filter:none}
 .section-top,.tiny-mono,.eyebrow,.service small,.selection-top>span,.case-label,.case-caption span,.case-bottom,.site-footer,.menu-footer,.service-tags,.offering-tags{font-family:"Inter Variable",Arial,sans-serif;letter-spacing:.1em}
 .section-pad{padding-top:65px;padding-bottom:95px}
 .section-heading{margin:35px 0 55px}
@@ -106,11 +106,6 @@ body{font-family:var(--studio-font)}
 .menu-dialog nav a>span{font-size:.5em;justify-self:end}
 .menu-header button{font:500 12px/1.3 var(--studio-font);letter-spacing:.03em;min-height:44px}
 .home-case{position:relative;min-width:0}
-.case-preview{position:relative;overflow:hidden}
-.case-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .45s}
-.case-preview-secondary{opacity:0}
-.case-preview-badge{position:absolute;bottom:18px;left:18px;z-index:2;background:#F6F4EFee;color:var(--black);font:500 9px/1.3 var(--studio-font);letter-spacing:.06em;padding:7px 10px;border-radius:18px}
-.case-preview .case-open{z-index:3;top:18px;right:18px;bottom:auto;font-size:24px}
 .home-case .case-caption{padding-right:48px;align-items:baseline;gap:14px}
 .case-save{position:absolute;right:0;bottom:5px;width:34px;height:34px;border:1px solid #f6f4ef50;border-radius:50%;background:none;color:var(--white);display:grid;place-items:center;transition:background .25s,border-color .25s}
 .case-save svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.5}
@@ -124,12 +119,12 @@ body{font-family:var(--studio-font)}
 .case:focus-visible .case-preview-secondary{opacity:1}
 @media(max-width:1100px){.site-header .desktop-nav{gap:18px;font-size:13px}.site-header .nav-project{font-size:10px;padding-inline:18px}}
 @media(max-width:900px){.site-header .desktop-nav{display:none}.menu-dialog nav a{font-size:clamp(34px,7vw,64px);grid-template-columns:minmax(0,1fr) 35px;gap:15px}.menu-dialog .menu-header img{width:185px}}
-@media(max-width:600px){.menu-dialog .menu-header img{width:165px}.menu-dialog nav{padding:25px 0}.menu-dialog nav a{font-size:clamp(28px,7.5vw,42px);padding:22px 0;letter-spacing:-.035em;grid-template-columns:minmax(0,1fr) 28px;gap:12px}.home-case .case-caption span{font-size:8px;letter-spacing:.03em}.case-preview-badge{bottom:12px;left:12px}.case-save{width:34px;height:34px}}
-@media(prefers-reduced-motion:reduce){.case-preview img,.service-toggle b{transition:none}.case:hover .case-preview-primary,.case:hover .case-preview-secondary,.service-toggle:is(:hover,:focus-visible) b{transform:none}.menu-dialog[open] nav a{animation:none}}
+@media(max-width:600px){.menu-dialog .menu-header img{width:165px}.menu-dialog nav{padding:25px 0}.menu-dialog nav a{font-size:clamp(28px,7.5vw,42px);padding:22px 0;letter-spacing:-.035em;grid-template-columns:minmax(0,1fr) 28px;gap:12px}.home-case .case-caption span{font-size:8px;letter-spacing:.03em}.case-save{width:34px;height:34px}}
+@media(prefers-reduced-motion:reduce){.service-toggle b{transition:none}.case:hover .case-preview-primary,.case:hover .case-preview-secondary,.service-toggle:is(:hover,:focus-visible) b{transform:none}.menu-dialog[open] nav a{animation:none}}
 
 /* Ink sweeps follow the original line breaks and keep the blue emphasis. */
 .motion-pending{opacity:.08;translate:0 18px}
-.motion-ink,h1>.motion-ink,.section-heading h2>.motion-ink{display:inline;font:inherit;letter-spacing:inherit;line-height:inherit;vertical-align:baseline;margin:0;color:transparent;background-image:linear-gradient(90deg,var(--ink-color) 50%,color-mix(in srgb,var(--ink-color) 22%,transparent) 50%);background-size:200% 100%;background-position:0% 0%;background-clip:text;-webkit-background-clip:text}
+h1>.motion-ink,.section-heading h2>.motion-ink{display:inline;font:inherit;letter-spacing:inherit;line-height:inherit;vertical-align:baseline;margin:0;color:transparent;background-image:linear-gradient(90deg,var(--ink-color) 50%,color-mix(in srgb,var(--ink-color) 22%,transparent) 50%);background-size:200% 100%;background-position:0% 0%;background-clip:text;-webkit-background-clip:text}
 .floating-menu{position:fixed;top:24px;right:6%;z-index:90;display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;border-radius:0;background:transparent;color:#fff;visibility:hidden;clip-path:inset(0 0 0 100%);transition:clip-path .5s cubic-bezier(.76,0,.24,1),visibility .5s,color .25s,background .25s}
 .floating-menu svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.2;transform:translateX(4px);transition:transform .45s cubic-bezier(.22,1,.36,1)}
 .floating-menu.is-visible{visibility:visible;clip-path:inset(0)}
@@ -137,14 +132,11 @@ body{font-family:var(--studio-font)}
 .floating-menu:hover{color:#fff;background:transparent}
 .floating-menu:focus-visible{outline:2px solid var(--blue);outline-offset:5px}
 @media(max-width:600px){.floating-menu{top:max(16px,env(safe-area-inset-top));right:6%;width:44px;height:44px}}
-@media(prefers-reduced-motion:reduce){.motion-pending{opacity:1;translate:none}.motion-ink{color:var(--ink-color);background:none}.floating-menu,.floating-menu svg{transition:none}.floating-menu,.floating-menu.is-visible{transform:none}}
+@media(prefers-reduced-motion:reduce){.motion-pending{opacity:1;translate:none}.floating-menu,.floating-menu svg{transition:none}.floating-menu,.floating-menu.is-visible{transform:none}}
 
 /* The large image recreates the reference ribbon, with a quiet left edge for live type. */
 .agency-visual{inset:0;overflow:hidden;opacity:1;mask-image:none}
 @keyframes artwork-arrive{from{opacity:0;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}
-
-/* Overscan keeps the image edges inside the frame as the ribbon moves. */
-.has-parallax .hero-artwork{scale:1.16;translate:var(--art-x,0px) var(--art-y,0px)}
 
 /* Menus uncover the page from the right; type follows the same horizontal direction. */
 .menu-dialog[open]{opacity:1;transform:none;clip-path:inset(0);animation:menu-wipe-in .5s cubic-bezier(.22,1,.36,1) both}
@@ -163,21 +155,14 @@ body{font-family:var(--studio-font)}
 .floating-menu svg,.menu-trigger>svg{stroke:#fff;stroke-width:1.5}
 html{background:var(--black);scrollbar-gutter:stable}
 .menu-dialog[data-closing]{will-change:transform}
-
-/* Soft magnetism, a travelling case arrow, and quiet editorial accents. */
-.has-magnet{transform:translate(var(--magnet-x,0px),var(--magnet-y,0px));transition:transform .3s cubic-bezier(.22,1,.36,1),background-color .25s;background-image:linear-gradient(105deg,transparent 40%,#fff2 50%,transparent 60%);background-size:260% 100%;background-position:120% 0}
-.has-magnet:hover{transform:translate(var(--magnet-x,0px),var(--magnet-y,0px));background-position:-35% 0;transition:transform .3s cubic-bezier(.22,1,.36,1),background-position .8s,background-color .25s}
-.has-magnet .ui-arrow{transition:transform .3s}.has-magnet:hover .ui-arrow{transform:translateX(3px)}
 @media(hover:hover) and (pointer:fine){
- .case-preview.is-previewing .case-open{top:var(--case-y,40px);left:var(--case-x,calc(100% - 40px));right:auto;width:44px;height:44px;border:0;background:var(--blue);color:var(--white);transform:translate(-50%,-50%);transition:top .12s ease-out,left .12s ease-out,background .2s;pointer-events:none}
- .case-preview.is-previewing img{translate:var(--case-pan-x,0px) var(--case-pan-y,0px);scale:1.02;transition:translate .6s cubic-bezier(.22,1,.36,1),scale .6s,opacity .45s}
  .service-head{position:relative}.service-head:after{content:'';position:absolute;bottom:0;left:0;width:100%;height:1px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.22,1,.36,1)}
  .service-head:hover:after,.service-head:focus-within:after{transform:scaleX(1)}
  .menu-dialog nav a{position:relative}.menu-dialog nav a[href$="/cases"]:after{content:'';position:absolute;right:12%;top:50%;width:180px;aspect-ratio:1.5;background:url('/work/forma-cover-768.webp') center/cover;opacity:0;transform:translateY(-45%) rotate(-5deg) scale(.94);pointer-events:none;transition:opacity .3s,transform .5s cubic-bezier(.22,1,.36,1)}
  .menu-dialog nav a[href$="/cases"]:hover:after{opacity:1;transform:translateY(-50%) rotate(-3deg) scale(1)}
 }
 @media(max-width:900px){.menu-dialog nav a[href$="/cases"]:after{display:none}}
-@media(prefers-reduced-motion:reduce){.has-magnet,.has-magnet:hover,.has-magnet .ui-arrow,.case-preview img,.service-head:after,.menu-dialog nav a:after{transition:none}.has-magnet,.has-magnet:hover,.has-magnet:hover .ui-arrow{transform:none}.case-preview img{translate:none;scale:1}.menu-dialog nav a[href$="/cases"]:after{transform:translateY(-50%)}}
+@media(prefers-reduced-motion:reduce){.service-head:after,.menu-dialog nav a:after{transition:none}.menu-dialog nav a[href$="/cases"]:after{transform:translateY(-50%)}}
 
 .home-case .case-preview{aspect-ratio:1.5}
 

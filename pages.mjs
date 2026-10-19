@@ -21,9 +21,9 @@ function casesIndex() {
     path: '/cases', page: 'cases', body: `
     <section class="page-intro work-intro section-pad">
       <div class="section-top"><span>ARBEJDE</span><a href="/inspiration">DIN INSPIRATION ↗</a></div>
-      <div class="editorial-intro"><h1>Arbejde med<br><em>karakter.</em></h1><p>Udforsk koncepterne. Gem det, der taler til dig.</p></div>
+      <div class="editorial-intro"><h1>Et udvalg.<br><em>Mange udtryk.</em></h1><p>Udforsk vores koncepter og kunder. Find det udtryk, der taler til dig.</p></div>
     </section>
-    <section class="project-paper project-archive section-pad">${renderProjectCollection()}</section>
+    <section class="portfolio-archive-section section-pad">${renderProjectCollection()}</section>
     ${cta('Dit brand.', 'Dit næste kapitel.')}`
   });
 }

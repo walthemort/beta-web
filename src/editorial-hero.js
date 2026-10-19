@@ -8,7 +8,7 @@ export function mountEditorialHero(){
    const animation=line.animate([
     {transform:'translateY(115%) rotate(2deg)'},
     {transform:'translateY(0) rotate(0deg)'}
-   ],{duration:1050,delay:80+index*130,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+   ],{duration:720,delay:40+index*90,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
    animations.add(animation);animation.finished.catch(()=>{}).finally(()=>{animation.cancel();animations.delete(animation)});
   }
  }

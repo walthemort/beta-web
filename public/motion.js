@@ -18,7 +18,7 @@ function closeMenu(dialog){
  if(motionOff()||!dialog.animate){dialog.close();document.body.style.overflow='';return Promise.resolve()}
  dialog.setAttribute('data-closing','');
  const from=getComputedStyle(dialog).transform,paused=dialog.getAnimations({subtree:true}).filter(a=>a instanceof CSSAnimation&&a.playState==='running');paused.forEach(a=>a.pause());
- const animation=dialog.animate([{transform:from},{transform:'translateX(100%)'}],{duration:260,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'}),state={animation,paused,promise:null};menuClosings.set(dialog,state);
+ const animation=dialog.animate([{transform:from},{transform:'translateX(100%)'}],{duration:180,easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards'}),state={animation,paused,promise:null};menuClosings.set(dialog,state);
  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),settle=()=>{if(reduce.matches&&menuClosings.get(dialog)===state)animation.finish()};reduce.addEventListener('change',settle);
  state.promise=animation.finished.then(()=>{if(menuClosings.get(dialog)!==state)return;menuClosings.delete(dialog);dialog.close();dialog.removeAttribute('data-closing');animation.cancel();document.body.style.overflow=''}).catch(()=>{}).finally(()=>reduce.removeEventListener('change',settle));return state.promise;
 }

@@ -46,7 +46,7 @@ function closeDialog(dialog){
  const isMenu=dialog===menu;
  const paused=isMenu?dialog.getAnimations({subtree:true}).filter(a=>a instanceof CSSAnimation&&a.playState==='running'):[];paused.forEach(a=>a.pause());
  const frames=isMenu?[{opacity:1,transform:current.transform},{opacity:1,transform:'translateX(100%)'}]:[{opacity:current.opacity,transform:current.transform},{opacity:0,transform:'translateY(12px) scale(.97)'}];
- const animation=dialog.animate(frames,{duration:isMenu?260:220,easing:isMenu?'cubic-bezier(.22,1,.36,1)':'cubic-bezier(.4,0,1,1)',fill:'forwards'});
+ const animation=dialog.animate(frames,{duration:isMenu?180:220,easing:isMenu?'cubic-bezier(.22,1,.36,1)':'cubic-bezier(.4,0,1,1)',fill:'forwards'});
  const state={animation,paused,promise:null};closingDialogs.set(dialog,state);
  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),settle=()=>{if(reduce.matches&&closingDialogs.get(dialog)===state)animation.finish()};reduce.addEventListener('change',settle);
  state.promise=animation.finished.then(()=>{if(closingDialogs.get(dialog)!==state)return;closingDialogs.delete(dialog);dialog.close();dialog.removeAttribute('data-closing');animation.cancel()}).catch(()=>{}).finally(()=>reduce.removeEventListener('change',settle));return state.promise;
@@ -103,7 +103,7 @@ const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matche
 if(!reducedMotion&&'IntersectionObserver'in window){document.body.classList.add('js-motion');const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
 let scrollScheduled=false;window.addEventListener('scroll',()=>{if(scrollScheduled)return;scrollScheduled=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-window.innerHeight;$('.scroll-progress').style.transform=`scaleX(${max>0?window.scrollY/max:0})`;scrollScheduled=false})},{passive:true});
 decorateArrows();
-if(!reducedMotion&&window.matchMedia('(pointer: fine)').matches){let pointerFrame=null;hero.addEventListener('pointermove',event=>{if(pointerFrame)return;pointerFrame=requestAnimationFrame(()=>{const rect=hero.getBoundingClientRect();hero.style.setProperty('--pointer-x',`${(event.clientX-rect.left)/rect.width*100}%`);hero.style.setProperty('--pointer-y',`${(event.clientY-rect.top)/rect.height*100}%`);pointerFrame=null})});hero.addEventListener('pointerleave',()=>{hero.style.removeProperty('--pointer-x');hero.style.removeProperty('--pointer-y')})}
+
 
 for(const details of document.querySelectorAll('.faq details')){
  const summary=details.querySelector('summary'),body=document.createElement('div');body.className='faq-body';

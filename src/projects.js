@@ -1,77 +1,46 @@
-/** Native project links enhanced with a focused, expanding preview and a compact archive. */
+/** One project stage, native case links, and an index that never animates page height. */
 export function mountProjects(t){
- const root=document.querySelector('[data-project-collection]');if(!root)return;
- const reduce=matchMedia('(prefers-reduced-motion: reduce)'),ease='cubic-bezier(.22,1,.36,1)';
- const cards=[...root.querySelectorAll('[data-project]')],dialog=root.querySelector('#project-preview'),body=root.querySelector('#project-preview-body');
- const templates=[...root.querySelectorAll('[data-project-template]')],more=root.querySelector('.project-more'),extra=root.querySelector('#project-extra');
- let index=0,source=null,oldOverflow='',closing=null,filter='all',filterGeneration=0,extraAnimation=null;
- if(more)more.hidden=false;root.querySelector('.project-filters')?.removeAttribute('hidden');
- const running=new Set();
- function animate(el,frames,options={}){if(reduce.matches)return null;const animation=el.animate(frames,{duration:500,easing:ease,...options});running.add(animation);animation.finished.catch(()=>{}).finally(()=>running.delete(animation));return animation}
- function originClip(){
-  const box=dialog.getBoundingClientRect(),origin=source?.getBoundingClientRect();
-  if(!origin||origin.bottom<0||origin.top>innerHeight)return 'inset(45% 15% 45% 15% round 18px)';
-  const x=Math.max(5,Math.min(95,(origin.left+origin.width/2-box.left)/box.width*100)),y=Math.max(5,Math.min(95,(origin.top+origin.height/2-box.top)/box.height*100));
-  return `inset(${Math.max(0,y-8)}% ${Math.max(0,100-x-12)}% ${Math.max(0,100-y-8)}% ${Math.max(0,x-12)}% round 18px)`;
+ const root=document.querySelector('[data-portfolio]');if(!root)return;
+ const stage=root.querySelector('#portfolio-stage'),rows=[...root.querySelectorAll('[data-project]')],choices=rows.map(row=>row.querySelector('[data-project-choice]'));
+ const templates=new Map([...root.querySelectorAll('[data-project-template]')].map(el=>[el.dataset.projectTemplate,el]));
+ const cache=new Map(),reduce=matchMedia('(prefers-reduced-motion: reduce)'),empty=root.querySelector('#project-empty');
+ let selected=stage.firstElementChild?.dataset.stageProject,request=0,filter='all',filterRequest=0,animation=null;
+ if(selected)cache.set(selected,stage.firstElementChild);
+ root.classList.add('is-enhanced');root.querySelector('.portfolio-filters')?.removeAttribute('hidden');
+ for(const row of rows){row.querySelector('.portfolio-fallback').hidden=true;row.querySelector('.portfolio-choice').hidden=false;row.classList.toggle('is-selected',row.dataset.project===selected)}
+ function paintChoice(){for(const row of rows){const active=row.dataset.project===selected;row.classList.toggle('is-selected',active);row.querySelector('.portfolio-choice').setAttribute('aria-pressed',String(active))}}
+ async function choose(slug,{announce=true}={}){
+  if(!templates.has(slug))return;const token=++request;if(slug===selected&&stage.firstElementChild?.dataset.stageProject===slug){stage.setAttribute('aria-busy','false');return}stage.setAttribute('aria-busy','true');
+  let article=cache.get(slug);if(!article){article=templates.get(slug).content.firstElementChild.cloneNode(true);cache.set(slug,article)}
+  const pictures=[...article.querySelectorAll('img')];pictures.forEach(img=>img.loading='eager');
+  await Promise.allSettled(pictures.map(img=>img.decode()));if(token!==request)return;
+  animation?.cancel();selected=slug;stage.hidden=false;stage.replaceChildren(article);paintChoice();stage.setAttribute('aria-busy','false');
+  if(!reduce.matches)animation=article.animate([{opacity:.35,transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:200,easing:'ease-out'});
+  if(announce)root.querySelector('#project-filter-status').textContent=t('Viser')+' '+rows.find(row=>row.dataset.project===slug).querySelector('.portfolio-choice>span').textContent;
+  dispatchEvent(new CustomEvent('beta:portfolio-changed'));
  }
- function content(next,transition=false){
-  const restoreFocus=body.contains(document.activeElement);index=(next+templates.length)%templates.length;
-  body.replaceChildren(templates[index].content.cloneNode(true));
-  body.querySelectorAll('img').forEach(img=>img.loading='eager');if(restoreFocus)body.querySelector('h2').focus({preventScroll:true});
-  root.querySelector('#project-preview-count').textContent=String(index+1).padStart(2,'0')+' / '+String(templates.length).padStart(2,'0');
-  if(transition)animate(body,[{opacity:.3,transform:'translateX(12px)'},{opacity:1,transform:'translateX(0)'}],{duration:260});
- }
- function open(link){
-  if(closing)return;if(extraAnimation)settleExtra(more.getAttribute('aria-expanded')==='true');source=link;oldOverflow=document.body.style.overflow;
-  content(templates.findIndex(template=>template.dataset.projectTemplate===link.dataset.projectPreview));
-  dialog.showModal();document.body.style.overflow='hidden';body.scrollTop=0;
-  animate(dialog,[{clipPath:originClip()},{clipPath:'inset(0 0 0 0 round 18px)'}],{duration:620});
-  animate(body.querySelector('.project-dialog-copy'),[{opacity:0,transform:'translateY(20px)'},{opacity:1,transform:'translateY(0)'}],{duration:500,delay:160});
-  body.querySelector('h2').focus({preventScroll:true});
- }
- function finishClose(){dialog.close();closing=null;for(const animation of running)if(animation.effect?.target===dialog||dialog.contains(animation.effect?.target))animation.cancel();document.body.style.overflow=oldOverflow;source?.focus({preventScroll:true})}
- function close(){
-  if(!dialog.open||closing)return;
-  const animation=animate(dialog,[{clipPath:getComputedStyle(dialog).clipPath},{clipPath:originClip()}],{duration:300});
-  if(!animation){finishClose();return}closing=animation;animation.finished.then(()=>{if(closing===animation)finishClose()}).catch(()=>{});
- }
- for(const link of root.querySelectorAll('[data-project-preview]'))link.addEventListener('click',event=>{if(event.button||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;event.preventDefault();open(link)});
- dialog.addEventListener('cancel',event=>{event.preventDefault();close()});
- dialog.addEventListener('click',event=>{if(event.target===dialog){const box=dialog.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)close()}});
- root.querySelector('[data-project-close]').onclick=close;
- root.querySelector('[data-project-prev]').onclick=()=>content(index-1,true);
- root.querySelector('[data-project-next]').onclick=()=>content(index+1,true);
- dialog.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();content(index+(event.key==='ArrowLeft'?-1:1),true)}});
- function settleExtra(open){extraAnimation?.cancel();extraAnimation=null;extra.hidden=!open;extra.inert=!open;extra.style.height='';extra.style.overflow=''}
- if(more)more.onclick=()=>{
-  const open=more.getAttribute('aria-expanded')!=='true',from=extra.hidden?0:extra.getBoundingClientRect().height;
-  extraAnimation?.cancel();extra.hidden=false;extra.inert=!open;extra.style.height='auto';
-  more.setAttribute('aria-expanded',String(open));more.firstElementChild.textContent=t(open?'VIS FÆRRE PROJEKTER':'VIS ALLE PROJEKTER');
-  const height=open?extra.scrollHeight:0;
-  if(reduce.matches){settleExtra(open);return}
-  extra.style.overflow='hidden';const animation=animate(extra,[{height:from+'px',opacity:open?0.4:1},{height:height+'px',opacity:open?1:0}],{duration:560});extraAnimation=animation;
-  if(open)extra.querySelectorAll('.project-card').forEach((card,i)=>animate(card,[{opacity:0,transform:'translateY(20px)'},{opacity:1,transform:'translateY(0)'}],{duration:480,delay:80+i*65}));
-  animation.finished.then(()=>{if(extraAnimation===animation)settleExtra(open)}).catch(()=>{});
- };
+ choices.forEach(button=>button.addEventListener('click',()=>void choose(button.dataset.projectChoice)));
+ root.querySelector('.portfolio-rows').addEventListener('keydown',event=>{
+  const button=event.target.closest('[data-project-choice]');if(!button||!['ArrowDown','ArrowUp','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  const visible=rows.filter(row=>!row.hidden).map(row=>row.querySelector('.portfolio-choice')),index=visible.indexOf(button);let next;
+  if(event.key==='Home')next=visible[0];else if(event.key==='End')next=visible.at(-1);else next=visible[(index+(['ArrowDown','ArrowRight'].includes(event.key)?1:-1)+visible.length)%visible.length];
+  event.preventDefault();next.focus({preventScroll:true});next.scrollIntoView({block:'nearest',inline:'nearest',behavior:'instant'});void choose(next.dataset.projectChoice);
+ });
+ const saved=()=>{try{const value=JSON.parse(localStorage.getItem('beta:inspiration')||'[]');return Array.isArray(value)?value:[]}catch{return[]}};
  async function applyFilter(value){
-  filter=value;const generation=++filterGeneration;
-  const saved=(()=>{try{const raw=JSON.parse(localStorage.getItem('beta:inspiration')||'[]');return Array.isArray(raw)?raw:[]}catch{return[]}})();
-  const positions=new Map(cards.filter(card=>!card.hidden).map(card=>[card,card.getBoundingClientRect()]));
+  const generation=++filterRequest;request++;stage.setAttribute('aria-busy','false');filter=value;const keep=saved(),visible=rows.filter(row=>value==='all'||row.dataset.category===value||(value==='saved'&&keep.includes(row.dataset.project)));
+  const removedFocus=rows.some(row=>row.contains(document.activeElement)&&!visible.includes(row))||stage.contains(document.activeElement)&&!visible.some(row=>row.dataset.project===selected);
   root.querySelectorAll('[data-project-filter]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.projectFilter===value)));
-  const visible=cards.filter(card=>value==='all'||value===card.dataset.category||(value==='saved'&&saved.includes(card.dataset.project)));
-  const exiting=cards.filter(card=>!card.hidden&&!visible.includes(card));
-  await Promise.allSettled(exiting.map(card=>animate(card,[{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.97)'}],{duration:140})?.finished));
-  if(generation!==filterGeneration)return;
-  for(const card of cards){const show=visible.includes(card);card.hidden=!show;card.inert=!show}
-  visible.forEach((card,i)=>{const from=positions.get(card),to=card.getBoundingClientRect();animate(card,from?[{transform:`translate(${from.x-to.x}px,${from.y-to.y}px)`},{transform:'translate(0,0)'}]:[{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'translateY(0)'}],{duration:420,delay:from?0:Math.min(i*35,100)})});
-  root.querySelector('#project-empty').hidden=visible.length>0;
+  for(const row of rows){row.hidden=!visible.includes(row);row.inert=row.hidden}
+  empty.hidden=visible.length>0;root.querySelector('.portfolio-layout').hidden=visible.length===0;
+  if(!visible.length){request++;stage.setAttribute('aria-busy','false');if(removedFocus)empty.querySelector('button').focus({preventScroll:true})}
+  else if(!visible.some(row=>row.dataset.project===selected)){await choose(visible[0].dataset.project,{announce:false});if(generation!==filterRequest)return;if(removedFocus)visible[0].querySelector('.portfolio-choice').focus({preventScroll:true})}
   root.querySelector('#project-filter-status').textContent=visible.length+' '+t('projekter');
  }
- root.querySelectorAll('[data-project-filter]').forEach(button=>button.onclick=()=>void applyFilter(button.dataset.projectFilter));
+ root.querySelectorAll('[data-project-filter]').forEach(button=>button.addEventListener('click',()=>void applyFilter(button.dataset.projectFilter)));
  root.querySelector('[data-project-reset]')?.addEventListener('click',()=>void applyFilter('all'));
  addEventListener('beta:inspiration-changed',()=>{if(filter==='saved')void applyFilter('saved')});
  addEventListener('storage',event=>{if(event.key==='beta:inspiration'&&filter==='saved')void applyFilter('saved')});
- if(!more&&new URLSearchParams(location.search).get('saved')==='1')void applyFilter('saved');
- reduce.addEventListener('change',()=>{if(!reduce.matches)return;if(closing)finishClose();if(extraAnimation)settleExtra(more.getAttribute('aria-expanded')==='true');for(const animation of running)animation.cancel()});
- addEventListener('resize',()=>{if(extraAnimation)settleExtra(more.getAttribute('aria-expanded')==='true')},{passive:true});
+ if(new URLSearchParams(location.search).get('saved')==='1'&&root.querySelector('.portfolio-filters'))void applyFilter('saved');
+ reduce.addEventListener('change',()=>{if(reduce.matches)animation?.cancel()});addEventListener('pagehide',()=>{request++;animation?.cancel()});
 }

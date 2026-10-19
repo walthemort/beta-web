@@ -113,9 +113,9 @@ The complete feature/status ledger is `docs/NEXT-IDEAS.md`; 15 further proposals
 
 ## Agency visual direction
 
-`public/atelier.css` defines the current paper / ink / electric-blue public edition. The homepage has a large real-text heading with self-hosted Inter and a contrasting system serif, a brief masked line entrance, a slim blue client loop, and compact expandable work. No hero video, canvas, image frame or background image is loaded. A drawn blue gesture, offset headline and project grid, diagonal image cuts and broad wordmark footer extend the supplied logo’s character into a shared visual language. Services keep their dark atelier chapter; the studio, Review, FAQ, contact and public subpages follow a simpler editorial rhythm. Approved logos remain untouched. See [docs/ART-DIRECTION.md](docs/ART-DIRECTION.md).
+`public/atelier.css` defines the paper / ink / electric-blue public edition. The supplied wordmark, large selectable headings and warm white surfaces remain. The experimental blue graphic has been removed everywhere. Cases now use a project index beside one steady visual stage, with category/saved filters on `/cases` and two illustrated concepts on the homepage. Each story opens directly on its own page. There are no project modals, image masks, cursor-following previews or magnetic buttons. See [docs/ART-DIRECTION.md](docs/ART-DIRECTION.md).
 
-The white floating burger appears after the header leaves view and uses difference blending over light and dark surfaces. The menu wipes in and closes with a short compositor transform; focus restoration and reduced-motion preferences are preserved. Pointer devices retain subtle magnetic actions and travelling project arrows; touch uses native links. Run `npm run build:studio` after editing studio source and `npm run test:studio` for its browser checks.
+Animation uses short opacity/transform entrances and compositor menu slides. Character-by-character gradient fills, scroll-linked text repainting, logo-strip blur and cross-document screenshot transitions are removed. The logo loop still moves on hover and pauses for keyboard focus or reduced motion. Services and FAQ retain their small, interruptible disclosure animations. Run `npm run build:studio`, `npm run test:studio` and `npm run test:projects` after editing studio behavior.
 
 
 ## Public website overhaul
@@ -128,9 +128,11 @@ The subsequent [art-direction pass](docs/ART-DIRECTION.md) puts the work first, 
 
 Visuel mavefornemmelse lives at `/retning` and `/en/retning`, linked beneath the homepage Review and from Services. Visitors can export their visual direction as a PNG board and optionally include it in the project brief. Logo testing has been removed from the website; existing logo-test browser data is ignored. See [docs/STUDIO-TOOLS.md](docs/STUDIO-TOOLS.md) for behavior and data boundaries. Run `npm run test:lab` for visual-choice, export, brief, responsive and removed-route checks.
 
-## Compact project collection
+## Project index and stage
 
-The homepage shows six compact cards, with an animated expansion to all projects and client holding pages. The project archive supports category and saved filters. Native case links gain a keyboard-accessible expanding preview; full case links and no-JavaScript navigation remain available. Client covers use supplied logos until approved project material is available. Run `npm run test:projects` for this flow.
+The homepage shows the illustrated concept studies through a compact selectable index and one large preview. `/cases` includes concepts and all client holding pages, with category and saved filters. Selection uses buttons with keyboard arrow/Home/End support; full stories use native links. On mobile the index scrolls horizontally. Without JavaScript every project remains a normal link and the first image remains visible.
+
+Only selected project imagery is loaded. Decoded panels are reused, rapid selections cannot display stale images, and the image canvas retains its dimensions. Saved inspiration persists through panel changes and into the planner. Client holding pages use approved logos and explicit “case on its way” copy, without fictional project details. Run `npm run test:projects` for the new flow.
 
 The public design pass follows the Framer screenshots supplied in chat. Both live references now return HTTP 200 after the environment update. See [docs/FRAMER-REFERENCE.md](docs/FRAMER-REFERENCE.md) for the confirmed FrameAuth script and the uploaded video recommendation.
 

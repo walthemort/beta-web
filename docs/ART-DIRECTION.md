@@ -1,29 +1,25 @@
-# Public art direction — paper, ink, electric blue
+# Public art direction — work, with room to breathe
 
-This edition replaces the ribbon, video and film-first hero experiments. The reference is a creative studio’s editorial portfolio: warm paper, oversized real typography, decisive blue accents, compact work and space between ideas. The authenticated client portal is outside this redesign.
+The site keeps warm white, Beta blue, black, the supplied wordmark and a large readable typographic opening. The experimental blue gesture has been removed from the homepage, contact and every public subpage. It did not communicate a clear enough connection to the brand. No hero film or new substitute brand mark is used. The actual logos are unchanged.
 
-## Hierarchy
+## Cases, rebuilt
 
-The opening uses “Gode idéer. Stærke aftryk.” with self-hosted Inter and a contrasting Georgia italic. There is no hero video, media panel, generated mark or image background. The brand wordmark remains the supplied black SVG. The brief introduction has one work action and one project link. The type enters through its baseline over a short, staggered sequence; reduced motion and no JavaScript show the complete heading immediately.
+The former staggered card grid and expanding project modal are replaced by a project index and a single visual stage. The homepage contains the available illustrated concept studies. `/cases` contains those concepts and the real client entries, with brand/digital/client/saved filters. The opening, index, stage and mobile composition are rebuilt together.
 
-A slim blue client strip leads into the project collection. Its logos retain their real supplied assets, continue moving on hover and link to the corresponding client page. Keyboard focus pauses the strip; reduced motion makes it scrollable. Six compact cards expand to the complete catalog. Concepts are explicitly labelled, and client holding cards never invent photography, results or a project story. The alternate blue/ink holding covers are graphical presentation only.
+Desktop puts the names beside the image, with a clear selected state and a native full-case link. Mobile uses a horizontally scrollable index above the image. The stage retains its image dimensions and enough caption space to avoid reflow for the current catalog. No visual changes happen merely because the mouse passes across a row. Arrow keys, Home and End navigate the visible index. Filtering returns focus safely when it removes an active saved project. Empty and storage-denied states remain usable.
 
-The services retain their fluid dark atelier: a single expanded story, separate persistent selections, study switching and continuity into the project brief. The studio section is now a clear point of view and three principles, rather than another branded image. Review is one integrated tool below that section. The FAQ is reduced to three practical questions, with portal access in the navigation. Contact ends in a blue typographic spread.
+Panels decode only on request and are cached. Request generations prevent an earlier image or filter request from replacing a newer selection. One brief opacity/translate transition introduces the selected panel. There is no image pan, clip-path animation, large height animation or modal close sequence. Without JavaScript, every index entry is a native case link and the first project stays visible.
 
-## Shared system
+Concepts retain their labels. Client pages use supplied marks and explicit pending-material copy; no project photography, metrics or stories are invented. Existing inspiration saves and the project brief remain connected through the same local storage key.
 
-Public pages share a light header, black SVG wordmark, blue current navigation item, stronger headings with serif accents, precise rules, smaller corner radii and a more legible footer. Cases retain their approved concept artwork; the redundant generated studio poster is removed. The project planner, inspiration, privacy and direction tool follow the same palette and controls. Real text remains selectable; semantic headings and native links work without JavaScript.
+## Motion and rendering
 
-The white floating burger uses difference blending across light and dark sections. Existing menu wipes and interruptible closing, keyboard focus restoration, project dialogs, comparison handles and service animation reversal are retained. Heading fills run only on visible sections after scrolling; the decorative curved blue project chapter has been removed. No continuous hero rendering or scroll hijacking is used.
+Public page navigation is native. Cross-document screenshot transitions, body fade redirects, scroll-linked gradient text, per-node text splitting, cursor-following project arrows, magnetic actions and the animated SVG gesture are removed. Heading entrances use only short opacity/transform animations. A single observer handles these entrances, which run once. Logo edges retain a soft mask without backdrop blur. The client strip still moves on hover, pauses under keyboard focus, and becomes manually scrollable for reduced motion.
+
+The fullscreen menu opens with a compositor slide and closes in 180 ms, without a changing clip mask. The plain white floating burger, focus return, scroll lock and interrupted/reduced-motion closing remain supported. Service and FAQ disclosures retain their small, interruptible height animations; service imagery now crossfades briefly without a mask or image zoom. Comparison dragging remains intact.
 
 ## Verification
 
-Build with `npm run build:studio`. `test:studio` covers the typography, inactive old media, menu motion, responsive and no-JavaScript behavior, and inspiration continuity. `test:overhaul` checks 54 bilingual responsive routes plus planner, privacy, galleries and truthful holding pages. `test:services`, `test:projects`, `test:scenes` and `test:adaptive` cover their respective interactive flows. `test:budget` retains the existing asset and delivery limits.
+`npm test` covers the server and data boundaries. `test:projects` checks the new index/stage, stable image dimensions, selection/filter races, direct case links, saved panel state, keyboard/focus, bilingual responsive layouts, no JavaScript and denied storage. `test:studio` checks removed effects, menu slides/reversal, focus, logo behavior and inspiration continuity. `test:overhaul` covers 54 bilingual responsive routes and the existing planner/privacy/gallery flows. `test:services`, `test:adaptive` and `test:budget` retain their respective checks. The former scroll-scene test and its removed runtime are retired.
 
-## Beta signature edition
-
-The light edition now has a drawn calligraphic gesture that borrows the tension, taper and sweeping motion of the supplied wordmark. It is website artwork, never a replacement brand mark. `lib/signature.mjs` supplies the same compact inline SVG for the homepage, contact and principal public-page openings. Headline lines are offset, the work grid has a small alternating vertical offset, and project/study/gallery covers share a precise diagonal cut. Filtered collections and narrow mobile layouts return to a level grid. Original client and Beta SVGs are unchanged.
-
-The gesture draws once when visible. A fine pointer produces at most nine pixels of drift; leaving, focus, a hidden tab, page exit and motion-preference changes reset it. There is no idle render loop. The graphic is decorative, unfocusable and visible without JavaScript. Live reduced motion cancels its active drawing immediately. Project arrivals reveal horizontally; the black project action receives a blue diagonal wipe. The footer gives the original black wordmark a broad, dedicated composition.
-
-Retired hero, banner and superseded case-index CSS has been removed rather than increasing the existing delivery budget. The studio browser check now also verifies the drawn path’s intermediate state, bounded pointer movement, live cancellation and no-JavaScript graphic.
+Local rendering measurements and their practical limits are recorded in [RENDER-PERFORMANCE.md](RENDER-PERFORMANCE.md).
