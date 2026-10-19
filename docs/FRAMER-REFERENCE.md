@@ -23,6 +23,6 @@ Search site/page Custom Code and the remaining FrameAuth plugin/integration for 
 
 ## Uploaded motion reference
 
-`Final Comp.mp4` was inspected: 18 seconds, 3840×2160, 60fps, H.264/AAC, about 21.7 MB. It is a montage with quick scene changes and the earlier Beta01 mark. It has not been published as the current brand's hero.
+`Final Comp.mp4` was inspected: 18 seconds, 3840×2160, 60fps, H.264/AAC, about 21.7 MB. It is a montage with quick scene changes and the earlier Beta01 mark. The user subsequently authorized the old-logo video as a temporary hero while the new version renders. Optimized desktop/mobile loops and the full film are now included; the master remains outside public assets. See `docs/HERO-FILM.md` for replacement instructions.
 
-Recommended direction: a short, muted hero loop after the mark is updated, with an optional full-film playback. For scroll scrubbing, use one continuous shot or a dedicated short edit; seeking across the complete montage produces abrupt cuts. A loading screen should not make visitors wait for the 18-second film. Keep the original as a master and supply a separate optimized web export.
+The temporary implementation uses muted hero playback and optional full-film playback. For scroll scrubbing, use one continuous shot or a dedicated short edit; seeking across the complete montage produces abrupt cuts. A loading screen should not make visitors wait for the 18-second film. Keep the original as a master and supply a separate optimized web export.

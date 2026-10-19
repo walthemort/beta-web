@@ -131,3 +131,7 @@ Visuel mavefornemmelse lives at `/retning` and `/en/retning`, linked beneath the
 The homepage shows six compact cards, with an animated expansion to all projects and client holding pages. The project archive supports category and saved filters. Native case links gain a keyboard-accessible expanding preview; full case links and no-JavaScript navigation remain available. Client covers use supplied logos until approved project material is available. Run `npm run test:projects` for this flow.
 
 The public design pass follows the Framer screenshots supplied in chat. Both live references now return HTTP 200 after the environment update. See [docs/FRAMER-REFERENCE.md](docs/FRAMER-REFERENCE.md) for the confirmed FrameAuth script and the uploaded video recommendation.
+
+## Temporary hero film
+
+The uploaded older-logo film is temporarily enabled while the new render is prepared. It plays silently in the hero, with a pause control and a separate “Se filmen” player for the full version. Mobile gets a smaller export; reduced-motion/data-saving/no-JS and video errors retain the still artwork. See [docs/HERO-FILM.md](docs/HERO-FILM.md) for the four replaceable media files, encoding command and playback checks. The Node server supports byte ranges for video seeking.

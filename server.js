@@ -1,3 +1,4 @@
+import {serveVideo} from './lib/video.mjs';
 import './lib/env.mjs';
 import {insideDirectory} from './lib/paths.mjs';
 import http from 'node:http';
@@ -49,7 +50,7 @@ export const server=http.createServer(async(req,res)=>{
    try{return send(200,await readFile(file),mime(file),{'Cache-Control':asset?'public, max-age=31536000, immutable':'no-store'})}catch{return send(503,'Portal build unavailable. Run npm run build:portal.','text/plain')}
   }
   if(/^\/(logos|clients|media|work|fonts)\//.test(pathname)){
-   const match=pathname.match(/^\/(logos|clients|media|work|fonts)\/([A-Za-z0-9_.-]+\.(?:svg|png|webp|jpg|woff2|txt))$/);if(!match)return send(404,'Not found','text/plain');try{return send(200,await readFile(resolve(root,'public',match[1],match[2])),mime(match[2]),{'Cache-Control':'public, max-age=3600'})}catch{return send(404,'Not found','text/plain')}
+   const match=pathname.match(/^\/(logos|clients|media|work|fonts)\/([A-Za-z0-9_.-]+\.(?:svg|png|webp|jpg|woff2|txt|mp4))$/);if(!match)return send(404,'Not found','text/plain');try{if(match[1]==='work'&&match[2].endsWith('.mp4'))return await serveVideo(req,res,resolve(root,'public',match[1],match[2]));return send(200,await readFile(resolve(root,'public',match[1],match[2])),mime(match[2]),{'Cache-Control':'public, max-age=3600'})}catch{return send(404,'Not found','text/plain')}
   }
   const files=['atelier.css','style.css','app.js','favicon.svg','clients.json','pages.css','pages.js','navigation.js','motion.js','features.css','agency.css','editorial.css','subpages-art.css','studio.js','features.js','comparison.css','comparison.js','brief-schema.js','admin.js','locale.js','lab.js','lab-data.js','lab-context.js','lab.css'];
   const name=pathname==='/'?'index.html':pathname.slice(1);if(name!=='index.html'&&!files.includes(name)){if(/\.[a-z0-9]+$/i.test(pathname))return send(404,'Not found','text/plain');const missing=renderMissingPage(pathname);return send(404,decorateHTML(missing.html,pathname,english),'text/html; charset=utf-8')}

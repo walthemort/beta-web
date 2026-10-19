@@ -147,3 +147,25 @@
 .has-scroll-ink .scroll-word{color:transparent;background-image:linear-gradient(90deg,var(--word-ink) 50%,color-mix(in srgb,var(--word-ink) 18%,transparent) 50%);background-size:200% 100%;background-position:100% 0;background-clip:text;-webkit-background-clip:text}
 @media print,(prefers-reduced-motion:reduce){.has-scroll-ink .scroll-word{color:var(--word-ink);background:none}}
 @media(forced-colors:active){.has-scroll-ink .scroll-word{color:CanvasText;background:none}}
+/* Temporary brand film. Replace the web exports when the new mark is rendered. */
+.agency-visual .hero-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:0;transition:opacity .7s var(--atelier-ease);pointer-events:none}
+.has-hero-film .agency-visual{left:35%;right:-3%}
+.has-hero-film .agency-visual:after{background:linear-gradient(90deg,var(--black),transparent 26%),linear-gradient(180deg,var(--black),transparent 20% 80%,var(--black))}
+.has-hero-frame .hero-film{opacity:1}
+.has-hero-frame .hero-artwork{opacity:0}
+.hero-film-controls{position:absolute;bottom:28px;right:var(--page-gutter);z-index:2;display:flex;gap:10px;align-items:center}
+.hero-film-controls button{min-height:42px;border:1px solid #f6f4ef55;background:#0b0b0e75;color:var(--white);border-radius:30px;font:500 9px/1.4 var(--studio-font);display:flex;align-items:center;justify-content:center;gap:14px;transition:background .25s,border-color .25s}
+#hero-film-open{padding:12px 18px}#hero-film-open .ui-arrow{width:16px;height:16px}
+#hero-film-toggle{width:42px;padding:10px}
+#hero-film-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5}
+#hero-film-toggle .film-pause{display:none}#hero-film-toggle[data-state=playing] .film-pause{display:block}#hero-film-toggle[data-state=playing] .film-play{display:none}
+.hero-film-controls button:hover{background:#0b0b0ec9;border-color:var(--white)}
+.brand-film-dialog{position:fixed;inset:0;width:min(1120px,calc(100% - 48px));max-width:none;max-height:calc(100svh - 48px);padding:0;margin:auto;border:1px solid #f6f4ef24;border-radius:16px;background:var(--black);color:var(--white);overflow:hidden}
+.brand-film-dialog::backdrop{background:#050508df;backdrop-filter:blur(8px)}
+.brand-film-toolbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:24px}
+.brand-film-toolbar h2{font:500 10px/1.5 var(--studio-font);letter-spacing:.03em;margin:0}
+.brand-film-toolbar button{display:grid;place-items:center;width:36px;height:36px;background:none;border:1px solid #f6f4ef44;border-radius:50%;color:inherit}
+.brand-film-toolbar svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.4}
+.brand-film-dialog video{display:block;width:100%;max-height:calc(100svh - 118px);aspect-ratio:16/9;background:#000}
+@media(max-width:600px){.has-hero-film .agency-visual{inset:330px -12% 0;mask-image:none;-webkit-mask-image:none}.has-hero-film .agency-visual:after{background:linear-gradient(180deg,var(--black),transparent 26% 75%,var(--black))}.hero-film-controls{bottom:22px}.hero-film-controls button{min-height:44px}#hero-film-toggle{width:44px}.brand-film-dialog{width:calc(100% - 20px)}.brand-film-toolbar{padding:12px 14px}.brand-film-toolbar h2{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.agency-visual .hero-film,.hero-film-controls button{transition:none}.brand-film-dialog::backdrop{backdrop-filter:none}}
