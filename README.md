@@ -130,4 +130,4 @@ Visuel mavefornemmelse lives at `/retning` and `/en/retning`, linked beneath the
 
 The homepage shows six compact cards, with an animated expansion to all projects and client holding pages. The project archive supports category and saved filters. Native case links gain a keyboard-accessible expanding preview; full case links and no-JavaScript navigation remain available. Client covers use supplied logos until approved project material is available. Run `npm run test:projects` for this flow.
 
-The public design pass follows the Framer screenshots supplied in chat. Network access to the live references needs the saved environment draft to be activated; see [docs/FRAMER-REFERENCE.md](docs/FRAMER-REFERENCE.md) for the exact access distinction and FrameAuth diagnostic steps.
+The public design pass follows the Framer screenshots supplied in chat. Both live references now return HTTP 200 after the environment update. See [docs/FRAMER-REFERENCE.md](docs/FRAMER-REFERENCE.md) for the confirmed FrameAuth script and the uploaded video recommendation.

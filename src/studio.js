@@ -1,3 +1,4 @@
+import {mountScrollScenes} from './scroll-scenes.js';
 import {mountProjects} from './projects.js';
 import {mountSectionMotion} from './section-motion.js';
 import {mountHomeServices} from './home-services.js';
@@ -7,7 +8,7 @@ import {mountFloatingMenu} from './floating-menu.js';
 import {mountHeroParallax} from './hero-parallax.js';
 import {mountCreativeInteractions} from './creative-interactions.js';
 
-mountProjects(t);mountSectionMotion();mountHomeServices(t);mountReveals();mountFloatingMenu(t);
+mountProjects(t);mountScrollScenes();mountSectionMotion();mountHomeServices(t);mountReveals();mountFloatingMenu(t);
 mountHeroParallax();
 mountCreativeInteractions();
 

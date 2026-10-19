@@ -26,8 +26,13 @@ Service selection stays separate from expansion. Keyed selection chips keep thei
 
 ## Project collection and public edition
 
-The public edition takes its blue chapter heading, curved paper transition and compact grid from the user's Framer screenshots while retaining Beta's existing hero artwork, wordmark, Review and service atelier. The Framer URLs initially return a CONNECT 403 from the environment proxy; their live animations have not been inspected. A network draft preserves the existing domains and adds the two reference hosts plus `framerusercontent.com`; it requires the user to save and publish the environment before access can be verified.
+The public edition takes its blue chapter heading, curved paper transition and compact grid from the user's Framer screenshots while retaining Beta's existing hero artwork, wordmark, Review and service atelier. The Framer URLs initially returned a proxy CONNECT 403. After the user activated the saved network draft, both returned HTTP 200 and the earlier reference was inspected in Chromium. See `docs/FRAMER-REFERENCE.md` for the confirmed FrameAuth snippet and the motion reference.
 
 The homepage renders six projects first and expands to the full catalog. The archive renders every project and adds category and saved filters. `lib/projects.mjs` joins approved/published case entries with client holding pages without duplicating clients or inventing project material. Holding cards use existing client marks; concepts retain their labels. Uploaded case photography can replace the holding presentation when approved.
 
 Native case links open an optional animated dialog with previous/next controls, keyboard navigation, focus restoration and a link to the full case. Without JavaScript, links navigate directly and the complete archive remains accessible. The dialog, gallery expansion, saved filters and reduced-motion transitions are covered by `npm run test:projects`. Image arrivals extend to public service, studio, case, inspiration and privacy content; the authenticated portal is outside this edition.
+
+
+## Scroll scenes
+
+Existing about, studio and case headings now fill progressively with scroll, retaining their actual selectable text and brand colours. The blue project chapter's paper edge flattens as it passes. These scenes use native page scrolling, schedule work only for visible scenes after scroll/resize, and do not pin the page. Reduced motion, unsupported CSS, printing and forced-colour modes show solid readable type. The uploaded older-logo montage remains a motion reference until the new brand version is ready.

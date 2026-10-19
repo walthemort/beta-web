@@ -4,7 +4,7 @@ export function mountReveals(){
  const headingSelector='.agency-hero h1,.section-heading h2,.about h2,.contact-main>span:first-child,.page-intro h1,.studio-manifesto h2,.client-case-story h2,.case-chapter h2,.review-intro h2,.portal-strip h2,.page-cta h2';
  const fadeSelector='.agency-kicker,.agency-intro,.about p,.page-intro>p,.intro-bottom>p';
  const actionSelector='.agency-actions>a,.button-blue,.outline-button,.portal-button,.text-link,.service-add,[data-studio-save]';
- const candidates=[...document.querySelectorAll(`${headingSelector},${fadeSelector},${actionSelector}`)].filter(el=>!el.closest('dialog,[hidden],#services .service-list,#services .selection-card'));
+ const candidates=[...document.querySelectorAll(`${headingSelector},${fadeSelector},${actionSelector}`)].filter(el=>!el.closest('dialog,[hidden],[data-scroll-ink],#services .service-list,#services .selection-card'));
  // A paragraph and its link should arrive together, without competing animations.
  const elements=candidates.filter(el=>!candidates.some(parent=>parent!==el&&parent.contains(el)));
  const groups=new Map();
