@@ -21,3 +21,7 @@ Paint time falls by about 67% in this local sample. Frame cadence remains close 
 Run `npm run profile:scroll` for the same procedure. It prints a JSON summary and saves `beta-scroll-profile.json` in the system temporary directory. An optional path can be passed after `--`. Each run uses its own ephemeral test server and closes its browser/server. The command is a diagnostic, not a hardware-dependent pass/fail test.
 
 `test:studio` checks that removed effects stay absent, menu motion uses transform, and scroll lock/focus are restored. `test:projects` checks steady image dimensions, cancellation of stale decoded selections and filters, native case links, saved panel state, keyboard/mobile/no-JS behavior and empty states. Service and review/planner flows retain their own browser checks.
+
+## Image-led edition
+
+The following visual pass adds two linked hero concept photographs to the same one-shot opacity/translate observer. It keeps the project index and all removed-effect constraints. An isolated sample using the same procedure recorded 218 paints / 104.4 ms paint time, 18 layouts / 35.0 ms layout time, a 17.5 ms 95th-percentile frame interval and two intervals over 32 ms. These are local diagnostic samples, not a promise of zero dropped frames on other hardware. No image panning, scrolling blur, word gradients or continuous hero render loop has been added.

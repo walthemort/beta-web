@@ -17,7 +17,7 @@ If the homepage and portal work but every subpage says “Not found”, stop the
 
 ## Pages and interactions
 
-- `/`: typographic paper-and-ink studio opening with a large wordmark and case CTA; separate expanding Beta Review, slim client-logo loop with faded/blurred edges and client-case links, animated service/FAQ disclosures and a local project brief.
+- `/`: image-led studio opening with overlapping, linked concept photographs, a readable wordmark and case CTA; blue service chapter, black studio manifesto, expanding Beta Review, slim client-logo loop with softly faded edges, animated disclosures and a local project brief.
 - `/cases`, `/cases/forma`, `/cases/offscript`, and seven client case URLs: filtering, saved inspiration, chapter navigation, typography playgrounds, full-size keyboard-accessible galleries and comparison sliders.
 - `/services`: service descriptions and an interactive four-stage process map.
 - `/studio`: editorial studio page and animated principles.

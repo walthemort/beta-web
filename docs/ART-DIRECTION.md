@@ -1,6 +1,12 @@
-# Public art direction — work, with room to breathe
+# Public art direction — an image-led studio edition
 
-The site keeps warm white, Beta blue, black, the supplied wordmark and a large readable typographic opening. The experimental blue gesture has been removed from the homepage, contact and every public subpage. It did not communicate a clear enough connection to the brand. No hero film or new substitute brand mark is used. The actual logos are unchanged.
+The site keeps warm white, Beta blue, black and the supplied wordmark. The opening now pairs a three-line editorial heading with an asymmetric spread of Offscript and Forma concept photographs. Each photograph is a native case link, with visible project names and a shared concept-study label. Responsive crops preserve the image-led composition on mobile. The experimental blue gesture has been removed from the homepage, contact and every public subpage. It did not communicate a clear enough connection to the brand. No hero film or new substitute brand mark is used. The actual logos are unchanged.
+
+## Composition across the site
+
+The homepage progresses from paper and photography to a slim blue logo loop, a light project index, full-blue services and an ink-black studio manifesto. The manifesto uses a larger statement above the studio introduction and three practical principles. Review returns to paper, with a muted flat input field, followed by concise FAQs and the blue contact chapter. The services subpage opens in blue; the studio manifesto shares the homepage’s ink palette. The real Beta wordmark remains large and readable in the header and footer.
+
+Service study crossfades use the concept collection rather than the old sculptural hero and branded poster mockup. The accordion, independent service selection, saved inspiration, project brief and private portal keep their existing behavior. All new copy has a matching English translation. The two concept photographs also use the existing one-shot reveal observer, so there are no idle image loops or pointer tracking.
 
 ## Cases, rebuilt
 
