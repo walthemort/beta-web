@@ -125,3 +125,9 @@ The subsequent [art-direction pass](docs/ART-DIRECTION.md) puts the work first, 
 ## Studio tools
 
 Visuel mavefornemmelse lives at `/retning` and `/en/retning`, linked beneath the homepage Review and from Services. Visitors can export their visual direction as a PNG board and optionally include it in the project brief. Logo testing has been removed from the website; existing logo-test browser data is ignored. See [docs/STUDIO-TOOLS.md](docs/STUDIO-TOOLS.md) for behavior and data boundaries. Run `npm run test:lab` for visual-choice, export, brief, responsive and removed-route checks.
+
+## Compact project collection
+
+The homepage shows six compact cards, with an animated expansion to all projects and client holding pages. The project archive supports category and saved filters. Native case links gain a keyboard-accessible expanding preview; full case links and no-JavaScript navigation remain available. Client covers use supplied logos until approved project material is available. Run `npm run test:projects` for this flow.
+
+The public design pass follows the Framer screenshots supplied in chat. Network access to the live references needs the saved environment draft to be activated; see [docs/FRAMER-REFERENCE.md](docs/FRAMER-REFERENCE.md) for the exact access distinction and FrameAuth diagnostic steps.

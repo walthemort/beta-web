@@ -19,7 +19,8 @@
     "test:studio": "node scripts/check-studio.mjs",
     "test:overhaul": "node scripts/check-overhaul.mjs",
     "test:lab": "node scripts/check-lab.mjs",
-    "test:services": "node scripts/check-services.mjs"
+    "test:services": "node scripts/check-services.mjs",
+    "test:projects": "node scripts/check-projects.mjs"
   },
   "engines": {
     "node": ">=22"

@@ -1,3 +1,4 @@
+import {renderProjectCollection} from './lib/projects.mjs';
 import {briefQuestions} from './lib/brief.mjs';
 import {readFileSync} from 'node:fs';
 const clients=JSON.parse(readFileSync(new URL('./public/clients.json',import.meta.url),'utf8'));
@@ -14,20 +15,6 @@ function responsiveCover(image, sizes) {
     ? `srcset="${image.src.replace('.webp', '-768.webp')} 768w, ${image.src} 1536w" sizes="${sizes}"`
     : '';
 }
-function card(c) {
-  const image = cover(c);
-  return `<article class="index-case" data-category="${c.category}" data-slug="${c.slug}">
-    <a href="/cases/${c.slug}" class="case-link" aria-label="Se ${escape(c.name)}">
-      <div class="case-art ${c.slug === 'forma' ? 'forma' : 'offscript'}">
-        <img class="case-cover" src="${escape(image.src)}" alt="${escape(image.alt)}" ${responsiveCover(image, '(max-width: 700px) 90vw, 60vw')} width="1536" height="1024" loading="lazy" decoding="async">
-        <span class="case-open" aria-hidden="true">↗</span>
-      </div>
-      <div class="case-caption"><h2>${escape(c.name)}</h2><span>${escape(c.categoryLabel)}</span></div>
-      <p class="case-description">${escape(c.headline.replace('\n', ' '))}</p>
-    </a>
-    <div class="case-caption-bottom"><span class="case-kind">${c.status === 'published' ? 'Kundeprojekt' : 'Konceptstudie'}</span><button class="save-case" data-save-case="${c.slug}" aria-pressed="false" aria-label="Gem ${escape(c.name)} som inspiration">+ GEM INSPIRATION</button></div>
-  </article>`;
-}
 function casesIndex() {
   return layout({
     title: 'Cases', description: 'Udforsk visuelle retninger, gem din inspiration og find næste skridt for dit brand.',
@@ -36,17 +23,7 @@ function casesIndex() {
       <div class="section-top"><span>ARBEJDE</span><a href="/inspiration">DIN INSPIRATION ↗</a></div>
       <div class="editorial-intro"><h1>Design med<br><em>retning.</em></h1><p>Udforsk koncepterne. Gem det, der taler til dig.</p></div>
     </section>
-    <section class="case-index section-pad">
-      <div class="case-toolbar" role="group" aria-label="Filtrér cases">
-        <button data-filter="all" aria-pressed="true">ALLE <span>${String(cases.length).padStart(2, '0')}</span></button><button data-filter="brand" aria-pressed="false">BRAND</button><button data-filter="digital" aria-pressed="false">DIGITAL</button><button data-filter="saved" aria-pressed="false">GEMTE <span id="saved-count">00</span></button><p id="filter-status" role="status">${cases.length} retninger</p>
-      </div>
-      <div class="case-index-grid">${cases.map(card).join('')}</div>
-      <div id="empty-cases" hidden><h2>Din næste retning starter her.</h2><p>Gem en case for at samle dine referencer her.</p><button data-reset-filter class="outline-button">SE ALLE CASES</button></div>
-    </section>
-    <section class="client-case-index section-pad">
-      <div class="client-index-heading"><h2>I godt selskab.</h2><p>De individuelle historier kommer snart.</p></div>
-      <div class="client-index-links">${clients.map(client => `<a href="${escape(client.case)}"><span>${escape(client.name)}</span><small>CASE PÅ VEJ ↗</small></a>`).join('')}</div>
-    </section>
+    <section class="project-paper project-archive section-pad">${renderProjectCollection()}</section>
     ${cta('Dit brand.', 'Dit næste kapitel.')}`
   });
 }
