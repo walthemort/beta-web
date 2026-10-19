@@ -1,10 +1,11 @@
+import {mountHomeServices} from './home-services.js';
 import {t} from './locale.js';
 import {mountReveals} from './scroll-reveal.js';
 import {mountFloatingMenu} from './floating-menu.js';
 import {mountHeroParallax} from './hero-parallax.js';
 import {mountCreativeInteractions} from './creative-interactions.js';
 
-mountReveals();mountFloatingMenu(t);
+mountHomeServices(t);mountReveals();mountFloatingMenu(t);
 mountHeroParallax();
 mountCreativeInteractions();
 

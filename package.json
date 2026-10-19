@@ -18,7 +18,8 @@
     "build:studio": "node scripts/build-studio.mjs",
     "test:studio": "node scripts/check-studio.mjs",
     "test:overhaul": "node scripts/check-overhaul.mjs",
-    "test:lab": "node scripts/check-lab.mjs"
+    "test:lab": "node scripts/check-lab.mjs",
+    "test:services": "node scripts/check-services.mjs"
   },
   "engines": {
     "node": ">=22"

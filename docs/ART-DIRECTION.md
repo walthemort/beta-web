@@ -17,3 +17,9 @@ Forma and Offscript remain clearly labelled concept projects. Their new generate
 Images have responsive 768px and 1536px WebP versions. Their encoded sizes are covered by `test:budget`; existing CSS and JavaScript budgets remain unchanged. Run `build:studio` after changing the motion source. Verification includes the root suite, `test:studio`, `test:ui`, `test:adaptive` and `test:overhaul`.
 
 A subsequent simplification pass removes the logo pause button, hover pausing, decorative menu numbers and repeated slogans/metadata around headings, comparisons and calls to action. The client loop continues on hover; keyboard focus pauses moving links and reduced-motion preferences keep the static row. Concept disclosures, practical instructions and local-save/privacy feedback remain visible.
+
+## Service atelier
+
+The homepage services now pair four numbered, single-open stories with a desktop visual study that follows exploration. The studies reuse existing concept artwork and are labelled as studies. Hover wipes, plus/minus controls and staggered body content share a restrained motion rhythm. Repeated clicks reverse from the current height; a responsive reflow or reduced-motion change clears height constraints.
+
+Service selection stays separate from expansion. Keyed selection chips keep their controls, use the existing `beta:services` planner state and return keyboard focus after removal. Storage failures are announced. Run `npm run test:services` for motion reversal, preview stability, keyboard selection, persistence, planner continuity, bilingual layouts and responsive/reduced-motion behavior.

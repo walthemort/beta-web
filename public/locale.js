@@ -61,3 +61,6 @@ Object.assign(dictionary,{'Visuel mavefornemmelse — BETA':'Visual instinct —
 Object.assign(dictionary,{'RYD FRA BRIEFEN':'REMOVE FROM BRIEF','Gemt til briefen:':'Saved for your brief:','Testen kunne ikke ryddes fra browserens lager.':'The test could not be cleared from browser storage.','Testen er fjernet fra briefen.':'The test has been removed from the brief.'});
 
 Object.assign(dictionary,{'VISUEL RETNING':'VISUAL DIRECTION'});
+
+Object.assign(dictionary,{'VISUELLE STUDIER':'VISUAL STUDIES','DIT PROJEKT':'YOUR PROJECT','Dit projektvalg':'Your project selection','Valgte services':'Selected services','Service tilføjet.':'Service added.','Service fjernet.':'Service removed.','Dit valg kunne ikke gemmes i denne browser.':'Your selection could not be saved in this browser.'});
+Object.assign(dictionary,{'VALGT':'SELECTED','VÆLG':'SELECT','Fjern':'Remove','Tilføj':'Add'});

@@ -55,17 +55,6 @@ $('#menu-close').onclick=()=>closeDialog(menu);
 menu.addEventListener('close',lockScroll);menu.addEventListener('cancel',e=>{e.preventDefault();void closeDialog(menu)});
 $('#menu-open').onclick=()=>showDialog(menu);
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();void closeDialog(menu).then(()=>{if(a.getAttribute('href').startsWith('#')){$(a.getAttribute('href'))?.scrollIntoView({behavior:motionOff()?'instant':'smooth'});history.replaceState(null,'',a.getAttribute('href'))}else window.location.assign(a.href)})}));
-const services=[...document.querySelectorAll('[data-service]')],names=services.map(el=>el.dataset.service);
-let selected=new Set();try{selected=new Set(JSON.parse(localStorage.getItem('beta:services')||'[]').filter(n=>names.includes(n)))}catch{}
-function updateSelection(animate=true){
- const previousHeight=$('#selection-list').getBoundingClientRect().height;
- for(const el of services){const active=selected.has(el.dataset.service),button=el.querySelector('.service-add');el.classList.toggle('is-selected',active);button.setAttribute('aria-pressed',String(active));button.setAttribute('aria-label',`${active?'Fjern':'Tilføj'} ${el.dataset.service}`);button.textContent=active?'VALGT ✓':'VÆLG ↗';decorateArrows(button)}
- $('#selection-count').textContent=String(selected.size).padStart(2,'0');$('#selection-list').innerHTML=selected.size?[...selected].map(n=>`<li><span>${esc(n)}</span><button data-remove="${esc(n)}" aria-label="Fjern ${esc(n)}">×</button></li>`).join(''):'<li class="selection-empty">Vælg en eller flere services.<br>Vi sammensætter et tilbud til dig.</li>';
- $('#selection-list').querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{selected.delete(b.dataset.remove);updateSelection()});
- if(animate){animateHeightChange($('#selection-list'),previousHeight);if(!motionOff())$('#selection-list').animate([{opacity:.3},{opacity:1}],{duration:250})}
- try{localStorage.setItem('beta:services',JSON.stringify([...selected]))}catch{}
-}
-for(const el of services){el.querySelector('.service-toggle').onclick=()=>{const button=el.querySelector('.service-toggle'),panel=el.querySelector('.service-body'),open=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!open));void animateDisclosure(panel,!open);el.classList.toggle('is-open',!open)};el.querySelector('.service-add').onclick=()=>{selected.has(el.dataset.service)?selected.delete(el.dataset.service):selected.add(el.dataset.service);updateSelection()}}
 let siteConfig={};fetch('/api/site-config').then(r=>r.json()).then(c=>{siteConfig=c}).catch(()=>{});
 function contactDestination(){if(siteConfig.bookingURL){try{const u=new URL(siteConfig.bookingURL);if(u.protocol==='https:'||u.protocol==='http:')return u.href}catch{}}if(siteConfig.contactEmail&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(siteConfig.contactEmail))return `mailto:${siteConfig.contactEmail}`;return null}
 const plannerURL=()=>document.documentElement.lang==='en'?'/en/start':'/start';
@@ -113,7 +102,7 @@ initializeClients();
 const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!reducedMotion&&'IntersectionObserver'in window){document.body.classList.add('js-motion');const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
 let scrollScheduled=false;window.addEventListener('scroll',()=>{if(scrollScheduled)return;scrollScheduled=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-window.innerHeight;$('.scroll-progress').style.transform=`scaleX(${max>0?window.scrollY/max:0})`;scrollScheduled=false})},{passive:true});
-updateSelection(false);decorateArrows();
+decorateArrows();
 if(!reducedMotion&&window.matchMedia('(pointer: fine)').matches){let pointerFrame=null;hero.addEventListener('pointermove',event=>{if(pointerFrame)return;pointerFrame=requestAnimationFrame(()=>{const rect=hero.getBoundingClientRect();hero.style.setProperty('--pointer-x',`${(event.clientX-rect.left)/rect.width*100}%`);hero.style.setProperty('--pointer-y',`${(event.clientY-rect.top)/rect.height*100}%`);pointerFrame=null})});hero.addEventListener('pointerleave',()=>{hero.style.removeProperty('--pointer-x');hero.style.removeProperty('--pointer-y')})}
 
 for(const details of document.querySelectorAll('.faq details')){
