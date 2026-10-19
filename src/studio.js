@@ -6,11 +6,9 @@ import {mountHomeServices} from './home-services.js';
 import {t} from './locale.js';
 import {mountReveals} from './scroll-reveal.js';
 import {mountFloatingMenu} from './floating-menu.js';
-import {mountHeroParallax} from './hero-parallax.js';
 import {mountCreativeInteractions} from './creative-interactions.js';
 
 mountHeroFilm(t);mountProjects(t);mountScrollScenes();mountSectionMotion();mountHomeServices(t);mountReveals();mountFloatingMenu(t);
-mountHeroParallax();
 mountCreativeInteractions();
 
 // Keep a direction while browsing; the existing inspiration board and brief read this same key.

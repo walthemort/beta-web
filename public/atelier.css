@@ -147,13 +147,22 @@
 .has-scroll-ink .scroll-word{color:transparent;background-image:linear-gradient(90deg,var(--word-ink) 50%,color-mix(in srgb,var(--word-ink) 18%,transparent) 50%);background-size:200% 100%;background-position:100% 0;background-clip:text;-webkit-background-clip:text}
 @media print,(prefers-reduced-motion:reduce){.has-scroll-ink .scroll-word{color:var(--word-ink);background:none}}
 @media(forced-colors:active){.has-scroll-ink .scroll-word{color:CanvasText;background:none}}
-/* Temporary brand film. Replace the web exports when the new mark is rendered. */
-.agency-visual .hero-film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:0;transition:opacity .7s var(--atelier-ease);pointer-events:none}
-.has-hero-film .agency-visual{left:35%;right:-3%}
-.has-hero-film .agency-visual:after{background:linear-gradient(90deg,var(--black),transparent 26%),linear-gradient(180deg,var(--black),transparent 20% 80%,var(--black))}
-.has-hero-frame .hero-film{opacity:1}
-.has-hero-frame .hero-artwork{opacity:0}
-.hero-film-controls{position:absolute;bottom:28px;right:var(--page-gutter);z-index:2;display:flex;gap:10px;align-items:center}
+/* A cinematic first screen. Copy and navigation to projects live below the film. */
+.film-hero.agency-hero{position:relative;display:block;height:auto;min-height:0;max-height:none;padding:0 var(--page-gutter);overflow:visible;background:var(--black);isolation:isolate}
+.film-hero .agency-visual{position:relative;inset:auto;z-index:0;width:100%;height:auto;aspect-ratio:16/9;max-height:78svh;border-radius:12px;background:#050506;overflow:hidden;opacity:1;mask-image:none;-webkit-mask-image:none;pointer-events:none}
+.film-hero .agency-visual:after{display:none}
+.film-hero .hero-artwork{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;animation:none;scale:1;translate:none;transform:none;opacity:1}
+.film-hero .hero-film{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:0;transition:opacity .6s var(--atelier-ease);pointer-events:none}
+.film-hero.has-hero-frame .hero-film{opacity:1}
+.film-hero.has-hero-frame .hero-artwork{opacity:0}
+.studio-intro{display:flex;justify-content:space-between;align-items:center;gap:36px;padding-block:38px 42px;background:var(--black);color:var(--white)}
+.studio-intro h1{font:400 clamp(25px,3vw,42px)/1.15 var(--studio-font);letter-spacing:-.045em;margin:0;max-width:24ch}
+.studio-intro h1 em{font-style:normal;color:var(--muted)}
+.studio-intro .agency-actions{display:flex;align-items:center;flex-wrap:wrap;gap:24px;margin:0}
+.studio-intro .agency-button{background:none;border:1px solid #f6f4ef44;color:var(--white);font-size:9px;min-height:44px;padding:12px 18px;gap:24px}
+.studio-intro .agency-button:hover{background:var(--white);color:var(--black)}
+.studio-intro .agency-review-link{font-size:10px;line-height:1.5;min-height:44px;display:flex;align-items:center;gap:12px}
+.hero-film-controls{position:absolute;bottom:18px;right:calc(var(--page-gutter) + 18px);z-index:2;display:flex;gap:10px;align-items:center}
 .hero-film-controls button{min-height:42px;border:1px solid #f6f4ef55;background:#0b0b0e75;color:var(--white);border-radius:30px;font:500 9px/1.4 var(--studio-font);display:flex;align-items:center;justify-content:center;gap:14px;transition:background .25s,border-color .25s}
 #hero-film-open{padding:12px 18px}#hero-film-open .ui-arrow{width:16px;height:16px}
 #hero-film-toggle{width:42px;padding:10px}
@@ -167,5 +176,6 @@
 .brand-film-toolbar button{display:grid;place-items:center;width:36px;height:36px;background:none;border:1px solid #f6f4ef44;border-radius:50%;color:inherit}
 .brand-film-toolbar svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.4}
 .brand-film-dialog video{display:block;width:100%;max-height:calc(100svh - 118px);aspect-ratio:16/9;background:#000}
-@media(max-width:600px){.has-hero-film .agency-visual{inset:330px -12% 0;mask-image:none;-webkit-mask-image:none}.has-hero-film .agency-visual:after{background:linear-gradient(180deg,var(--black),transparent 26% 75%,var(--black))}.hero-film-controls{bottom:22px}.hero-film-controls button{min-height:44px}#hero-film-toggle{width:44px}.brand-film-dialog{width:calc(100% - 20px)}.brand-film-toolbar{padding:12px 14px}.brand-film-toolbar h2{font-size:9px}}
+@media(max-width:900px){.studio-intro{gap:28px}.studio-intro .agency-actions{gap:12px;justify-content:end}.studio-intro h1{font-size:30px}}
+@media(max-width:600px){.film-hero .agency-visual{border-radius:8px;max-height:none}.hero-film-controls{bottom:10px;right:calc(var(--page-gutter) + 10px);gap:7px}.hero-film-controls button{min-height:34px}#hero-film-open{font-size:8px;padding:8px 11px;gap:10px}#hero-film-toggle{width:34px;padding:8px}.studio-intro{display:block;padding-block:26px 30px}.studio-intro h1{font-size:27px;max-width:24ch}.studio-intro .agency-actions{justify-content:start;gap:18px;margin-top:22px}.studio-intro .agency-button{font-size:8px;padding:10px 14px;gap:16px;min-height:42px}.studio-intro .agency-review-link{font-size:9px;min-height:42px}.brand-film-dialog{width:calc(100% - 20px)}.brand-film-toolbar{padding:12px 14px}.brand-film-toolbar h2{font-size:9px}}
 @media(prefers-reduced-motion:reduce){.agency-visual .hero-film,.hero-film-controls button{transition:none}.brand-film-dialog::backdrop{backdrop-filter:none}}

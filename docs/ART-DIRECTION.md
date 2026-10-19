@@ -36,3 +36,8 @@ Native case links open an optional animated dialog with previous/next controls, 
 ## Scroll scenes
 
 Existing about, studio and case headings now fill progressively with scroll, retaining their actual selectable text and brand colours. The blue project chapter's paper edge flattens as it passes. These scenes use native page scrolling, schedule work only for visible scenes after scroll/resize, and do not pin the page. Reduced motion, unsupported CSS, printing and forced-colour modes show solid readable type. The user has authorized the older-logo montage as a temporary hero while the new version renders. It is now optimized and replaceable, with optional full-film playback.
+
+
+## Film-first homepage
+
+The hero now contains only the wide film and its play/pause/full-film controls. The former oversized headline, supporting paragraph and split-screen gradient are removed. A short studio introduction and project/Review links sit below the frame. The video keeps its full composition on desktop and mobile, and the fallback image is steady. This supersedes the former pointer-driven ribbon parallax and text-over-art hero layout.

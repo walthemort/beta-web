@@ -1,7 +1,7 @@
 /** One-shot editorial reveals. Text stays selectable, semantic and visible without JS. */
 export function mountReveals(){
  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),pending=new Set(),running=new Map();
- const headingSelector='.agency-hero h1,.section-heading h2,.about h2,.contact-main>span:first-child,.page-intro h1,.studio-manifesto h2,.client-case-story h2,.case-chapter h2,.review-intro h2,.portal-strip h2,.page-cta h2';
+ const headingSelector='.studio-intro h1,.section-heading h2,.about h2,.contact-main>span:first-child,.page-intro h1,.studio-manifesto h2,.client-case-story h2,.case-chapter h2,.review-intro h2,.portal-strip h2,.page-cta h2';
  const fadeSelector='.agency-kicker,.agency-intro,.about p,.page-intro>p,.intro-bottom>p';
  const actionSelector='.agency-actions>a,.button-blue,.outline-button,.portal-button,.text-link,.service-add,[data-studio-save]';
  const candidates=[...document.querySelectorAll(`${headingSelector},${fadeSelector},${actionSelector}`)].filter(el=>!el.closest('dialog,[hidden],[data-scroll-ink],#services .service-list,#services .selection-card'));

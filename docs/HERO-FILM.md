@@ -13,7 +13,7 @@ All MP4s have fast-start metadata. The server streams validated public video ass
 
 ## Behavior
 
-The existing text, calls to action and navigation are usable immediately. Hero playback is muted, inline and loops. A pause/play control is provided. Playback pauses offscreen, in a hidden tab, while the full-film dialog is open, and on page leave; a user's pause survives scrolling. Reduced-motion and data-saving preferences prevent automatic video fetching/playback; the existing ribbon artwork remains the fallback. Explicit play is available. Failed hero playback preserves the artwork and full-film button.
+The hero presents the film in a wide frame with no overlaid headline or marketing copy. Its complete composition is preserved with `object-fit: contain`, including on mobile; there is no side gradient or image parallax. A compact introduction and project/Review links live directly below the film. Navigation and those links are usable immediately. Hero playback is muted, inline and loops. A pause/play control is provided. Playback pauses offscreen, in a hidden tab, while the full-film dialog is open, and on page leave; a user's pause survives scrolling. Reduced-motion and data-saving preferences prevent automatic video fetching/playback; the existing ribbon artwork remains the fallback. Explicit play is available. Failed hero playback preserves the artwork and full-film button.
 
 The full film opens on request with native controls, including audio and seeking. Escape, the close control and backdrop clicks close it, pause audio and return focus. Closing resumes the background only when current preferences and the user's pause state permit it. No-JavaScript visitors retain the static hero.
 

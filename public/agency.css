@@ -12,21 +12,11 @@ body{font-family:var(--studio-font)}
 .site-header .nav-project{border:1px solid #F6F4EF80;border-radius:50px;padding:12px 23px;margin-left:22px;font-size:10px;letter-spacing:.1em;color:var(--white)}
 .site-header>.language-toggle{margin-left:0;border:0;font-size:10px;padding:8px}
 .site-header>.menu-trigger{display:none}
-.agency-hero{position:relative;min-height:610px;height:min(740px,calc(100svh - 118px));overflow:hidden;background:var(--black);padding:55px 6% 80px;display:flex;align-items:center;isolation:isolate}
-.agency-visual{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:1}
-
-.agency-hero-copy{width:min(48%,560px);position:relative;z-index:1}
-.agency-kicker{font:10px/1.5 "Inter Variable",Arial,sans-serif;letter-spacing:.24em;margin:0 0 28px;color:#f6f4efb3}
-.agency-hero h1{font-size:clamp(48px,5.5vw,86px);font-weight:400;line-height:.99;letter-spacing:-.055em;margin:0 0 28px}
-.agency-hero h1 em{font-style:normal;color:var(--blue)}
-.agency-intro{max-width:340px;font-size:15px;line-height:1.65;letter-spacing:.01em;color:#f6f4efb3;margin:0 0 30px}
 .agency-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
 .agency-button{display:inline-flex;align-items:center;justify-content:center;gap:23px;border-radius:40px;background:var(--blue);color:var(--white);padding:15px 26px;font-size:10px;letter-spacing:.08em;transition:background .25s,transform .35s}
 .agency-button:hover{background:#3461ff;transform:translateY(-3px)}
 .agency-review-link{font-size:11px;color:#f6f4efb3;display:inline-flex;gap:8px;align-items:center}
 .agency-review-link:hover{color:var(--white)}
-.agency-hero-foot{position:absolute;inset:auto 6% 34px;display:flex;align-items:center;justify-content:space-between;font:9px/1.5 "Inter Variable",Arial,sans-serif;letter-spacing:.19em;color:#f6f4ef80}
-.agency-hero-foot>span:first-child:before{content:'';display:inline-block;width:40px;height:1px;background:#f6f4ef55;margin:0 16px 3px 0}
 .hero.review-section{height:auto;min-height:0;max-height:none;padding:60px 6%;background:var(--black);border-block:1px solid var(--line);overflow:visible;display:block}
 .hero.review-section:before{display:none}
 .review-section .hero-content{text-align:left;animation:none}
@@ -90,14 +80,10 @@ body{font-family:var(--studio-font)}
 .site-footer{padding-block:40px;letter-spacing:.04em}.site-footer .brand img{width:180px}
 .page-intro h1,.page-intro h2,.studio-manifesto h2,.offerings h2{font-weight:400;letter-spacing:-.055em}
 .desktop-nav .nav-project{border-radius:30px}
-
-@media(min-width:1700px){.agency-hero-copy{margin-left:calc((100vw - 1500px)/2)}.agency-hero{padding-right:max(6%,calc((100vw - 1500px)/2))}}
-@media(max-width:1100px){.site-header{gap:24px}.site-header .desktop-nav{gap:20px}.site-header .nav-project{margin-left:0}.site-header>.brand{flex-basis:185px}.site-header>.brand img{width:185px}.agency-hero{height:650px;min-height:560px}.agency-hero-copy{width:53%}.agency-hero h1{font-size:6.8vw}.agency-intro{font-size:14px}.agency-review-link{width:100%}}
-@media(max-width:900px){.site-header{height:100px;gap:18px}.site-header .desktop-nav{display:none}.site-header>.language-toggle{margin-left:auto}.site-header>.menu-trigger{display:flex;gap:10px;font-size:10px}.menu-trigger span{font-size:22px}.menu-trigger:hover span{transform:none}.agency-hero{height:650px;min-height:540px;padding-top:40px}.agency-hero-copy{width:55%}.agency-hero h1{font-size:clamp(43px,6.7vw,68px)}.agency-hero-foot>span:last-child{display:none}.review-intro{gap:25px}.selection-card{grid-template-columns:auto 1fr}.selection-bottom{grid-column:1/-1}.section-pad{padding-block:60px}}
-@media(max-width:600px){.site-header{height:96px;padding-inline:6%}.site-header>.brand{flex-basis:165px}.site-header>.brand img{width:165px}.brand-studio{font-size:7px;letter-spacing:5px;margin-top:-1px}.site-header>.menu-trigger{font-size:0;padding-left:4px}.site-header>.menu-trigger span{font-size:25px}.agency-hero{height:auto;min-height:660px;align-items:flex-start;padding:54px 6% 225px}.agency-hero-copy{width:100%}.agency-kicker{font-size:8px;margin-bottom:20px}.agency-hero h1{font-size:clamp(43px,11vw,66px);max-width:380px;margin-bottom:23px}.agency-intro{font-size:13px;max-width:270px;line-height:1.65}.agency-actions{gap:18px}.agency-review-link{width:auto;font-size:10px}.agency-button{font-size:9px;padding:14px 20px;gap:15px}.agency-hero:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0B0B0E 25%,#0B0B0E90 53%,transparent 75%);pointer-events:none}.agency-hero-foot{bottom:23px;font-size:7px}.review-section .review-intro{display:block;margin-bottom:22px}.review-intro h2{font-size:30px}.review-intro>p{margin-top:15px;font-size:12px;max-width:280px}.hero.review-section{padding:40px 6%}.review-section .search-field input{font-size:12px;height:38px}.review-section .search-field button{height:37px;padding-inline:12px;font-size:8px;gap:9px}.review-section .review-shell{padding:5px}.client-strip{padding:9px 0}.client-logo{height:35px;width:105px}.client-logo img{max-height:23px;max-width:95px}.client-group{gap:30px;padding-right:30px}.client-name{font-size:16px}.section-pad{padding-block:45px}.section-heading{margin:28px 0 35px}.section-heading h2{font-size:40px}.section-heading p{font-size:13px}.service-head{padding:27px 0}.service-toggle b{font-size:28px}.service-toggle small{font-size:8px}.service-add{font-size:8px;padding:8px 12px}.service-body>p{font-size:16px}.selection-card{gap:18px}.selection-top h3{font-size:10px}.selection-card #selection-list{font-size:11px}.selection-card .selection-empty{font-size:11px}.cases{gap:24px;grid-template-columns:1fr}.case-art{aspect-ratio:1.2}.case-caption h3{font-size:19px}.about-layout{gap:35px}.about h2{font-size:44px;margin-top:0}.about p{font-size:14px}.studio-editorial img{aspect-ratio:1.2}.portal-strip{padding-block:40px}.portal-strip h2{font-size:34px}.portal-button{padding:15px 20px}.faq{padding-block:40px}.contact-main>span:first-child{font-size:11vw}.contact-arrow{font-size:12vw}.site-footer{gap:18px;padding-block:28px}.site-footer .brand{flex-basis:100%;margin-bottom:15px}.site-footer .brand img{width:180px}}
+@media(max-width:1100px){.site-header{gap:24px}.site-header .desktop-nav{gap:20px}.site-header .nav-project{margin-left:0}.site-header>.brand{flex-basis:185px}.site-header>.brand img{width:185px}.agency-review-link{width:100%}}
+@media(max-width:900px){.site-header{height:100px;gap:18px}.site-header .desktop-nav{display:none}.site-header>.language-toggle{margin-left:auto}.site-header>.menu-trigger{display:flex;gap:10px;font-size:10px}.menu-trigger span{font-size:22px}.menu-trigger:hover span{transform:none}.review-intro{gap:25px}.selection-card{grid-template-columns:auto 1fr}.selection-bottom{grid-column:1/-1}.section-pad{padding-block:60px}}
+@media(max-width:600px){.site-header{height:96px;padding-inline:6%}.site-header>.brand{flex-basis:165px}.site-header>.brand img{width:165px}.brand-studio{font-size:7px;letter-spacing:5px;margin-top:-1px}.site-header>.menu-trigger{font-size:0;padding-left:4px}.site-header>.menu-trigger span{font-size:25px}.agency-actions{gap:18px}.agency-review-link{width:auto;font-size:10px}.agency-button{font-size:9px;padding:14px 20px;gap:15px}.review-section .review-intro{display:block;margin-bottom:22px}.review-intro h2{font-size:30px}.review-intro>p{margin-top:15px;font-size:12px;max-width:280px}.hero.review-section{padding:40px 6%}.review-section .search-field input{font-size:12px;height:38px}.review-section .search-field button{height:37px;padding-inline:12px;font-size:8px;gap:9px}.review-section .review-shell{padding:5px}.client-strip{padding:9px 0}.client-logo{height:35px;width:105px}.client-logo img{max-height:23px;max-width:95px}.client-group{gap:30px;padding-right:30px}.client-name{font-size:16px}.section-pad{padding-block:45px}.section-heading{margin:28px 0 35px}.section-heading h2{font-size:40px}.section-heading p{font-size:13px}.service-head{padding:27px 0}.service-toggle b{font-size:28px}.service-toggle small{font-size:8px}.service-add{font-size:8px;padding:8px 12px}.service-body>p{font-size:16px}.selection-card{gap:18px}.selection-top h3{font-size:10px}.selection-card #selection-list{font-size:11px}.selection-card .selection-empty{font-size:11px}.cases{gap:24px;grid-template-columns:1fr}.case-art{aspect-ratio:1.2}.case-caption h3{font-size:19px}.about-layout{gap:35px}.about h2{font-size:44px;margin-top:0}.about p{font-size:14px}.studio-editorial img{aspect-ratio:1.2}.portal-strip{padding-block:40px}.portal-strip h2{font-size:34px}.portal-button{padding:15px 20px}.faq{padding-block:40px}.contact-main>span:first-child{font-size:11vw}.contact-arrow{font-size:12vw}.site-footer{gap:18px;padding-block:28px}.site-footer .brand{flex-basis:100%;margin-bottom:15px}.site-footer .brand img{width:180px}}
 @media(prefers-reduced-motion:reduce){.agency-button{transition:none}}
-.agency-hero:before{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,#0B0B0E,transparent 14%,transparent 93%,#0B0B0E)}
-.agency-hero-foot{z-index:1}
 .case-hero h1,.client-case-intro h1,.lab-heading h2,.page-cta h2,.case-chapter h2,.planner-step h2{font-weight:400}
 
 
@@ -139,7 +125,7 @@ body{font-family:var(--studio-font)}
 @media(max-width:1100px){.site-header .desktop-nav{gap:18px;font-size:13px}.site-header .nav-project{font-size:10px;padding-inline:18px}}
 @media(max-width:900px){.site-header .desktop-nav{display:none}.menu-dialog nav a{font-size:clamp(34px,7vw,64px);grid-template-columns:minmax(0,1fr) 35px;gap:15px}.menu-dialog .menu-header img{width:185px}}
 @media(max-width:600px){.menu-dialog .menu-header img{width:165px}.menu-dialog nav{padding:25px 0}.menu-dialog nav a{font-size:clamp(28px,7.5vw,42px);padding:22px 0;letter-spacing:-.035em;grid-template-columns:minmax(0,1fr) 28px;gap:12px}.home-case .case-caption span{font-size:8px;letter-spacing:.03em}.case-preview-badge{bottom:12px;left:12px}.case-save{width:34px;height:34px}}
-@media(prefers-reduced-motion:reduce){.hero-artwork,.case-preview img,.service-toggle b{transition:none}.case:hover .case-preview-primary,.case:hover .case-preview-secondary,.service-toggle:is(:hover,:focus-visible) b{transform:none}.menu-dialog[open] nav a{animation:none}}
+@media(prefers-reduced-motion:reduce){.case-preview img,.service-toggle b{transition:none}.case:hover .case-preview-primary,.case:hover .case-preview-secondary,.service-toggle:is(:hover,:focus-visible) b{transform:none}.menu-dialog[open] nav a{animation:none}}
 
 /* Ink sweeps follow the original line breaks and keep the blue emphasis. */
 .motion-pending{opacity:.08;translate:0 18px}
@@ -155,18 +141,10 @@ body{font-family:var(--studio-font)}
 
 /* The large image recreates the reference ribbon, with a quiet left edge for live type. */
 .agency-visual{inset:0;overflow:hidden;opacity:1;mask-image:none}
-.agency-visual .hero-artwork{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:none;animation:artwork-arrive 1.5s cubic-bezier(.22,1,.36,1) both}
-.agency-visual:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#0B0B0E 0%,#0B0B0E55 34%,transparent 60%)}
 @keyframes artwork-arrive{from{opacity:0;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}
-@media(max-width:1100px) and (min-width:601px){.agency-visual .hero-artwork{object-position:58% 50%}.agency-visual:after{background:linear-gradient(90deg,#0B0B0E 0%,#0B0B0Ea6 38%,transparent 70%)}}
-@media(max-width:600px){.agency-visual{inset:250px -15% 0 0;mask-image:linear-gradient(180deg,transparent,#000 28%);-webkit-mask-image:linear-gradient(180deg,transparent,#000 28%)}.agency-visual .hero-artwork{object-position:83% 50%}.agency-visual:after{background:linear-gradient(180deg,#0B0B0E88,transparent 40%,#0B0B0E 100%)}}
-@media(prefers-reduced-motion:reduce){.agency-visual .hero-artwork{animation:none;transform:none}}
 
 /* Overscan keeps the image edges inside the frame as the ribbon moves. */
 .has-parallax .hero-artwork{scale:1.16;translate:var(--art-x,0px) var(--art-y,0px)}
-.parallax-active .hero-artwork{will-change:translate}
-@media(max-width:600px){.has-parallax .hero-artwork{scale:1.12}}
-@media(prefers-reduced-motion:reduce){.has-parallax .hero-artwork{scale:1;translate:none;will-change:auto}}
 
 /* Menus uncover the page from the right; type follows the same horizontal direction. */
 .menu-dialog[open]{opacity:1;transform:none;clip-path:inset(0);animation:menu-wipe-in .5s cubic-bezier(.22,1,.36,1) both}
