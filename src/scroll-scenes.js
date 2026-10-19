@@ -1,6 +1,6 @@
 /** Scroll-linked type and chapter curves, with no idle render loop or page pinning. */
 export function mountScrollScenes(){
- const reduce=matchMedia('(prefers-reduced-motion: reduce)'),targets=[],chapter=document.querySelector('.project-chapter');
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)'),targets=[],chapter=document.querySelector('[data-curved-chapter]');
  const clamp=value=>Math.max(0,Math.min(1,value));let frame=0;
  if(CSS.supports('background-clip','text')&&CSS.supports('color','color-mix(in srgb, black 18%, transparent)'))for(const heading of document.querySelectorAll('.about h2,.studio-manifesto h2,.case-story h2')){
   const walker=document.createTreeWalker(heading,NodeFilter.SHOW_TEXT),nodes=[];let node;while(node=walker.nextNode())if(node.textContent.trim())nodes.push(node);
