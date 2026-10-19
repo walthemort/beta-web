@@ -17,6 +17,7 @@
     "test:adaptive": "node scripts/check-adaptive.mjs",
     "build:studio": "node scripts/build-studio.mjs",
     "test:studio": "node scripts/check-studio.mjs",
+    "test:hero": "node scripts/check-hero.mjs",
     "test:overhaul": "node scripts/check-overhaul.mjs",
     "test:lab": "node scripts/check-lab.mjs",
     "test:services": "node scripts/check-services.mjs",

@@ -1,12 +1,22 @@
 # Public art direction — an image-led studio edition
 
-The site keeps warm white, Beta blue, black and the supplied wordmark. The opening now pairs a three-line editorial heading with an asymmetric spread of Offscript and Forma concept photographs. Each photograph is a native case link, with visible project names and a shared concept-study label. Responsive crops preserve the image-led composition on mobile. The experimental blue gesture has been removed from the homepage, contact and every public subpage. It did not communicate a clear enough connection to the brand. No hero film or new substitute brand mark is used. The actual logos are unchanged.
+The supplied Beta wordmark sets the direction: sharp terminals, stretched proportions and a feeling of forward movement. Those qualities become fixed photographic cuts, oblique sans-serif emphasis and a staggered composition. The actual logo files remain untouched. Brand colours remain `#1B4DFF`, `#F6F4EF` and `#0B0B0E`.
+
+## Two perspectives
+
+The homepage opens in blue with Offscript’s concept photograph. “Kant / Ro” (“Edge / Calm”) changes the hero’s palette and photograph to Forma’s quieter paper-and-material study. The composition and page height remain steady. The visible image is a native case link with a clear concept label. Without JavaScript, the first case link and heading remain visible; the interactive controls stay hidden.
+
+The second image decodes before selection. Request generations prevent stale selections from replacing a more recent click. Failed decoding leaves the existing picture and case link usable, announces the issue and permits a retry. Arrow keys, Home and End operate the two buttons. A focused case link is returned to the chosen button before its panel is hidden. Reduced motion, including a live preference change, cancels animations. Neither selection nor scroll starts an idle rendering loop.
+
+Image frames use a static angled cut. Only opacity and transform animate on the photograph; the shape itself does not morph. The hero background colour transitions briefly when explicitly switching perspectives. No hero film or substitute brand mark is used.
 
 ## Composition across the site
 
-The homepage progresses from paper and photography to a slim blue logo loop, a light project index, full-blue services and an ink-black studio manifesto. The manifesto uses a larger statement above the studio introduction and three practical principles. Review returns to paper, with a muted flat input field, followed by concise FAQs and the blue contact chapter. The services subpage opens in blue; the studio manifesto shares the homepage’s ink palette. The real Beta wordmark remains large and readable in the header and footer.
+The blue opening leads into a slim black logo loop and a light project chapter. On desktop the homepage’s project photograph is on the left and the index on the right. A blue angled field identifies the selected concept; mobile keeps the compact horizontal index above the picture. The project photograph has a small cut corner. Its metadata, native case navigation and inspiration saves remain available.
 
-Service study crossfades use the concept collection rather than the old sculptural hero and branded poster mockup. The accordion, independent service selection, saved inspiration, project brief and private portal keep their existing behavior. All new copy has a matching English translation. The two concept photographs also use the existing one-shot reveal observer, so there are no idle image loops or pointer tracking.
+Large oblique sans-serif accents replace the earlier serif emphasis in public page introductions, the studio statement and contact chapters. The service section stays blue; the studio statement stays black. Review and concise FAQs use paper, followed by the blue contact chapter and the original large footer wordmark. The services subpage opens in blue; the studio manifesto shares the homepage’s ink palette. All new copy is translated into English.
+
+Service disclosures and image crossfades, the project brief and private portal retain their behavior. Forced colours removes the photographic cuts and supplies explicit selection outlines. Focusable image links keep their outline outside the cut image wrapper.
 
 ## Cases, rebuilt
 
@@ -26,6 +36,6 @@ The fullscreen menu opens with a compositor slide and closes in 180 ms, without 
 
 ## Verification
 
-`npm test` covers the server and data boundaries. `test:projects` checks the new index/stage, stable image dimensions, selection/filter races, direct case links, saved panel state, keyboard/focus, bilingual responsive layouts, no JavaScript and denied storage. `test:studio` checks removed effects, menu slides/reversal, focus, logo behavior and inspiration continuity. `test:overhaul` covers 54 bilingual responsive routes and the existing planner/privacy/gallery flows. `test:services`, `test:adaptive` and `test:budget` retain their respective checks. The former scroll-scene test and its removed runtime are retired.
+`npm test` covers the server and data boundaries. `test:hero` checks perspective switching, stable page geometry, decode races, failures/retry, keyboard focus, live reduced motion, bilingual responsive presentation and native no-JS links. `test:projects` checks the new index/stage, stable image dimensions, selection/filter races, direct case links, saved panel state, keyboard/focus, bilingual responsive layouts, no JavaScript and denied storage. `test:studio` checks removed effects, menu slides/reversal, focus, logo behavior and inspiration continuity. `test:overhaul` covers 54 bilingual responsive routes and the existing planner/privacy/gallery flows. `test:services`, `test:adaptive` and `test:budget` retain their respective checks. The former scroll-scene test and its removed runtime are retired.
 
 Local rendering measurements and their practical limits are recorded in [RENDER-PERFORMANCE.md](RENDER-PERFORMANCE.md).

@@ -5,7 +5,7 @@ import {t} from './locale.js';
 import {mountReveals} from './scroll-reveal.js';
 import {mountFloatingMenu} from './floating-menu.js';
 
-mountEditorialHero();mountProjects(t);mountHomeServices(t);mountReveals();mountFloatingMenu(t);
+mountEditorialHero(t);mountProjects(t);mountHomeServices(t);mountReveals();mountFloatingMenu(t);
 
 // Keep a direction while browsing; the existing inspiration board and brief read this same key.
 const read=()=>{try{const saved=JSON.parse(localStorage.getItem('beta:inspiration')||'[]');return Array.isArray(saved)?saved.filter(value=>typeof value==='string'&&/^[a-z0-9-]{1,60}$/.test(value)):[]}catch{return[]}};

@@ -25,3 +25,9 @@ Run `npm run profile:scroll` for the same procedure. It prints a JSON summary an
 ## Image-led edition
 
 The following visual pass adds two linked hero concept photographs to the same one-shot opacity/translate observer. It keeps the project index and all removed-effect constraints. An isolated sample using the same procedure recorded 218 paints / 104.4 ms paint time, 18 layouts / 35.0 ms layout time, a 17.5 ms 95th-percentile frame interval and two intervals over 32 ms. These are local diagnostic samples, not a promise of zero dropped frames on other hardware. No image panning, scrolling blur, word gradients or continuous hero render loop has been added.
+
+## Selectable perspectives
+
+The next edition uses a fixed angled photographic crop and explicit Edge/Calm controls. The image crop never morphs. Selecting a perspective decodes the requested image, then runs a short opacity/translate entrance and a brief background-colour transition. Scroll keeps the existing one-shot heading reveals and no continuous hero render loop.
+
+An isolated run using the same 1440×1000 / 4× CPU procedure recorded 216 paints / 82.8 ms paint time, 18 layouts / 18.4 ms layout time, a 17.5 ms 95th-percentile frame interval and one interval over 32 ms. Treat run-to-run differences as local measurements rather than a cross-device FPS guarantee. `test:hero` covers rapid changes, failed decoding/retry, stable geometry, keyboard access, reduced motion and the primary action on a shorter desktop display.

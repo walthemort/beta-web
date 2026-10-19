@@ -17,7 +17,7 @@ If the homepage and portal work but every subpage says “Not found”, stop the
 
 ## Pages and interactions
 
-- `/`: image-led studio opening with overlapping, linked concept photographs, a readable wordmark and case CTA; blue service chapter, black studio manifesto, expanding Beta Review, slim client-logo loop with softly faded edges, animated disclosures and a local project brief.
+- `/`: blue studio opening with cut photographic sheets, oversized oblique type and two selectable visual perspectives (Edge/Calm); a readable wordmark, asymmetric project index, blue service chapter, black studio manifesto, expanding Beta Review, slim black client-logo loop, animated disclosures and a local project brief.
 - `/cases`, `/cases/forma`, `/cases/offscript`, and seven client case URLs: filtering, saved inspiration, chapter navigation, typography playgrounds, full-size keyboard-accessible galleries and comparison sliders.
 - `/services`: service descriptions and an interactive four-stage process map.
 - `/studio`: editorial studio page and animated principles.
@@ -115,7 +115,7 @@ The complete feature/status ledger is `docs/NEXT-IDEAS.md`; 15 further proposals
 
 `public/atelier.css` defines the paper / ink / electric-blue public edition. The supplied wordmark, large selectable headings and warm white surfaces remain. The experimental blue graphic has been removed everywhere. Cases now use a project index beside one steady visual stage, with category/saved filters on `/cases` and two illustrated concepts on the homepage. Each story opens directly on its own page. There are no project modals, image masks, cursor-following previews or magnetic buttons. See [docs/ART-DIRECTION.md](docs/ART-DIRECTION.md).
 
-Animation uses short opacity/transform entrances and compositor menu slides. Character-by-character gradient fills, scroll-linked text repainting, logo-strip blur and cross-document screenshot transitions are removed. The logo loop still moves on hover and pauses for keyboard focus or reduced motion. Services and FAQ retain their small, interruptible disclosure animations. Run `npm run build:studio`, `npm run test:studio` and `npm run test:projects` after editing studio behavior.
+Animation uses short opacity/transform entrances and compositor menu slides. Character-by-character gradient fills, scroll-linked text repainting, logo-strip blur and cross-document screenshot transitions are removed. The logo loop still moves on hover and pauses for keyboard focus or reduced motion. Services and FAQ retain their small, interruptible disclosure animations. Run `npm run build:studio`, `npm run test:hero`, `npm run test:studio` and `npm run test:projects` after editing studio behavior.
 
 
 ## Public website overhaul

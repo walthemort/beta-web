@@ -77,3 +77,7 @@ Object.assign(dictionary,{'Uafhængigt kreativt studio':'Independent creative st
 Object.assign(dictionary,{'Viser':'Showing','UDVALGTE KONCEPTER':'SELECTED CONCEPTS','PROJEKTINDEKS':'PROJECT INDEX','Vælg projekt':'Choose a project','ALLE PROJEKTER':'ALL PROJECTS','Forskellige idéer.':'Different ideas.','Samme omtanke.':'The same care.','Et udvalg.':'A selection.','Mange udtryk.':'Many expressions.','Udforsk vores koncepter og kunder. Find det udtryk, der taler til dig.':'Explore our concepts and clients. Find the expression that speaks to you.','Projekterne er på vej.':'Projects are on their way.'});
 
 Object.assign(dictionary,{'Der flytter':'That move','noget.':'things.','To visuelle konceptstudier.':'Two visual concept studies.','Dit brand fortjener':'Your brand deserves','mere end pænt.':'more than pretty.'});
+
+Object.assign(dictionary,{'Skabt til':'Made','at skille':'to stand','sig ud.':'apart.','Skift visuelt perspektiv':'Change visual perspective','Et andet perspektiv?':'Another perspective?','Kant':'Edge','Ro':'Calm','OFFSCRIPT / KONCEPTSTUDIE':'OFFSCRIPT / CONCEPT STUDY','FORMA / KONCEPTSTUDIE':'FORMA / CONCEPT STUDY','Viser perspektiv:':'Showing perspective:','Billedet kunne ikke indlæses. Prøv igen.':'The image could not be loaded. Try again.','Fra tanke.':'From thought.','Til virkelighed.':'To reality.'});
+
+Object.assign(dictionary,{'Egne veje.':'Our own paths.','Tydelige aftryk.':'Distinct impressions.'});
