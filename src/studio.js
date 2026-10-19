@@ -1,3 +1,4 @@
+import {mountSignatureMotion} from './signature-motion.js';
 import {mountEditorialHero} from './editorial-hero.js';
 import {mountScrollScenes} from './scroll-scenes.js';
 import {mountProjects} from './projects.js';
@@ -8,7 +9,7 @@ import {mountReveals} from './scroll-reveal.js';
 import {mountFloatingMenu} from './floating-menu.js';
 import {mountCreativeInteractions} from './creative-interactions.js';
 
-mountEditorialHero();mountProjects(t);mountScrollScenes();mountSectionMotion();mountHomeServices(t);mountReveals();mountFloatingMenu(t);
+mountSignatureMotion();mountEditorialHero();mountProjects(t);mountScrollScenes();mountSectionMotion();mountHomeServices(t);mountReveals();mountFloatingMenu(t);
 mountCreativeInteractions();
 
 // Keep a direction while browsing; the existing inspiration board and brief read this same key.

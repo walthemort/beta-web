@@ -19,3 +19,11 @@ The white floating burger uses difference blending across light and dark section
 ## Verification
 
 Build with `npm run build:studio`. `test:studio` covers the typography, inactive old media, menu motion, responsive and no-JavaScript behavior, and inspiration continuity. `test:overhaul` checks 54 bilingual responsive routes plus planner, privacy, galleries and truthful holding pages. `test:services`, `test:projects`, `test:scenes` and `test:adaptive` cover their respective interactive flows. `test:budget` retains the existing asset and delivery limits.
+
+## Beta signature edition
+
+The light edition now has a drawn calligraphic gesture that borrows the tension, taper and sweeping motion of the supplied wordmark. It is website artwork, never a replacement brand mark. `lib/signature.mjs` supplies the same compact inline SVG for the homepage, contact and principal public-page openings. Headline lines are offset, the work grid has a small alternating vertical offset, and project/study/gallery covers share a precise diagonal cut. Filtered collections and narrow mobile layouts return to a level grid. Original client and Beta SVGs are unchanged.
+
+The gesture draws once when visible. A fine pointer produces at most nine pixels of drift; leaving, focus, a hidden tab, page exit and motion-preference changes reset it. There is no idle render loop. The graphic is decorative, unfocusable and visible without JavaScript. Live reduced motion cancels its active drawing immediately. Project arrivals reveal horizontally; the black project action receives a blue diagonal wipe. The footer gives the original black wordmark a broad, dedicated composition.
+
+Retired hero, banner and superseded case-index CSS has been removed rather than increasing the existing delivery budget. The studio browser check now also verifies the drawn path’s intermediate state, bounded pointer movement, live cancellation and no-JavaScript graphic.
