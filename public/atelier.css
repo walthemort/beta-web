@@ -125,6 +125,7 @@ body{background:var(--white);color:var(--black);--muted:#656568;--line:#0b0b0e25
 .public-edition .inspiration-board textarea{background:transparent;color:var(--black);border-color:var(--line)}
 
 /* Blue chapter controls must keep contrast in every disclosure/selection state. */
+#services .service-toggle b{color:var(--white)}
 #services .service:before{background:#f6f4ef0a}
 #services .service-number,#services .service.is-open .service-number,#services .service.is-selected .service-number,#services #selection-count,#services .service-studies figcaption{color:var(--white)}
 #services .service-add{border-color:#f6f4ef77}
