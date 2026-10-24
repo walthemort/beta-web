@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+import {executable} from '../lib/render-review.mjs';
+process.env.NODE_ENV='test';const {server}=await import('../server.js');await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
+const browser=await chromium.launch({executablePath:executable(),args:['--no-sandbox','--disable-dev-shm-usage']});
+try{
+ const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});await context.addInitScript(()=>localStorage.setItem('beta:analytics-consent','false'));
+ const page=await context.newPage(),errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
+ const format=value=>page.waitForFunction(value=>document.querySelector(`[data-format=${value}]`)?.getAttribute('aria-selected')==='true',value);
+ for(const width of [390,768,1440])for(const prefix of ['','/en'])for(const slug of ['forma','offscript']){
+  await page.setViewportSize({width,height:1000});await page.goto(base+prefix+'/cases/'+slug);await page.evaluate(()=>document.fonts.ready);
+  await page.locator('.format-tabs').waitFor({state:'visible'});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,slug+prefix+' / '+width);
+  const before=await page.locator('.format-stage').boundingBox();
+  for(const value of ['web','campaign','print']){await page.locator(`[data-format=${value}]`).click();await format(value);assert.equal(await page.locator('[data-format-panel]:visible').count(),1);const after=await page.locator('.format-stage').boundingBox();assert.equal(Math.round(after.height),Math.round(before.height),'Formats keep a steady stage');assert.equal(await page.locator('.format-stage').getAttribute('aria-busy'),'false')}
+  await page.locator('[data-detail="2"]').click();assert.equal(await page.locator('[data-detail-note="2"]').isVisible(),true);assert.equal(await page.locator('[data-detail-note]:visible').count(),1);
+  assert.equal(await page.locator('.chapter-nav a[href="#play"]').textContent(),prefix?'03 / FORMATS':'03 / FORMATER');
+ }
+ await page.setViewportSize({width:1440,height:1000});await page.goto(base+'/cases/forma');await page.locator('[data-format=print]').focus();await page.keyboard.press('End');await format('campaign');assert.equal(await page.locator('[data-format=campaign]').evaluate(el=>el===document.activeElement),true);await page.keyboard.press('Home');await format('print');
+ // Stale or failed decodes must preserve the latest usable format.
+ await page.evaluate(()=>{const img=document.querySelector('[data-format-panel=web] img');window.formatDecode=img.decode.bind(img);img.decode=()=>new Promise(r=>window.releaseFormat=r)});
+ await page.locator('[data-format=web]').click();assert.equal(await page.locator('.format-stage').getAttribute('aria-busy'),'true');await page.locator('[data-format=print]').click();await page.evaluate(()=>window.releaseFormat());await format('print');assert.equal(await page.locator('.format-stage').getAttribute('aria-busy'),'false');
+ await page.evaluate(()=>document.querySelector('[data-format-panel=web] img').decode=()=>Promise.reject(Error('Unavailable')));await page.locator('[data-format=web]').click();await page.waitForFunction(()=>document.querySelector('[data-format-status]').textContent.includes('kunne ikke'));await format('print');
+ await page.evaluate(()=>document.querySelector('[data-format-panel=web] img').decode=window.formatDecode);await page.locator('[data-format=web]').click();await format('web');
+ await page.locator('[data-detail="0"]').focus();await page.keyboard.press('End');assert.equal(await page.locator('[data-detail="2"]').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('[data-detail="2"]').evaluate(el=>el===document.activeElement),true);
+ await page.emulateMedia({reducedMotion:'no-preference'});const process=page.locator('.case-process details');await process.locator('summary').click();await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await process.evaluate(el=>el.open),true);assert.equal(await process.locator('.experience-disclosure').evaluate(el=>el.style.height),'');await process.locator('summary').click();assert.equal(await process.evaluate(el=>el.open),false);
+ for(const width of [390,768,1440])for(const prefix of ['','/en']){
+  await page.setViewportSize({width,height:1000});await page.goto(base+prefix+'/studio/arkiv');await page.locator('.archive-filters').waitFor({state:'visible'});assert.equal(await page.locator('.archive-study:visible').count(),6);
+  await page.locator('[data-archive-filter=type]').click();assert.equal(await page.locator('.archive-study:visible').count(),2);await page.locator('.archive-study:visible summary').first().click();assert.equal(await page.locator('.archive-study:visible').first().evaluate(el=>el.open),true);
+  await page.locator('[data-archive-filter=digital]').click();assert.equal(await page.locator('.archive-study:visible').count(),2);await page.locator('[data-archive-filter=all]').click();assert.equal(await page.locator('.archive-study:visible').count(),6);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+  assert.equal(await page.locator('.desktop-nav a[href="'+prefix+'/studio"]').getAttribute('aria-current'),'page');
+ }
+ // The film is fetched and played only after a deliberate click; closing releases it.
+ await page.goto(base);assert.equal(await page.locator('video').count(),0);assert(!requests.some(url=>url.endsWith('/beta-studio-reel.mp4')));
+ const opener=page.locator('[data-open-reel]').first();await opener.click();await page.locator('.reel-dialog').waitFor({state:'visible'});await page.waitForFunction(()=>document.querySelector('.reel-dialog video')?.currentTime>0);
+ assert.equal(await page.locator('.reel-dialog video').evaluate(el=>el.muted),true);assert.equal(Math.round(await page.locator('.reel-dialog video').evaluate(el=>el.duration)),24);assert.equal(await page.evaluate(()=>document.body.style.overflow),'hidden');
+ await page.keyboard.press('Escape');await page.locator('.reel-dialog').waitFor({state:'detached'});assert.equal(await page.locator('video').count(),0);assert.equal(await opener.evaluate(el=>el===document.activeElement),true);assert.equal(await page.evaluate(()=>document.body.style.overflow),'');
+ await page.emulateMedia({reducedMotion:'no-preference'});await opener.click();await page.locator('.reel-head button').click();await opener.evaluate(el=>el.click());await page.waitForTimeout(220);assert.equal(await page.locator('.reel-dialog').evaluate(el=>el.open),true);await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.reel-dialog').evaluate(el=>Number(getComputedStyle(el).opacity)),1);await page.keyboard.press('Escape');await page.emulateMedia({reducedMotion:'reduce'});await page.locator('.reel-dialog').waitFor({state:'detached'});
+ await page.route('**/beta-studio-reel.mp4',route=>route.abort());await opener.click();await page.locator('.reel-error').waitFor({state:'visible'});assert.equal(await page.locator('.reel-error a').getAttribute('href'),'/work/beta-studio-reel.mp4');await page.keyboard.press('Escape');await page.locator('.reel-dialog').waitFor({state:'detached'});await page.unroute('**/beta-studio-reel.mp4');
+ await page.goto(base+'/cases/rekom');assert.equal(await page.locator('[data-case-experience]').count(),0);assert.deepEqual(errors,[]);await context.close();
+ const plain=await browser.newContext({javaScriptEnabled:false}),nojs=await plain.newPage();await nojs.goto(base+'/cases/forma');assert.equal(await nojs.locator('[data-format-panel]:visible').count(),3);assert.equal(await nojs.locator('[data-detail-note]:visible').count(),3);await nojs.locator('.case-process summary').click();assert.equal(await nojs.locator('.case-process details').evaluate(el=>el.open),true);await nojs.goto(base+'/studio/arkiv');assert.equal(await nojs.locator('.archive-study:visible').count(),6);assert.equal(await nojs.locator('[data-open-reel]').first().getAttribute('href'),'/work/beta-studio-reel.mp4');await plain.close();
+ console.log('12 responsive/bilingual case editions, formats and decode races/retry, design details, keyboard/reduced motion, archive filters, no-JS, actual reel playback, lazy media, error recovery and modal focus/cleanup passed.');
+}finally{await browser.close();server.closeAllConnections();await new Promise(r=>server.close(r))}

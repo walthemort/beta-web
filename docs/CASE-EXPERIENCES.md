@@ -1,0 +1,22 @@
+# Six studio experiences
+
+The public site now connects six experiences around the existing Forma and Offscript concept studies. Real client holding pages remain unchanged.
+
+1. **Formats:** `/cases/forma#play` and `/cases/offscript#play` switch between Print, Website and Campaign. Each format is a separate photographic or HTML composition. The browser-window previews are illustrations, not live sites or links. Native tabs support arrows, Home/End and a focusable panel. Incoming images decode before selection; stale and failed requests leave the latest usable format intact. The canvas keeps its dimensions.
+2. **The thinking behind it:** an expandable section connects the existing typographic/colour studies with each concept’s three design principles. This describes the concept, without inventing client research or production history.
+3. **Studio reel:** a 24-second H.264/AAC montage opens from the homepage, studio and archive. It uses the supplied current Beta wordmark, existing concept photography and the new illustrative format compositions. Its soundtrack is reused from the user-provided `beta-brand-film.mp4`, looped and faded to fit; no new music service is used. The film starts muted with native controls, a readable sequence description and a direct-file fallback. No video element or MP4 request exists until the user opens it. Closing pauses and releases the media, restores scrolling and returns focus. Reopening during the close and live reduced-motion changes are supported. Without JS, the link opens the MP4 directly.
+4. **Design details:** three numbered points on each concept photograph explain a corresponding principle. All notes remain readable without JavaScript. Enhanced points support keyboard arrows and Home/End, use 48-pixel targets, retain the uncropped photograph’s coordinates and announce the selected detail.
+5. **Studio archive:** `/studio/arkiv` and `/en/studio/arkiv` contain six self-initiated studies, with Print/Typography/Digital filters and expandable notes. Entries link back to the relevant concept’s formats. The complete collection and native disclosures work without JavaScript.
+6. **Individual layouts:** Forma uses warm paper, a serif masthead, an offset photograph and an uneven gallery. Offscript uses a blue opening, stacked display typography, a wide campaign photograph and a dark image chapter. Header/footer, inspiration saves, sharing, chapter links, palette copying, galleries and comparison dragging remain connected.
+
+## Files and publishing boundaries
+
+`lib/case-experiences.mjs` renders the additions. `pages.mjs` selects the two editions and the archive route. Route-specific styles/JS are loaded only where required; the small reel controller and its styles accompany the reel teasers. `src/case-experiences.js` and `src/reel.js` build to public modules through `npm run build:studio`. New copy is translated in `public/locale.js`.
+
+The custom studies are restricted to the two existing **unpublished concepts**. Published projects and other client slugs keep the generic case template and approved CMS content. Publishing a real client story never silently inherits these invented format illustrations. Archive studies are explicitly self-initiated and are curated in `lib/case-experiences.mjs`; they are not represented as commissioned client work or chronological project records.
+
+The MP4 is committed, so running the site does not require FFmpeg or a video build. To rebuild it, run `npm run build:reel` with FFmpeg and the repository’s Chromium/Playwright setup available. The build captures the current concept compositions at 1280×720, adds brief encoded fades and gentle photo movement, and creates the 24-second stream with fast-start metadata. Native byte-range streaming permits seeking. Its file budget is separate from initial page delivery.
+
+## Verification
+
+`npm test` includes concept/published boundaries, escaping editable content, absent gallery metadata and bilingual route delivery. `npm run test:experiences` covers twelve responsive/bilingual case combinations, formats/decode races/retry, steady canvas geometry, design details, focus, reduced motion, archive filtering, no-JS access, actual muted film playback, deferred fetching, media failure fallback and modal cleanup/reopening. Existing overhaul, comparison, studio, project, service, hero and adaptive checks cover the shared interactions. `test:budget` reports common assets, route-specific experience assets and the encoded film independently.

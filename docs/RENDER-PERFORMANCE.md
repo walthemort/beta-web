@@ -31,3 +31,9 @@ The following visual pass adds two linked hero concept photographs to the same o
 The next edition uses a fixed angled photographic crop and explicit Edge/Calm controls. The image crop never morphs. Selecting a perspective decodes the requested image, then runs a short opacity/translate entrance and a brief background-colour transition. Scroll keeps the existing one-shot heading reveals and no continuous hero render loop.
 
 An isolated run using the same 1440×1000 / 4× CPU procedure recorded 216 paints / 82.8 ms paint time, 18 layouts / 18.4 ms layout time, a 17.5 ms 95th-percentile frame interval and one interval over 32 ms. Treat run-to-run differences as local measurements rather than a cross-device FPS guarantee. `test:hero` covers rapid changes, failed decoding/retry, stable geometry, keyboard access, reduced motion and the primary action on a shorter desktop display.
+
+## Case experiences and on-demand reel
+
+The homepage adds a compact studio teaser. Its native MP4 link is enhanced by a small modal controller; the browser test confirms that there is no video element or MP4 request before a click. Closing removes the media and releases its source. Case-format, detail and archive styles/scripts are delivered on the relevant routes rather than loaded into the homepage.
+
+An isolated run of the established 1440×1000 / 4× CPU homepage procedure recorded 222 paints / 98.5 ms paint time, 20 layouts / 30.0 ms layout time, a 17.7 ms 95th-percentile frame interval and one interval over 32 ms. The new teaser changes the homepage length, so this remains a local full-page diagnostic, not an identical-content comparison or a measurement of every case page. Common delivery budgets still pass; route-specific assets and the 24-second encoded reel are reported separately.

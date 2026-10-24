@@ -21,7 +21,7 @@ export const server=http.createServer(async(req,res)=>{
   const rawPath=new URL(req.url,'http://beta.local').pathname,english=rawPath==='/en'||rawPath.startsWith('/en/'),pathname=english?(rawPath.slice(3)||'/'):rawPath;
   if(pathname.startsWith('/api/')){
    if(english)throw Error('Use the canonical API path');
-   if(pathname==='/api/status'&&req.method==='GET')return send(200,{app:'beta-web',subpages:true,routes:['/cases','/services','/studio','/start','/retning','/inspiration','/privacy','/admin','/portal']});
+   if(pathname==='/api/status'&&req.method==='GET')return send(200,{app:'beta-web',subpages:true,routes:['/cases','/services','/studio','/studio/arkiv','/start','/retning','/inspiration','/privacy','/admin','/portal']});
    if(pathname==='/api/site-config'&&req.method==='GET')return send(200,publicConfig());
    if(pathname==='/api/auth-config'&&req.method==='GET')return send(200,authConfig());
    if(pathname==='/api/case-content'&&req.method==='GET'){const {readJSON}=await import('./lib/store.mjs');return send(200,readJSON('content/cases.json',[]).filter(c=>c.status!=='draft'))}
@@ -52,7 +52,7 @@ export const server=http.createServer(async(req,res)=>{
   if(/^\/(logos|clients|media|work|fonts)\//.test(pathname)){
    const match=pathname.match(/^\/(logos|clients|media|work|fonts)\/([A-Za-z0-9_.-]+\.(?:svg|png|webp|jpg|woff2|txt|mp4))$/);if(!match)return send(404,'Not found','text/plain');try{if(match[1]==='work'&&match[2].endsWith('.mp4'))return await serveVideo(req,res,resolve(root,'public',match[1],match[2]));return send(200,await readFile(resolve(root,'public',match[1],match[2])),mime(match[2]),{'Cache-Control':'public, max-age=3600'})}catch{return send(404,'Not found','text/plain')}
   }
-  const files=['atelier.css','style.css','app.js','favicon.svg','clients.json','pages.css','pages.js','navigation.js','motion.js','features.css','agency.css','editorial.css','subpages-art.css','studio.js','features.js','comparison.css','comparison.js','brief-schema.js','admin.js','locale.js','lab.js','lab-data.js','lab-context.js','lab.css'];
+  const files=['case-experiences.css','case-experiences.js','reel.css','reel.js','atelier.css','style.css','app.js','favicon.svg','clients.json','pages.css','pages.js','navigation.js','motion.js','features.css','agency.css','editorial.css','subpages-art.css','studio.js','features.js','comparison.css','comparison.js','brief-schema.js','admin.js','locale.js','lab.js','lab-data.js','lab-context.js','lab.css'];
   const name=pathname==='/'?'index.html':pathname.slice(1);if(name!=='index.html'&&!files.includes(name)){if(/\.[a-z0-9]+$/i.test(pathname))return send(404,'Not found','text/plain');const missing=renderMissingPage(pathname);return send(404,decorateHTML(missing.html,pathname,english),'text/html; charset=utf-8')}
   const data=await readFile(resolve(root,'public',name));return send(200,name==='index.html'?decorateHTML(data.toString(),pathname,english):data,mime(name));
  }catch(e){return send(e.status||400,{error:e.message||'Unable to complete this request.'})}

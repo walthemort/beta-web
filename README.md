@@ -18,9 +18,10 @@ If the homepage and portal work but every subpage says “Not found”, stop the
 ## Pages and interactions
 
 - `/`: blue studio opening with cut photographic sheets, oversized oblique type and two selectable visual perspectives (Edge/Calm); a readable wordmark, asymmetric project index, blue service chapter, black studio manifesto, expanding Beta Review, slim black client-logo loop, animated disclosures and a local project brief.
-- `/cases`, `/cases/forma`, `/cases/offscript`, and seven client case URLs: filtering, saved inspiration, chapter navigation, typography playgrounds, full-size keyboard-accessible galleries and comparison sliders.
+- `/cases`, `/cases/forma`, `/cases/offscript`, and seven client case URLs: filtering, saved inspiration, chapter navigation, typography playgrounds, individual Forma/Offscript layouts, print/web/campaign format switching, design-decision notes, full-size keyboard-accessible galleries and comparison sliders.
+- `/studio/arkiv`: six self-initiated visual studies, filters, expandable notes and links to the concept formats.
 - `/services`: service descriptions and an interactive four-stage process map.
-- `/studio`: editorial studio page and animated principles.
+- `/studio`: editorial studio page, animated principles and the studio reel.
 - `/inspiration`: saved case references and private notes, stored only in this browser.
 - `/start`: three-step brief, remembered service selections/timing, inspiration notes, optional review findings, export, configured estimates and booking. Downloads do not submit anything to Beta.
 - `/en` and `/en/...`: English public pages; switch language while preserving the route. Service IDs stay canonical across languages. Editorial translations live in `public/locale.js`; translate new CMS copy there when publishing bilingual content.
@@ -30,6 +31,8 @@ If the homepage and portal work but every subpage says “Not found”, stop the
 - `/app/beta`: studio-owner tools for client invitations/access revocation, shared milestones, previous versions, requests and uploaded attachments.
 
 All real-client pages remain explicitly labelled placeholders until approved content is entered. The Forma/Offscript visual explorations are concepts. Client placeholder artwork says “not client work.” Comparison sliders show concept A/B; no invented client before/after stories or metrics are included.
+
+The homepage, studio and archive link to a 24-second studio reel. It is built from the existing labelled concept studies, starts muted and loads only when opened. All six experiences and their publishing boundaries are documented in [CASE-EXPERIENCES.md](docs/CASE-EXPERIENCES.md). Run `npm run test:experiences` after changes. The committed film needs no local video tooling to play.
 
 ## Enable the new portal tools
 
