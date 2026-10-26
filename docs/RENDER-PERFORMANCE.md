@@ -37,3 +37,11 @@ An isolated run using the same 1440×1000 / 4× CPU procedure recorded 216 paint
 The homepage adds a compact studio teaser. Its native MP4 link is enhanced by a small modal controller; the browser test confirms that there is no video element or MP4 request before a click. Closing removes the media and releases its source. Case-format, detail and archive styles/scripts are delivered on the relevant routes rather than loaded into the homepage.
 
 An isolated run of the established 1440×1000 / 4× CPU homepage procedure recorded 222 paints / 98.5 ms paint time, 20 layouts / 30.0 ms layout time, a 17.7 ms 95th-percentile frame interval and one interval over 32 ms. The new teaser changes the homepage length, so this remains a local full-page diagnostic, not an identical-content comparison or a measurement of every case page. Common delivery budgets still pass; route-specific assets and the 24-second encoded reel are reported separately.
+
+## Review-first foundation
+
+The homepage is now independent of the legacy homepage CSS and the old concept/project/service controllers. Its two stylesheets total about 7.5 KiB gzip in the delivery check; the common subpage styles are measured separately. The first screen contains native text, the supplied logo, a labelled Beta identity example and the Review form. The moving logo track, concept photography and studio reel teaser are absent from the homepage. No video is requested there.
+
+An isolated run of the same 1440×1000 / 4× CPU procedure recorded 24 paints / 26.6 ms paint time, eight layouts / 8.2 ms layout time, a 17.5 ms 95th-percentile frame interval and no sampled interval over 32 ms. Content and page length have changed; these remain local diagnostic measurements, not a guarantee for every device. The new client collection uses supplied SVG marks until approved project covers are published.
+
+`test:hero` now validates Review-first responsive/bilingual structure, a primary action visible on shorter screens, real Enter-to-review submission against a controlled response, live proof updates, viewport changes, close/error focus and no-JS client links. `test:projects` and `test:services` cover the replacement native client and service flows. Tests of the retired Edge/Calm hero, project index and home service-selection widget have been replaced with checks of the new behavior.

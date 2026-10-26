@@ -1,45 +1,27 @@
-# Public art direction — an image-led studio edition
+# BETA_REVIEW — a new public foundation
 
-The supplied Beta wordmark sets the direction: sharp terminals, stretched proportions and a feeling of forward movement. Those qualities become fixed photographic cuts, oblique sans-serif emphasis and a staggered composition. The actual logo files remain untouched. Brand colours remain `#1B4DFF`, `#F6F4EF` and `#0B0B0E`.
+The public entry point is rebuilt around a first look at the visitor’s brand and the original seven selected client collaborations. The opening, form, result styling, client collection, studio introduction, service links, Review questions and contact chapter are new markup and styling. The former blue concept hero, Edge/Calm controls, project index/stage, moving logo strip, homepage reel teaser and home service-selection widget are removed.
 
-## Two perspectives
+## Review as the opening
 
-The homepage opens in blue with Offscript’s concept photograph. “Kant / Ro” (“Edge / Calm”) changes the hero’s palette and photograph to Forma’s quieter paper-and-material study. The composition and page height remain steady. The visible image is a native case link with a clear concept label. Without JavaScript, the first case link and heading remain visible; the interactive controls stay hidden.
+`public/review-home.css` is the homepage’s own foundation. The homepage does not load `style.css`, `features.css`, `agency.css`, `editorial.css`, `subpages-art.css` or `atelier.css`. It includes its own shared-shell, Review, consent and modal styles. `public/selected-work.css` styles the selected-client collection on both the homepage and `/cases`.
 
-The second image decodes before selection. Request generations prevent stale selections from replacing a more recent click. Failed decoding leaves the existing picture and case link usable, announces the issue and permits a retry. Arrow keys, Home and End operate the two buttons. A focused case link is returned to the chosen button before its panel is hidden. Reduced motion, including a live preference change, cancels animations. Neither selection nor scroll starts an idle rendering loop.
+The supplied Beta wordmark stays large and readable. Warm white, Beta blue and black frame an editorial Review workspace: a typographic opening, a tilted brand proof and a clear URL form. On mobile the form appears before the proof so the primary action stays on the first screen. The proof’s initial colours and Inter reference are explicitly labelled as **Beta’s own example**, and are never stored as an analysis result.
 
-Image frames use a static angled cut. Only opacity and transform animate on the photograph; the shape itself does not morph. The hero background colour transitions briefly when explicitly switching perspectives. No hero film or substitute brand mark is used.
+Submitting Enter runs the existing Review API and expands the findings in place. `src/review-home.js` listens for real review results and updates the proof with validated detected colours, the actual font names when available, and the reviewed domain. Desktop/mobile view changes update the same proof. Missing findings remain explicit; closing or an error restores the labelled example. The specimen stays an illustration and never downloads arbitrary fonts from the visited website. Palette labels choose a contrasting foreground. Existing screenshots, optional details/contrast, PDF/print export, local storage and brief continuity remain available.
 
-## Composition across the site
+## Real collaborations first
 
-The blue opening leads into a slim black logo loop and a light project chapter. On desktop the homepage’s project photograph is on the left and the index on the right. A blue angled field identifies the selected concept; mobile keeps the compact horizontal index above the picture. The project photograph has a small cut corner. Its metadata, native case navigation and inspiration saves remain available.
+`lib/selected-work.mjs` curates Rekom, BAT, Reformed Cleaning, Red Bull, Selfmade Records, Freshpoint and Ild.Pizza using the supplied marks. Red Bull remains a text reference until an approved image is supplied. Cards are native links, with clear pending-case labels. No project photography or outcomes are invented. Published matching client stories automatically use their approved gallery cover and a case link label; drafts and unselected concepts cannot appear as commissioned work.
 
-Large oblique sans-serif accents replace the earlier serif emphasis in public page introductions, the studio statement and contact chapters. The service section stays blue; the studio statement stays black. Review and concise FAQs use paper, followed by the blue contact chapter and the original large footer wordmark. The services subpage opens in blue; the studio manifesto shares the homepage’s ink palette. All new copy is translated into English.
+`/cases` uses the same collection. Forma and Offscript remain available through a smaller studio directory and `/studio/arkiv`, with their individual layouts, formats, reasoning, details, galleries and comparison controls. The optional reel remains on the studio and archive routes. Inspiration saves remain available on the case pages and continue into the planner.
 
-Service disclosures and image crossfades, the project brief and private portal retain their behavior. Forced colours removes the photographic cuts and supplies explicit selection outlines. Focusable image links keep their outline outside the cut image wrapper.
+## A simpler path through the studio
 
-## Cases, rebuilt
+Primary navigation starts with BETA_REVIEW, followed by Work, Studio and Client portal. Services remain available in the menu and from four direct homepage links, each selecting the corresponding service in the project brief. The shared subpage shell in `public/atelier.css` is reduced to header/footer, public-page styling and menu motion. The unused hero/project/service controllers and old project-rendering module are deleted.
 
-The former staggered card grid and expanding project modal are replaced by a project index and a single visual stage. The homepage contains the available illustrated concept studies. `/cases` contains those concepts and the real client entries, with brand/digital/client/saved filters. The opening, index, stage and mobile composition are rebuilt together.
-
-Desktop puts the names beside the image, with a clear selected state and a native full-case link. Mobile uses a horizontally scrollable index above the image. The stage retains its image dimensions and enough caption space to avoid reflow for the current catalog. No visual changes happen merely because the mouse passes across a row. Arrow keys, Home and End navigate the visible index. Filtering returns focus safely when it removes an active saved project. Empty and storage-denied states remain usable.
-
-Panels decode only on request and are cached. Request generations prevent an earlier image or filter request from replacing a newer selection. One brief opacity/translate transition introduces the selected panel. There is no image pan, clip-path animation, large height animation or modal close sequence. Without JavaScript, every index entry is a native case link and the first project stays visible.
-
-Concepts retain their labels. Client pages use supplied marks and explicit pending-material copy; no project photography, metrics or stories are invented. Existing inspiration saves and the project brief remain connected through the same local storage key.
-
-## Motion and rendering
-
-Public page navigation is native. Cross-document screenshot transitions, body fade redirects, scroll-linked gradient text, per-node text splitting, cursor-following project arrows, magnetic actions and the animated SVG gesture are removed. Heading entrances use only short opacity/transform animations. A single observer handles these entrances, which run once. Logo edges retain a soft mask without backdrop blur. The client strip still moves on hover, pauses under keyboard focus, and becomes manually scrollable for reduced motion.
-
-The fullscreen menu opens with a compositor slide and closes in 180 ms, without a changing clip mask. The plain white floating burger, focus return, scroll lock and interrupted/reduced-motion closing remain supported. Service and FAQ disclosures retain their small, interruptible height animations; service imagery now crossfades briefly without a mask or image zoom. Comparison dragging remains intact.
+Motion is limited to brief entrances, the result expansion, small interactive disclosures and the compositor menu slide. There is no continuous hero rendering, automatic video, cursor-following preview or page-navigation delay. Native links and the full selected-client collection remain usable without JavaScript; a visible note explains that analysis requires JavaScript.
 
 ## Verification
 
-`npm test` covers the server and data boundaries. `test:hero` checks perspective switching, stable page geometry, decode races, failures/retry, keyboard focus, live reduced motion, bilingual responsive presentation and native no-JS links. `test:projects` checks the new index/stage, stable image dimensions, selection/filter races, direct case links, saved panel state, keyboard/focus, bilingual responsive layouts, no JavaScript and denied storage. `test:studio` checks removed effects, menu slides/reversal, focus, logo behavior and inspiration continuity. `test:overhaul` covers 54 bilingual responsive routes and the existing planner/privacy/gallery flows. `test:services`, `test:adaptive` and `test:budget` retain their respective checks. The former scroll-scene test and its removed runtime are retired.
-
-Local rendering measurements and their practical limits are recorded in [RENDER-PERFORMANCE.md](RENDER-PERFORMANCE.md).
-
-## Concept editions and the studio collection
-
-The six experiences in [CASE-EXPERIENCES.md](CASE-EXPERIENCES.md) build on this direction. Forma now uses warm paper, a serif masthead and an offset image/gallery composition; Offscript uses stacked type, a blue opening and a dark campaign chapter. Print/web/campaign compositions, expandable design reasoning and photographic detail points provide distinct ways into the work. The new studio archive and on-demand reel are linked from the homepage and studio. The concept/published boundary keeps these explorations out of real client stories.
+`npm test` includes the standalone CSS contract, selected-client curation, published-story boundary, escaping and bilingual rendering alongside the existing server/security tests. `test:hero` now checks the Review-first opening, eight responsive/bilingual combinations, the action above the fold, Enter submission, live proof updates, viewport switching, reset/error focus and no-JS access. `test:projects` now checks twenty selected-work combinations and native client/concept navigation. `test:services` covers all four service-to-brief links in two languages and three widths. Menu, shared pages, case experiences, comparison dragging, Review exports and private portal workflows retain their relevant checks.

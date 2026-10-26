@@ -1,69 +1,32 @@
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {executable} from '../lib/render-review.mjs';
-process.env.NODE_ENV='test';
-const {server}=await import('../server.js');
-await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
-const base='http://127.0.0.1:'+server.address().port;
+import {enrichReport} from '../lib/report.mjs';
+process.env.NODE_ENV='test';const {server}=await import('../server.js');await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
 const browser=await chromium.launch({executablePath:executable(),args:['--no-sandbox','--disable-dev-shm-usage']});
+const desktop={url:'https://brand.example',colors:['#153366','#F3F0E8'],fonts:['Desktop Sans'],sizes:['40px'],svg:true,logoSvg:true,rendered:true,view:'desktop',viewport:{width:1280,height:900},note:'Desktop fixture'},mobile={...desktop,view:'mobile',colors:['#E03422','#FFFFFF'],fonts:['Mobile Sans'],viewport:{width:390,height:844}};
 try{
- const context=await browser.newContext({viewport:{width:1440,height:1000}});
- await context.addInitScript(()=>localStorage.setItem('beta:analytics-consent','false'));
- const page=await context.newPage(),errors=[];
- page.on('pageerror',error=>errors.push(error.message));
- const active=slug=>page.waitForFunction(slug=>document.querySelector('.editorial-hero').dataset.heroDirection===slug,slug);
- await page.goto(base);await page.evaluate(()=>document.fonts.ready);
- await page.locator('.hero-directions').waitFor({state:'visible'});
- await page.locator('[data-hero-panel=offscript] img').evaluate(img=>img.decode());
- const box=await page.locator('#hero-gallery').boundingBox();
- await page.locator('[data-hero-choice=forma]').click();await active('forma');
- assert.equal(await page.locator('[data-hero-panel=offscript]').isVisible(),false);
- assert.equal(await page.locator('[data-hero-panel=forma]').getAttribute('href'),'/cases/forma');
- assert.equal(await page.locator('[data-hero-choice=forma]').getAttribute('aria-pressed'),'true');
- assert.equal(await page.locator('#hero-direction-status').textContent(),'Viser perspektiv: Ro');
- const switched=await page.locator('#hero-gallery').boundingBox();
- assert(Math.abs(box.height-switched.height)<1&&Math.abs(box.y-switched.y)<1,'Changing perspective cannot move the page');
- await page.locator('[data-hero-choice=forma]').focus();await page.keyboard.press('ArrowLeft');await active('offscript');
- assert.equal(await page.locator('[data-hero-choice=offscript]').evaluate(el=>el===document.activeElement),true);
- // A decoded earlier request must never replace the latest chosen perspective.
- await page.evaluate(()=>{
-  const img=document.querySelector('[data-hero-panel=forma] img');
-  window.heroOriginalDecode=img.decode.bind(img);
-  img.decode=()=>new Promise(resolve=>window.releaseHeroDecode=resolve);
- });
- await page.locator('[data-hero-choice=forma]').click();
- assert.equal(await page.locator('#hero-gallery').getAttribute('aria-busy'),'true');
- await page.locator('[data-hero-choice=offscript]').click();
- await page.evaluate(()=>window.releaseHeroDecode());
- await page.waitForFunction(()=>document.querySelector('#hero-gallery').getAttribute('aria-busy')==='false');
- assert.equal(await page.locator('.editorial-hero').getAttribute('data-hero-direction'),'offscript');
- // Failed images leave the current case usable, announce the issue, and permit a retry.
- await page.evaluate(()=>document.querySelector('[data-hero-panel=forma] img').decode=()=>Promise.reject(Error('Unavailable image')));
- await page.locator('[data-hero-choice=forma]').click();
- await page.waitForFunction(()=>document.querySelector('#hero-direction-status').textContent.includes('kunne ikke'));
- assert.equal(await page.locator('[data-hero-panel=offscript]').isVisible(),true);
- assert.equal(await page.locator('#hero-gallery').getAttribute('aria-busy'),'false');
- await page.evaluate(()=>document.querySelector('[data-hero-panel=forma] img').decode=window.heroOriginalDecode);
- await page.locator('[data-hero-choice=forma]').click();await active('forma');
- await page.emulateMedia({reducedMotion:'reduce'});
- assert.equal(await page.locator('.editorial-hero').evaluate(el=>el.getAnimations({subtree:true}).length),0);
- for(const width of [360,768,1440])for(const language of ['','/en']){
-  await page.setViewportSize({width,height:1000});await page.goto(base+language+'/');
-  await page.evaluate(()=>document.fonts.ready);await page.locator('.hero-directions').waitFor({state:'visible'});
-  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
-  assert.equal(await page.locator('h1').textContent(),language?'Made to stand apart.':'Skabt til at skille sig ud.');
-  await page.locator('[data-hero-choice=forma]').click();await active('forma');
-  assert.equal(await page.locator('[data-hero-panel=forma]').getAttribute('href'),language+'/cases/forma');
-  assert.equal(await page.locator('[data-hero-panel]:visible').count(),1);
-  assert.equal(await page.locator('#hero-direction-status').textContent(),language?'Showing perspective: Calm':'Viser perspektiv: Ro');
+ const context=await browser.newContext({reducedMotion:'reduce',viewport:{width:1440,height:1000}});await context.addInitScript(()=>localStorage.setItem('beta:analytics-consent','false'));
+ const page=await context.newPage(),errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
+ await context.route('**/api/review',r=>r.fulfill({json:enrichReport({...desktop,views:{desktop,mobile}})}));
+ for(const width of [360,390,768,1440])for(const prefix of ['','/en']){
+  await page.setViewportSize({width,height:900});await page.goto(base+prefix+'/');await page.evaluate(()=>document.fonts.ready);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Home overflow '+width+prefix);
+  assert.equal(await page.locator('h1').textContent(),prefix?'Your brand.A fresh perspective.':'Dit brand.Et nyt blik.');
+  assert.equal(await page.locator('[data-selected-case]').count(),7);assert.equal(await page.locator('.editorial-hero,[data-portfolio],[data-open-reel],video,canvas').count(),0);
+  assert(await page.locator('#review').evaluate(el=>el.compareDocumentPosition(document.querySelector('#work'))&Node.DOCUMENT_POSITION_FOLLOWING));
+  assert.equal(await page.locator('#proof-label').textContent(),prefix?'EXAMPLE / BETA’S OWN IDENTITY':'EKSEMPEL / BETAS EGET UDTRYK');
+  assert.equal(await page.locator('#review-submit').evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight),true,'The Review action belongs on the first screen');
+  const rootStyles=await page.locator('link[rel=stylesheet]').evaluateAll(nodes=>nodes.map(n=>new URL(n.href).pathname));assert.deepEqual(rootStyles,['/selected-work.css','/review-home.css']);
+  await page.locator('#url').fill('brand.example');await page.locator('#url').press('Enter');await page.locator('[data-review-view=mobile]').waitFor();await page.waitForFunction(()=>document.querySelector('.review-proof').dataset.liveProof==='true');
+  assert.equal(await page.locator('#proof-palette>span').first().textContent(),'#153366');assert((await page.locator('#proof-font').textContent()).includes('Desktop Sans'));
+  await page.locator('[data-review-view=mobile]').click();assert.equal(await page.locator('#proof-palette>span').first().textContent(),'#E03422');assert((await page.locator('#proof-font').textContent()).includes('Mobile Sans'));
+  await page.locator('#review-reset').click();assert.equal(await page.locator('#review-submit').getAttribute('aria-expanded'),'false');assert.equal(await page.locator('#proof-palette>span').count(),3);assert.equal(await page.locator('.review-proof').getAttribute('data-live-proof'),null);
  }
- await page.setViewportSize({width:1440,height:800});await page.goto(base);await page.evaluate(()=>document.fonts.ready);await page.locator('.hero-directions').waitFor({state:'visible'});
- assert(await page.locator('.editorial-hero .agency-button').evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight),'The main action must remain visible on a shorter desktop display');
- assert.deepEqual(errors,[]);await context.close();
- const plain=await browser.newContext({javaScriptEnabled:false}),nojs=await plain.newPage();
- await nojs.goto(base);assert.equal(await nojs.locator('h1').isVisible(),true);
- assert.equal(await nojs.locator('[data-hero-panel=offscript]').getAttribute('href'),'/cases/offscript');
- assert.equal(await nojs.locator('.hero-directions').isVisible(),false);
- await plain.close();
- console.log('Hero perspectives: decoded transitions, stable page geometry, latest-selection wins, failure/retry, keyboard focus, live reduced motion, DA/EN at three widths and native no-JS links passed.');
-}finally{await browser.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve))}
+ for(const prefix of ['','/en']){await page.setViewportSize({width:1440,height:800});await page.goto(base+prefix+'/');await page.evaluate(()=>document.fonts.ready);assert(await page.locator('#review-submit').evaluate(el=>el.getBoundingClientRect().bottom<=innerHeight),'Review action stays visible on a shorter desktop display');}
+ await page.setViewportSize({width:1440,height:1000});await page.goto(base);await page.unroute('**/api/review');await context.unroute('**/api/review');
+ await context.route('**/api/review',r=>r.fulfill({status:400,json:{error:'Invalid URL'}}));await page.locator('#url').fill('bad address');await page.locator('#url').press('Enter');await page.locator('.review-error').waitFor();assert.equal(await page.locator('#review-form').getAttribute('aria-busy'),null);assert.equal(await page.locator('.review-proof').getAttribute('data-live-proof'),null);await page.locator('#review-reset').click();assert.equal(await page.locator('#url').evaluate(el=>el===document.activeElement),true);
+ assert(!requests.some(url=>url.endsWith('.mp4')));assert.deepEqual(errors,[]);await context.close();
+ const plain=await browser.newContext({javaScriptEnabled:false}),nojs=await plain.newPage();await nojs.goto(base);assert.equal(await nojs.locator('h1').isVisible(),true);assert.equal(await nojs.locator('[data-selected-case]:visible').count(),7);assert.equal(await nojs.locator('.no-script-note').isVisible(),true);await nojs.locator('[data-selected-case=rekom]').click();assert(nojs.url().endsWith('/cases/rekom'));await plain.close();
+ console.log('Review-first homepage: eight bilingual responsive views, action above the fold, independent CSS, real selected clients, Enter-to-review, live palette/font proof, desktop/mobile updates, close/error focus, no autoplay media and native no-JS links passed.');
+}finally{await browser.close();server.closeAllConnections();await new Promise(r=>server.close(r))}

@@ -30,7 +30,7 @@ try{
   assert.equal(await page.locator('.desktop-nav a[href="'+prefix+'/studio"]').getAttribute('aria-current'),'page');
  }
  // The film is fetched and played only after a deliberate click; closing releases it.
- await page.goto(base);assert.equal(await page.locator('video').count(),0);assert(!requests.some(url=>url.endsWith('/beta-studio-reel.mp4')));
+ await page.goto(base+'/studio');assert.equal(await page.locator('video').count(),0);assert(!requests.some(url=>url.endsWith('/beta-studio-reel.mp4')));
  const opener=page.locator('[data-open-reel]').first();await opener.click();await page.locator('.reel-dialog').waitFor({state:'visible'});await page.waitForFunction(()=>document.querySelector('.reel-dialog video')?.currentTime>0);
  assert.equal(await page.locator('.reel-dialog video').evaluate(el=>el.muted),true);assert.equal(Math.round(await page.locator('.reel-dialog video').evaluate(el=>el.duration)),24);assert.equal(await page.evaluate(()=>document.body.style.overflow),'hidden');
  await page.keyboard.press('Escape');await page.locator('.reel-dialog').waitFor({state:'detached'});assert.equal(await page.locator('video').count(),0);assert.equal(await opener.evaluate(el=>el===document.activeElement),true);assert.equal(await page.evaluate(()=>document.body.style.overflow),'');

@@ -1,5 +1,5 @@
 import {hasCaseEdition,caseEdition,renderCaseFormats,renderCaseProcess,renderCaseDetails,renderStudioArchive,renderReelTeaser} from './lib/case-experiences.mjs';
-import {renderProjectCollection} from './lib/projects.mjs';
+import {renderSelectedWork} from './lib/selected-work.mjs';
 import {briefQuestions} from './lib/brief.mjs';
 import {readFileSync} from 'node:fs';
 const clients=JSON.parse(readFileSync(new URL('./public/clients.json',import.meta.url),'utf8'));
@@ -18,13 +18,13 @@ function responsiveCover(image, sizes) {
 }
 function casesIndex() {
   return layout({
-    title: 'Cases', description: 'Udforsk visuelle retninger, gem din inspiration og find næste skridt for dit brand.',
+    title: 'Cases', description: 'Et udvalg af Betas kunder og samarbejder. Find også studiets egne konceptstudier.',
     path: '/cases', page: 'cases', body: `
     <section class="page-intro work-intro section-pad">
       <div class="section-top"><span>ARBEJDE</span><a href="/inspiration">DIN INSPIRATION ↗</a></div>
-      <div class="editorial-intro"><h1>Et udvalg.<br><em>Mange udtryk.</em></h1><p>Udforsk vores koncepter og kunder. Find det udtryk, der taler til dig.</p></div>
+      <div class="editorial-intro"><h1>Udvalgte<br><em>samarbejder.</em></h1><p>Et udvalg af de kunder, vi har skabt sammen med.</p></div>
     </section>
-    <section class="portfolio-archive-section section-pad">${renderProjectCollection()}</section>
+    ${renderSelectedWork()}
     ${cta('Dit brand.', 'Dit næste kapitel.')}`
   });
 }
