@@ -24,7 +24,8 @@
     "test:lab": "node scripts/check-lab.mjs",
     "test:services": "node scripts/check-services.mjs",
     "test:projects": "node scripts/check-projects.mjs",
-    "profile:scroll": "node scripts/profile-scroll.mjs"
+    "profile:scroll": "node scripts/profile-scroll.mjs",
+    "test:statement": "node scripts/check-statement.mjs"
   },
   "engines": {
     "node": ">=22"

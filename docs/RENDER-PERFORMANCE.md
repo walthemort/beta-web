@@ -45,3 +45,11 @@ The homepage is now independent of the legacy homepage CSS and the old concept/p
 An isolated run of the same 1440×1000 / 4× CPU procedure recorded 24 paints / 26.6 ms paint time, eight layouts / 8.2 ms layout time, a 17.5 ms 95th-percentile frame interval and no sampled interval over 32 ms. Content and page length have changed; these remain local diagnostic measurements, not a guarantee for every device. The new client collection uses supplied SVG marks until approved project covers are published.
 
 `test:hero` now validates Review-first responsive/bilingual structure, a primary action visible on shorter screens, real Enter-to-review submission against a controlled response, live proof updates, viewport changes, close/error focus and no-JS client links. `test:projects` and `test:services` cover the replacement native client and service flows. Tests of the retired Edge/Calm hero, project index and home service-selection widget have been replaced with checks of the new behavior.
+
+## Statement edition
+
+The public identity now uses a self-hosted 42.1 KiB Syne display font alongside Inter, responsive paper material exports (192.2 KiB desktop / 25.8 KiB mobile), static line masks with short transform entrances, and a close-seamed client wall. The paper backdrop has a fixed image size during report expansion. There is no continuous hero renderer, scrolling blur, automatic video or per-frame text painting.
+
+An isolated 1440×1000 / 4× CPU full-homepage sample recorded 81 paints / 54.9 ms paint time, 25 layouts / 25.0 ms layout time, a 17.5 ms 95th-percentile frame interval and no sampled interval above 32 ms. This is a local diagnostic of the new content and page length, not a hardware-independent smoothness guarantee. Homepage CSS is 10.1 KiB gzip; public JavaScript is 50.8 KiB gzip. All existing delivery limits still pass, with explicit budgets added for the new font and material exports.
+
+`test:statement` adds 48 bilingual responsive checks, heading readability, material-image decoding, mobile menu geometry, a running text entrance cancelled by a reduced-motion change, and no-JS access. The existing Review/client/service/menu/planner/case/reel/compare/export checks remain in use.

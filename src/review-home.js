@@ -18,5 +18,4 @@ if(proof){
  });
  function settle(){for(const animation of running)animation.cancel();running.clear()}
  reduce.addEventListener('change',()=>{if(reduce.matches)settle()});addEventListener('pagehide',settle);
- if(!reduce.matches){const heading=document.querySelector('#agency-title');if(heading){const animation=heading.animate([{opacity:.5,transform:'translateY(14px)'},{opacity:1,transform:'translateY(0)'}],{duration:600,easing:'cubic-bezier(.22,1,.36,1)'});running.add(animation);animation.finished.catch(()=>{}).finally(()=>running.delete(animation))}}
 }

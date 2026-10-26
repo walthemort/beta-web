@@ -12,7 +12,7 @@ try{
  for(const width of [360,390,768,1440])for(const prefix of ['','/en']){
   await page.setViewportSize({width,height:900});await page.goto(base+prefix+'/');await page.evaluate(()=>document.fonts.ready);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Home overflow '+width+prefix);
-  assert.equal(await page.locator('h1').textContent(),prefix?'Your brand.A fresh perspective.':'Dit brand.Et nyt blik.');
+  assert.equal(await page.locator('h1').textContent(),prefix?'Your brand.A new view.':'Dit brand.Et nyt blik.');
   assert.equal(await page.locator('[data-selected-case]').count(),7);assert.equal(await page.locator('.editorial-hero,[data-portfolio],[data-open-reel],video,canvas').count(),0);
   assert(await page.locator('#review').evaluate(el=>el.compareDocumentPosition(document.querySelector('#work'))&Node.DOCUMENT_POSITION_FOLLOWING));
   assert.equal(await page.locator('#proof-label').textContent(),prefix?'EXAMPLE / BETA’S OWN IDENTITY':'EKSEMPEL / BETAS EGET UDTRYK');

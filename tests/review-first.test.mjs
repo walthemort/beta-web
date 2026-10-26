@@ -21,5 +21,5 @@ test('Curated clients use only published matching case stories',()=>{
  const html=renderSelectedWork({clients:published});assert(html.includes('A &lt; B'));assert(html.includes('Approved &lt; work'));assert(!html.includes('/media/draft.webp'));
 });
 test('Review-first copy and primary navigation remain bilingual',()=>{
- const html=decorateHTML(index,'/',true);assert(html.includes('A fresh perspective.'));assert(html.includes('/en#review'));assert(html.includes('/en/cases/rekom'));assert(html.includes('SEE MY REVIEW'));assert(!html.includes('Dine fundne styles'));
+ const html=decorateHTML(index,'/',true);assert(html.includes('A new view.'));assert(html.includes('/en#review'));assert(html.includes('/en/cases/rekom'));assert(html.includes('SEE MY REVIEW'));assert(!html.includes('Dine fundne styles'));
 });
