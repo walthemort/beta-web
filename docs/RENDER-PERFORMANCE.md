@@ -53,3 +53,9 @@ The public identity now uses a self-hosted 42.1 KiB Syne display font alongside 
 An isolated 1440×1000 / 4× CPU full-homepage sample recorded 81 paints / 54.9 ms paint time, 25 layouts / 25.0 ms layout time, a 17.5 ms 95th-percentile frame interval and no sampled interval above 32 ms. This is a local diagnostic of the new content and page length, not a hardware-independent smoothness guarantee. Homepage CSS is 10.1 KiB gzip; public JavaScript is 50.8 KiB gzip. All existing delivery limits still pass, with explicit budgets added for the new font and material exports.
 
 `test:statement` adds 48 bilingual responsive checks, heading readability, material-image decoding, mobile menu geometry, a running text entrance cancelled by a reduced-motion change, and no-JS access. The existing Review/client/service/menu/planner/case/reel/compare/export checks remain in use.
+
+## Background-film hero
+
+The hero now uses one responsive, muted native video and a compact bottom dock. Its centre stays free of interface content. Reports expand beneath the fixed-height film stage. The old paper-hero layouts were removed from the homepage stylesheet; Studio retains the material image. The video pauses when less than 10% of the hero remains visible, behind the menu and in a hidden tab. Initial reduced-motion and data-saver visits request only the poster. Manual pause survives scrolling and menu changes.
+
+An isolated full-homepage 1440×1000 / 4× CPU run with normal playback recorded 86 paints / 41.9 ms paint time, 25 layouts / 19.3 ms layout time, a 17.5 ms 95th-percentile frame interval and no sampled interval above 32 ms. These are local diagnostic measurements, not device-independent guarantees. Homepage CSS is now 9.6 KiB gzip, public JavaScript 51.4 KiB gzip; delivery budgets still pass. `test:hero-film` verifies real playback, responsive source selection, clear-centre geometry, pause/resume, live preferences, failure fallback and no-JS behavior.

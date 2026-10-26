@@ -1,4 +1,6 @@
 import {t} from './locale.js';
+import {mountHeroFilm} from './hero-film.js';
+mountHeroFilm();
 const proof=document.querySelector('.review-proof');
 if(proof){
  const label=proof.querySelector('#proof-label'),font=proof.querySelector('#proof-font'),palette=proof.querySelector('#proof-palette'),caption=proof.querySelector('#proof-caption'),reduce=matchMedia('(prefers-reduced-motion: reduce)'),running=new Set();

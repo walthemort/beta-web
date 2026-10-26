@@ -93,3 +93,5 @@ Object.assign(dictionary,{"BETA — Et nyt blik.":"BETA — A fresh perspective.
 Object.assign(dictionary,{'I godt':'In good','selskab.':'company.','STUDIOARKIV':'STUDIO ARCHIVE','Udvalgte samarbejder':'Selected collaborations'});
 
 Object.assign(dictionary,{'Udvalgte':'Selected','samarbejder.':'collaborations.','Et udvalg af Betas kunder og samarbejder. Find også studiets egne konceptstudier.':'A selection of Beta’s clients and collaborations. You can also explore the studio’s own concept studies.','ET OVERBLIK. ET UDGANGSPUNKT.':'AN OVERVIEW. A STARTING POINT.','Skal vi finde retningen?':'Shall we find a direction?'});
+
+Object.assign(dictionary,{'Sæt baggrundsfilmen på pause':'Pause the background film','Afspil baggrundsfilmen':'Play the background film'});

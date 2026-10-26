@@ -25,7 +25,8 @@
     "test:services": "node scripts/check-services.mjs",
     "test:projects": "node scripts/check-projects.mjs",
     "profile:scroll": "node scripts/profile-scroll.mjs",
-    "test:statement": "node scripts/check-statement.mjs"
+    "test:statement": "node scripts/check-statement.mjs",
+    "test:hero-film": "node scripts/check-hero-film.mjs"
   },
   "engines": {
     "node": ">=22"
